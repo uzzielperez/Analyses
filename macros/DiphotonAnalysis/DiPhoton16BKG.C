@@ -3,7 +3,9 @@
 #include <TH2.h>
 #include <TStyle.h>
 #include <TCanvas.h>
+#include <iostream>
 
+using namespace std;
 void DiPhoton16BKG::Loop()
 {
 //   In a ROOT session, you can do:
@@ -29,6 +31,23 @@ void DiPhoton16BKG::Loop()
 // METHOD2: replace line
 //    fChain->GetEntry(jentry);       //read all branches
 //by  b_branchname->GetEntry(ientry); //read only this branch
+   
+   //histograms
+	TH1D* diphotonMinv = new TH1D("diphotonMinv", "", 80, 0.,1600.);
+	diphotonMinv->Sumw2();
+	TH1D* photon1Pt  = new TH1D("photon1Pt", "", 80, 0.,1600.);
+	TH1D* photon1Eta = new TH1D("photon1Eta", "", 80, 0.,1600.);
+	TH1D* photon1Phi = new TH1D("photon1Phi", "", 80, 0.,1600.);
+	TH1D* photon2Pt  = new TH1D("photon2Pt", "", 80, 0.,1600.);
+	TH1D* photon2Eta = new TH1D("photon2Eta", "", 80, 0.,1600.);
+	TH1D* photon2Phi = new TH1D("photon2Phi", "", 80, 0.,1600.);
+	photon1Pt->Sumw2();
+	photon1Eta->Sumw2();
+	photon1Phi->Sumw2();
+	photon2Pt->Sumw2();
+	photon2Eta->Sumw2();
+	photon2Phi->Sumw2();
+		
    if (fChain == 0) return;
 
    Long64_t nentries = fChain->GetEntriesFast();
@@ -39,5 +58,29 @@ void DiPhoton16BKG::Loop()
       if (ientry < 0) break;
       nb = fChain->GetEntry(jentry);   nbytes += nb;
       // if (Cut(ientry) < 0) continue;
-   }
-}
+      if (jentry%10000 == 0) cout << "Number of processed events: "<< jentry << endl;
+
+	diphotonMinv->Fill(Diphoton_Minv, Event_weightAll);
+	photon1Pt->Fill(Photon1_pt, Event_weightAll);
+	photon1Eta->Fill(Photon1_eta, Event_weightAll);
+	photon1Phi->Fill(Photon1_phi, Event_weightAll);
+	photon2Pt->Fill(Photon2_pt, Event_weightAll);
+	photon2Eta->Fill(Photon2_eta, Event_weightAll);
+	photon2Phi->Fill(Photon2_phi, Event_weightAll);
+		
+  }//end of loop over events
+	
+	TFile file_out("diphoton16bkg_histograms.root", "RECREATE");
+
+	diphotonMinv->Write();
+	photon1Pt->Write();
+	photon1Eta->Write();
+	photon1Phi->Write();
+	photon2Pt->Write();
+	photon2Eta->Write();
+	photon2Phi->Write();
+	
+	file_out.ls();
+	file_out.Close();
+
+}//end of Class loop

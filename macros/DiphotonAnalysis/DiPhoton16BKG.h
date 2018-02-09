@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////
 // This class has been automatically generated on
-// Thu Feb  8 19:34:16 2018 by ROOT version 6.06/01
+// Thu Feb  8 23:01:40 2018 by ROOT version 6.06/01
 // from TChain diphoton/fTree/
 //////////////////////////////////////////////////////////
 
