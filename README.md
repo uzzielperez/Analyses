@@ -2,8 +2,8 @@
 To execute the scripts <br />
 ```bash
 
-chmod u+x scriptname.sh <br />
-./scriptname.sh  <br />
+chmod u+x scriptname.sh 
+./scriptname.sh  
 
 ```
 
@@ -11,8 +11,8 @@ or <br />
 
 ```bash
 
--x script_name.sh <br />
-bash -x script_name.sh <br />
-source scriptname.sh <br />
+-x script_name.sh 
+bash -x script_name.sh 
+source scriptname.sh 
 
 ```
