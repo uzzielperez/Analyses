@@ -2,8 +2,8 @@
 ## Usually start by looking at the structure of the tree using MakeClass
 ```C++
 
-fTree->Print(); <br \>
-fTree->MakeClass("myClass_name"); <br \>
+fTree->Print(); 
+fTree->MakeClass("myClass_name"); 
 
 ```
 
