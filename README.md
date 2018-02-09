@@ -1,10 +1,10 @@
-#To execute the scripts
+# Analyses
+## To execute the scripts
 chmod u+x scriptname.sh
 ./scriptname.sh
 
-#or
+## or
 -x script_name.sh
 bash -x script_name.sh
 source scriptname.sh
 
-# Analyses
