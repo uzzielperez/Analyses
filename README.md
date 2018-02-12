@@ -17,7 +17,7 @@ python merge.py
 
 ```
  
-2.) In progres... <br />
+2.) In progress... <br />
 
 ## Initial SM Diphoton 2016 Pipeline
 1.) Run ExoDiPhotonAnalyzer on GGJets Sherpa from summer using ./submit_crab_cfg.py <br />
