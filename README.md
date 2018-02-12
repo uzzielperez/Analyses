@@ -1,12 +1,23 @@
 # Analyses
 
 ## Workflow
+0.) Codes in Analysis_vx directories. <br />
 1.) Produce Ntuples by running Analyzer over datasets <br />
 2.) Merge Root files with the same Mass Bin <br />
 3.) Chain the same trees together and Make Class to loop over events <br />
 Run selection criteria through ClassName.C and analyze.C. <br />
 This will write histograms into a new .root file for plotting. <br />
 4.) Run Plotter <br />
+
+## Analysis_vx
+1.) Configure Input and Output path and files in merge.py. To merge, run
+```bash
+
+python merge.py
+
+```
+ 
+2.) In progres... <br />
 
 ## Initial SM Diphoton 2016 Pipeline
 1.) Run ExoDiPhotonAnalyzer on GGJets Sherpa from summer using ./submit_crab_cfg.py <br />
