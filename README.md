@@ -10,6 +10,7 @@ This will write histograms into a new .root file for plotting. <br />
 4.) Run Plotter <br />
 
 ## Analysis_vx
+0.) Configure and run eoshelper.py to get full paths (quite LONG!) to the CRAB ntuples. <br />
 1.) Configure Input and Output path and files in merge.py. To merge, run
 ```bash
 
