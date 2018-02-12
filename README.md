@@ -22,13 +22,13 @@ This will write histograms into a new .root file for plotting. <br />
 ```bash
 
 cmsenv
-root -l analyze.C
+root -l /macros/analyze.C
 
 ```  
 5.) To plot run 
 ```bash
 
-python plotnostat-diphbkg.py
+python /pyroot/plotnostat-diphbkg.py
 
 ```
 
