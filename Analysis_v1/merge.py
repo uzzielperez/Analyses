@@ -103,9 +103,9 @@ cwd = os.getcwd()
 #print "%s/rootmerger.sh" %(cwd)
 #######################MERGING##########################
 #bottleneck
-###subprocess.call("%s/rootmerger.sh" %(cwd), shell = True)
+subprocess.call("%s/rootmerger.sh" %(cwd), shell = True)
 ########################################################
-###print "Merging process finished. To check, type \n \n root -l root://cmsxrootd.fnal.gov/%s*.root " %(outputdir)
+print "Merging process finished. To check, type \n \n root -l root://cmsxrootd.fnal.gov/%s*.root " %(outputdir)
 print " "
 sw.Stop()
 print "Processing Time:"

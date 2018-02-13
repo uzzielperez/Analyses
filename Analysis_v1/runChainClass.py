@@ -1,16 +1,39 @@
 import ROOT 
 import time
 import subprocess
+import os
 
 inputfile = 'ainput.txt'
 f = open(inputfile)
 lines = f.read().split('\n') #list containing each line
 lines = lines[:-1] #to exclude last slot in lines which is white space
 print len(lines)
+cwd = os.getcwd()
 
 # Timer
 sw = ROOT.TStopwatch()
 sw.Start()
+
+
+#------------------------------------------
+
+#chain.Print()
+study = "GGJets"
+classname = "Class%s" %(study)
+
+#------------------------------------------
+
+#create empty rootfile for plots
+#rootfile = "%s.root" %(study)
+#outFile = ROOT.TFile(rootfile, "RECREATE")
+#outDir = outFile.mkdir("%sStudy" %(study))
+#outDir.cd()
+
+newfolder = '%sStudy' %(study)
+os.mkdir(newfolder)
+os.chdir(newfolder)
+
+print "Moving to %sStudy/" %(study)
 
 #-----------------------------------------
 
@@ -26,18 +49,11 @@ for e in lines:
 	print e
 	chain.Add(e) 
 print " >> Input evts:",chain.GetEntries()
-
-#------------------------------------------
-
-#chain.Print()
-classname = "ClassBKG"
 chain.MakeClass(classname)
 f.close()
 
 #------------------------------------------
-
-
-AN_template = "aAN_template.C"
+AN_template = "%s/aAN_template.C" %(cwd)
 AN_file = "analyze%s.C" %(classname)
 AN = open(AN_file, "w+")
 AN.write('#include "%s.C" \n' %(classname))
@@ -50,6 +66,7 @@ with open(AN_template, 'r') as f2:
 print "Created %s to run over files" %(AN_file)
 print code
 AN.close()
+
 #------------------------------------------
 
 sw.Stop()
