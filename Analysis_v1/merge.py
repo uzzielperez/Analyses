@@ -49,8 +49,10 @@ sw.Start()
 
 ################ MERGING
 #create bash script that stitches the names together
-fh = open("arootmerger.sh", "w+") #w+ to create and write file
-f2chain = open("afiles2chain.txt", "w+")
+mergerfile = 'arootmerger.sh'
+chainerfile = 'ainput.txt'
+fh = open(mergerfile, "w+") #w+ to create and write file
+f2chain = open(chainerfile, "w+")
 fh.write("#!/bin/bash")
 fh.write('\n')
 
@@ -87,10 +89,11 @@ for i in range(len(massbin)):
 	 merge(inf_, outf_)
 
 fh.close()
-print "Created rootmerger.sh for %s" %outputdir
+print "Created %s to merge files to %s" %(mergerfile, outputdir)
+print "Created %s to chain files with common tree" %(chainerfile)
 print ">> Merging the files...." 
 
-bashcom = "chmod u+rx rootmerger.sh"
+bashcom = "chmod u+rx %s" %(mergerfile)
 process = subprocess.Popen(bashcom.split(), stdout=subprocess.PIPE)
 output, error = process.communicate()
 
