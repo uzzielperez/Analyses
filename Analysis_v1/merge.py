@@ -13,7 +13,7 @@ rootxrd = 'xrdfs root://cmseos.fnal.gov ls -u '
 greproot = ' | grep \.root'
 crab = '/crab_'
 rootext = '.root'
-
+cmsxrootd = 'root://cmsxrootd.fnal.gov/'
 ################### Input Directory
 # Main
 INPUTDIR = '/store/user/cuperez/DiPhotonAnalysis/Summer16GGJets/'
@@ -49,9 +49,13 @@ sw.Start()
 
 ################ MERGING
 #create bash script that stitches the names together
-fh = open("rootmerger.sh", "w+")
+fh = open("arootmerger.sh", "w+") #w+ to create and write file
+f2chain = open("afiles2chain.txt", "w+")
 fh.write("#!/bin/bash")
 fh.write('\n')
+
+def substr(a, b):                              
+    return "".join(a.rsplit(b))
 def merge(inf, outf):
 	#subprocess.call(["hadd", "-f", outf, `inf`])
 	bashcmd = "hadd -f %s `%s`" %(outf, inf) 
@@ -65,6 +69,9 @@ def merge(inf, outf):
         #print " "
         fh.write(bashcmd) 	
 	fh.write('\n')
+        outfile = substr(outf_, rootpreeos)
+	f2chain.write("root://cmsxrootd.fnal.gov/%s" %(outfile))
+	f2chain.write('\n')
         return;
 
 
@@ -93,9 +100,9 @@ cwd = os.getcwd()
 #print "%s/rootmerger.sh" %(cwd)
 #######################MERGING##########################
 #bottleneck
-subprocess.call("%s/rootmerger.sh" %(cwd), shell = True)
+###subprocess.call("%s/rootmerger.sh" %(cwd), shell = True)
 ########################################################
-print "Merging process finished. To check, type \n \n root -l root://cmsxrootd.fnal.gov/%s*.root " %(outputdir)
+###print "Merging process finished. To check, type \n \n root -l root://cmsxrootd.fnal.gov/%s*.root " %(outputdir)
 print " "
 sw.Stop()
 print "Processing Time:"
