@@ -11,6 +11,7 @@ __init__.py
 *.png
 *.pdf
 *.root
+*.swp
 
 # crab
 crab.history
