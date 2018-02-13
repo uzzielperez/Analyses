@@ -33,14 +33,14 @@ void DiPhoton16BKG::Loop()
 //by  b_branchname->GetEntry(ientry); //read only this branch
    
    //histograms
-	TH1D* diphotonMinv = new TH1D("diphotonMinv", "", 80, 0.,1600.);
+	TH1D* diphotonMinv = new TH1D("diphotonMinv", "", 50, 0.,1600.);
 	diphotonMinv->Sumw2();
-	TH1D* photon1Pt  = new TH1D("photon1Pt", "", 80, 0.,1600.);
-	TH1D* photon1Eta = new TH1D("photon1Eta", "", 80, -3.,3.);
-	TH1D* photon1Phi = new TH1D("photon1Phi", "", 80, -3.,3.);
+	TH1D* photon1Pt  = new TH1D("photon1Pt", "", 50, 0.,1600.);
+	TH1D* photon1Eta = new TH1D("photon1Eta", "", 80, -3,3);
+	TH1D* photon1Phi = new TH1D("photon1Phi", "", 80, -3,3);
 	TH1D* photon2Pt  = new TH1D("photon2Pt", "", 80, 0.,1600.);
-	TH1D* photon2Eta = new TH1D("photon2Eta", "", 80, 3.,3.);
-	TH1D* photon2Phi = new TH1D("photon2Phi", "", 80, 3.,3.);
+	TH1D* photon2Eta = new TH1D("photon2Eta", "", 80, -3,3);
+	TH1D* photon2Phi = new TH1D("photon2Phi", "", 80, -3,3);
 	photon1Pt->Sumw2();
 	photon1Eta->Sumw2();
 	photon1Phi->Sumw2();
@@ -49,14 +49,14 @@ void DiPhoton16BKG::Loop()
 	photon2Phi->Sumw2();
    
    //No cut hists
-	TH1D* diphotonMinvn = new TH1D("diphotonMinv", "", 80, 0.,1600.);
+	TH1D* diphotonMinvn = new TH1D("diphotonMinvn", "", 50, 0.,3500.);
 	diphotonMinvn->Sumw2();
-	TH1D* photon1Ptn  = new TH1D("photon1Pt", "", 80, 0.,1600.);
-	TH1D* photon1Etan = new TH1D("photon1Eta", "", 80, -3.,3.);
-	TH1D* photon1Phin = new TH1D("photon1Phi", "", 80, -3.,3.);
-	TH1D* photon2Ptn  = new TH1D("photon2Pt", "", 80, 0.,1600.);
-	TH1D* photon2Etan = new TH1D("photon2Eta", "", 80, 3.,3.);
-	TH1D* photon2Phin = new TH1D("photon2Phi", "", 80, 3.,3.);
+	TH1D* photon1Ptn  = new TH1D("photon1Ptn", "", 50, 0.,2500.);
+	TH1D* photon1Etan = new TH1D("photon1Etan", "", 70, -3.5,3.5);
+	TH1D* photon1Phin = new TH1D("photon1Phin", "", 70, -3.5,3.5);
+	TH1D* photon2Ptn  = new TH1D("photon2Ptn", "", 50, 0.,2500.);
+	TH1D* photon2Etan = new TH1D("photon2Etan", "", 70, -3.5,3.5);
+	TH1D* photon2Phin = new TH1D("photon2Phin", "", 70, -3.5,3.5);
 	photon1Ptn->Sumw2();
 	photon1Etan->Sumw2();
 	photon1Phin->Sumw2();
@@ -80,9 +80,9 @@ void DiPhoton16BKG::Loop()
       nb = fChain->GetEntry(jentry);   nbytes += nb;
       // if (Cut(ientry) < 0) continue;
       if (jentry%10000 == 0) cout << "Number of processed events: "<< jentry << endl;
+      //if (!isGood) continue;
       Ntotal ++;
       
-	
 	diphotonMinvn->Fill(Diphoton_Minv, Event_weightAll);
 	photon1Ptn->Fill(Photon1_pt, Event_weightAll);
 	photon1Etan->Fill(Photon1_eta, Event_weightAll);
@@ -92,8 +92,9 @@ void DiPhoton16BKG::Loop()
 	photon2Phin->Fill(Photon2_phi, Event_weightAll);
 
 
-      if (!isGood){
-	continue;
+
+      if (isGood){
+	//continue;
 	NPassisGood++; 
 	//cout << isGood << endl; Checking if it is 1. 
 	
