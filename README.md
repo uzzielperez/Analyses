@@ -15,7 +15,7 @@ cd Analysis_vx/
 
 ```
 
-0.) Configure and run eoshelper.sh to get full paths (quite LONG!) to the CRAB ntuples. <br />
+0.) Interacting with eos files can be quite daunting without tab completion and wildcards.  Configure and run eoshelper.sh to get full paths (quite LONG!) to the CRAB ntuples. <br />
 ```bash
 
 ./eoshelper.sh
@@ -27,8 +27,11 @@ cd Analysis_vx/
 python merge.py
 
 ```
+This will create two files: arootmerger.sh (will be executed with previous command) and a text (afiles2chain.txt) file containing fulls paths to files of the new merged products. 
  
-2.) In progress... <br />
+2.) Using afiles2chain.txt as input, chain trees and make class. In progress...<br />
+3.) Configure class for selection and execute analyze.C to loop over events. In progress...<br />
+4.) Make general purpose plotters
 
 ## Initial SM Diphoton 2016 Pipeline
 1.) Run ExoDiPhotonAnalyzer on GGJets Sherpa from summer using ./submit_crab_cfg.py <br />
