@@ -29,8 +29,17 @@ python merge.py
 ```
 This will create two files: arootmerger.sh (will be executed with previous command) and a text (afiles2chain.txt) file containing fulls paths to files of the new merged products. 
  
-2.) Using afiles2chain.txt as input, chain trees and make class. In progress...<br />
-3.) Configure class for selection and execute analyze.C to loop over events. In progress...<br />
+2.) Using ainput.txt as input, chain trees and make class. Run <br />
+```bash
+
+python RunChainClass.py
+
+```
+
+This will create a new Class<Classname>.C, Class<Classname>.h, analyze<Classname>.C. To start a new analysis with different cuts make new directory and do your analysis there. Otherwise
+you risk overwriting your main analysis codes. 
+
+3.) Configure class for selection and execute analyze<Classname>.C to loop over events. In progress...<br />
 4.) Make general purpose plotters
 
 ## Initial SM Diphoton 2016 Pipeline
