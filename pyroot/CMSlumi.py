@@ -37,7 +37,7 @@ lumi_7TeV  = "5.1 fb^{-1}"
 lumi_sqrtS = "" 
 drawLogo      = False
 
-def CMS_lumi(pad, iPeriod, iPosX):
+def CMS_lumi(pad, iPeriod, iPosX, MC):
         #pad = TPad('pad1','This is pad1',0.02,0.52,0.48,0.98,21)
         outOfFrame    = False
         if (iPosX/10==0):
@@ -66,7 +66,11 @@ def CMS_lumi(pad, iPeriod, iPosX):
         b = pad.GetBottomMargin()
         
         pad.cd()
-        
+       
+        if (MC == True):
+		lumi_7TeV = "1 fb^{-1}"
+		lumi_8TeV = "1 fb^{-1}"
+		lumi_13TeV = "1 fb^{-1}"  
         if (iPeriod==1):
             lumiText = lumi_7TeV
             lumiText += " (7TeV)"

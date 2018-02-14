@@ -41,7 +41,7 @@ legend1.SetTextSize(0.035)
 legend1.AddEntry(diphoton_Minvn,"SM Diphoton","l")
 legend1.Draw()
 
-CMS_lumi(c, 4, 11) 
+CMS_lumi(c, 4, 11, True) 
 
 c.SetLogy()
 c.Draw()
@@ -76,7 +76,7 @@ leg.AddEntry(hphoton1pTn,r"#gamma_{1} p_{T}")
 leg.AddEntry(hphoton2pTn,r"#gamma_{2} p_{T}")
 leg.Draw()
 
-CMS_lumi(canvas, 4, 11)
+CMS_lumi(canvas, 4, 11, True)
 
 canvas.SetLogy()
 canvas.Draw()
@@ -113,7 +113,7 @@ leg2.SetTextSize(0.035)
 leg2.AddEntry(hphoton1etan,r"#gamma_{1} p_{T}")
 leg2.AddEntry(hphoton2etan,r"#gamma_{2} p_{T}")
 leg2.Draw()
-CMS_lumi(mcanvas, 4, 11)
+CMS_lumi(mcanvas, 4, 11, True)
 mcanvas.cd(2)
 
 hphoton1phin.GetXaxis().SetTitleOffset(1)
@@ -135,7 +135,7 @@ leg3.AddEntry(hphoton1phin,r"#gamma_{1}")
 leg3.AddEntry(hphoton2phin,r"#gamma_{2}")
 leg3.Draw()
 
-CMS_lumi(mcanvas, 4, 11)
+CMS_lumi(mcanvas, 4, 11, True)
 mcanvas.Draw()
 mcanvas.Print("BKGPlots.pdf]", "angles")
 
