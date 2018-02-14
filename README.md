@@ -36,10 +36,17 @@ python RunChainClass.py
 
 ```
 
-This will create a new Class<Classname>.C, Class<Classname>.h, analyze<Classname>.C. To start a new analysis with different cuts make new directory and do your analysis there. Otherwise
-you risk overwriting your main analysis codes. 
+This will create a new <Classname>.C, <Classname>.h, analyze<Classname>.C. To start a new analysis with different cuts make new directory and do your analysis there. Otherwise
+you risk overwriting your main analysis codes. RunChainClass.py actually makes the directory for you and you can start working there. 
 
-3.) Configure class for selection and execute analyze<Classname>.C to loop over events. In progress...<br />
+3.) Configure class for selection and execute analyze<Classname>.C to loop over events. One can do, <br />
+```bash
+
+root -l analyze<Classname>.C
+
+```
+This will write a root file which you can make plots from. 
+
 4.) Make general purpose plotters
 
 ## Initial SM Diphoton 2016 Pipeline
