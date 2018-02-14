@@ -47,7 +47,13 @@ root -l analyze<Classname>.C
 ```
 This will write a root file which you can make plots from. 
 
-4.) Make general purpose plotters
+4.) Using root file created plot with
+```bash
+
+python quick_plotter.py
+
+```
+This will generate .png or .pdf files that you need for presentation or quick view. Program needs refinement. 
 
 ## Initial SM Diphoton 2016 Pipeline
 1.) Run ExoDiPhotonAnalyzer on GGJets Sherpa from summer using ./submit_crab_cfg.py <br />
