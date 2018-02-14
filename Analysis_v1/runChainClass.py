@@ -18,7 +18,8 @@ sw.Start()
 #------------------------------------------
 
 #chain.Print()
-study = "GGJets"
+#study = "GGJets"
+study = "DiPhoton"
 classname = "Class%s" %(study)
 
 #------------------------------------------
@@ -54,7 +55,7 @@ f.close()
 
 #------------------------------------------
 AN_template = "%s/aAN_template.C" %(cwd)
-AN_file = "analyze%s.C" %(classname)
+AN_file = "analyze.C"
 AN = open(AN_file, "w+")
 AN.write('#include "%s.C" \n' %(classname))
 
