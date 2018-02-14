@@ -66,14 +66,16 @@ i = 0
 while i<len(histos):
 	
         # Canvas
-	c[i] = ROOT.TCanvas("canvas%s"%(i),"canvas%s"%(i), 600, 600)
+	c[i] = ROOT.TCanvas("canvas%s"%(i),"canvas%s"%(i), 600, 600) # Modify size
 	#c[i].SetGrid()
 	
 	# Histogram Name and Draw
 	histos[i] = f.Get(obj[i])
 	histos[i].GetXaxis().SetTitleOffset(1.4)
 	histos[i].GetYaxis().SetTitleOffset(1.4)
-	histos[i].GetYaxis().SetTitle("weighted events/ 80 GeV")
+	
+	ytitle = "weighted events/ 80 GeV"
+	histos[i].GetYaxis().SetTitle(ytitle)
 	
 	# ------for Minv
 	#histos[i].GetXaxis().SetTitle(r"m_{#gamma#gamma} #scale[0.8]{(GeV)}") #problem here
@@ -81,7 +83,7 @@ while i<len(histos):
 	histos[i].Draw("hist")
 	
 	#Legend
-	leg = TLegend(.60, 0.75, .97, .85)
+	leg = TLegend(.60, 0.75, .97, .85) ###### NEEDS TO BE MODIFIED
 	leg.SetBorderSize(0)
 	leg.SetFillColor(0)
 	leg.SetFillStyle(0)
@@ -90,7 +92,7 @@ while i<len(histos):
 	leg.AddEntry(histos[i], obj[i] ,"l")
 	leg.Draw()
 
-	CMS_lumi(c[i], 4, 11) 
+	CMS_lumi(c[i], 4, 11, True) 
 
 	c[i].SetLogy()
 	c[i].Draw()
