@@ -5,6 +5,8 @@ from ROOT import TClass,TKey, TIter,TCanvas, TPad, TFile, TPaveText, TColor, TGa
 from ROOT import kBlack, kBlue, kRed
 from ROOT import gBenchmark, gStyle, gROOT, gDirectory
 
+from legend import *
+
 import sys  
 CMSlumiPath = '/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/pyroot'
 sys.path.append(CMSlumiPath)  
@@ -64,41 +66,93 @@ print obj
 #leg = []
 i = 0
 while i<len(histos):
-	
-        # Canvas
+
+       
+	 # Canvas
 	c[i] = ROOT.TCanvas("canvas%s"%(i),"canvas%s"%(i), 600, 600) # Modify size
 	#c[i].SetGrid()
 	
+	#--------------- String Finder	
+	if obj[i].find("Minv") != -1:
+		xtitle = r"m_{#gamma#gamma} #scale[0.8]{(GeV)}"
+		xmin = 200
+		xmax = 1600 
+	        c[i].SetLogy()
+	elif obj[i].find("Pt") != -1:
+		xtitle = "p_{T} (GeV)"
+		xmin = 200
+		xmax = 1600
+		c[i].SetLogy()
+	elif obj[i].find("Eta") != -1:
+		xtitle = r"#eta" 
+		xmin = -3.0
+		xmax = 3.0
+	elif obj[i].find("Phi") != -1:
+		xtitle = r"#phi"
+		xmin = -3.5
+		xmax = 3.5
+	else:
+		continue
+	
+	if obj[i].find("diphoton") != -1:
+		legentry = r"#gamma#gamma"
+	elif (obj[i].find("photon1")) != -1: 
+		legentry = r"#gamma_{1}"
+	elif (obj[i].find("photon2")) != -1:
+		legentry = r"#gamma_{2}"
+	else:
+		legentry = obj[i]
+
+	#------------------	
+
 	# Histogram Name and Draw
 	histos[i] = f.Get(obj[i])
-	histos[i].GetXaxis().SetTitleOffset(1.4)
-	histos[i].GetYaxis().SetTitleOffset(1.4)
-	
+	histos[i].GetXaxis().SetTitleOffset(1.2)
+	histos[i].GetYaxis().SetTitleOffset(1.2)
+
 	ytitle = "weighted events/ 80 GeV"
 	histos[i].GetYaxis().SetTitle(ytitle)
 	
-	# ------for Minv
-	#histos[i].GetXaxis().SetTitle(r"m_{#gamma#gamma} #scale[0.8]{(GeV)}") #problem here
-	#histos[i].SetAxisRange(200, 1600)
-	histos[i].Draw("hist")
+	histos[i].GetXaxis().SetTitle(xtitle) 
+	histos[i].SetAxisRange(xmin, xmax)
 	
+	# --Draw option
+	
+	h = True
+	
+	if h:
+		histos[i].Draw("hist")
+	else:
+		histos[i].Draw()
+	
+#	overlay = False
+	
+#	if overlay
+#	if obj[i].find
+	# ----
+
 	#Legend
-	leg = TLegend(.60, 0.75, .97, .85) ###### NEEDS TO BE MODIFIED
+	#leg = TLegend(xlegpos1, ylegpos1, xlegpos1, ylegpos1) ###### NEEDS TO BE MODIFIED
+	leg = TLegend(.60, 0.75, .97, .85)
 	leg.SetBorderSize(0)
 	leg.SetFillColor(0)
 	leg.SetFillStyle(0)
 	leg.SetTextFont(42)
 	leg.SetTextSize(0.035)
-	leg.AddEntry(histos[i], obj[i] ,"l")
+	leg.AddEntry(histos[i], legentry ,"l")
 	leg.Draw()
 
+       #c[i].PlaceLegend()
 	CMS_lumi(c[i], 4, 11, True) 
 
-	c[i].SetLogy()
 	c[i].Draw()
 	#c[i].Print("BKGPlots.pdf[", "minv")
 	#c[i].Print("BKGPlotsminv.pdf")
-	c[i].Print("%s.png" %(obj[i]))
+	
+	if h:
+		c[i].Print("h%s.png" %(obj[i]))
+	else:
+		c[i].Print("%s.png" %(obj[i]))
 
 	i = i+1
 
