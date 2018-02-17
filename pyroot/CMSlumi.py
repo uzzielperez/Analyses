@@ -24,10 +24,10 @@ cmsTextSize     = 0.75;
 cmsTextSize = 0.45; 
 cmsTextOffset = 0.1;  # only used in outOfFrame version 
  
-relPosX = 0.045 
+relPosX = 0.04 #0.045 default 
 relPosY = 0.035 
 relExtraDY = 1 
-relExtraDX = 2.2 
+relExtraDX = 1.5 #2.2 default
  
 extraOverCmsTextSize  = 0.76 
  
