@@ -104,11 +104,12 @@ def place_legend(canvas, x1=None, y1=None, x2=None, y2=None, header="", option="
         place_user = canvas.PadtoU(*place)
         # Make sure there are no overlaps
         if any(obj.Overlap(*place_user) for obj in objects):
-            continue
-        return canvas.BuildLegend(place[0], place[1], place[2], place[3], header, option)
+            continue 
+       #return canvas.BuildLegend(place[0], place[1], place[2], place[3], header, option)
+        return canvas.BuildLegend(place[0], place[1], place[2], place[3], header)
     # As a fallback, use the default values, taken from TCanvas::BuildLegend
-    return canvas.BuildLegend(0.5, 0.67, 0.88, 0.88, header, option)
-
+    return canvas.BuildLegend(0.5, 0.67, 0.88, 0.88, header)
+    #return canvas.BuildLegend(0.5, 0.67, 0.88, 0.88, header, option)
 # Monkey patch ROOT objects to make it all work
 ROOT.THStack.__iter__ = lambda self: iter(self.GetHists())
 ROOT.TMultiGraph.__iter__ = lambda self: iter(self.GetListOfGraphs())

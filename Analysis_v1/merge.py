@@ -6,6 +6,11 @@ import re
 import time
 import subprocess
 
+########################################
+# Merge Settings 
+
+mergeloop = False      #Set to false if there is only one INPUTDIR
+
 ############### Commands and Extensions
 rootpreeos = 'root://cmseos.fnal.gov/'
 rootxrd = 'xrdfs root://cmseos.fnal.gov ls -u '
@@ -19,10 +24,12 @@ cmsxrootd = 'root://cmsxrootd.fnal.gov/'
 INPUTDIR = '/store/user/cuperez/DiPhotonAnalysis/Summer16GGJets/'
 #INPUTDIR = '/store/user/cuperez/DiPhotonAnalysis/....'
 
+# For Resubmissions
+INPATH = '/store/user/cuperez/DiPhotonAnalysis/Summer16GGJetsResubmit/GGJets_M-500To1000_Pt-50_13TeV-sherpa/crab_GGJets_M-500To1000_Pt-50_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/180216_200831/0000/'
+
 # FinalState and Mass bin
 fstate = 'GGJets_M-'
-massbin = ["1000To2000", "2000To4000","200To500","4000To6000","500To1000",
-	  "6000To8000","60To200","8000To13000"]  
+massbin = ["1000To2000", "2000To4000","200To500","4000To6000","500To1000","6000To8000","60To200","8000To13000"]  
 ptcut = '_Pt-50'
 energy ='_13TeV'
 gen = '-sherpa'
@@ -38,8 +45,8 @@ INPUTSUB = ["/180202_203147/0000","/180202_203156/0000","/180202_203125/0000",
 
 ################# OUTPUT 
 # Main Output Dir
-#outputdir = '/store/user/cuperez/DiPhotonAnalysis/Summer16_GGJets_Merged/'
-outputdir = '/store/user/cuperez/DiPhotonAnalysis/Summer16-GGJets-Merge/'
+outputdir = '/store/user/cuperez/DiPhotonAnalysis/Summer16_GGJets_Merged/'
+#outputdir = '/store/user/cuperez/DiPhotonAnalysis/Summer16-GGJets-Merge/'
 
 #outputfilename = FSTATEBIN + rootext
 
@@ -48,65 +55,97 @@ sw = ROOT.TStopwatch()
 sw.Start()
 
 ################ MERGING
+
+#--------------------------------------------------------
+# Merge Loop
 #create bash script that stitches the names together
 mergerfile = 'arootmerger.sh'
-chainerfile = 'ainput.txt'
-fh = open(mergerfile, "w+") #w+ to create and write file
+amergerfile = 'arootmerger_single.sh'
+chainerfile = 'aInputMerged.txt' # input to runChainClass.py
+floop = open(mergerfile, "w+") #w+ to create and write file
+fsingle= open(amergerfile, "w+")
 f2chain = open(chainerfile, "w+")
-fh.write("#!/bin/bash")
-fh.write('\n')
+
+floop.write("#!/bin/bash")
+floop.write('\n')
+fsingle.write("#!/bin/bash")
+fsingle.write('\n')
 
 def substr(a, b):                              
-    return "".join(a.rsplit(b))
-def merge(inf, outf):
-	#subprocess.call(["hadd", "-f", outf, `inf`])
-	bashcmd = "hadd -f %s `%s`" %(outf, inf) 
-	#process = subprocess.Popen(bashcmd.split(), stdout=subprocess.PIPE)
-	#output, error = process.communicate()
-        
-	#subprocess.Popen(bashcmd)	
-	
-	#output = subprocess.checkoutput(['bash', '-c', bashcmd])
+	return "".join(a.rsplit(b))
+def merge(inf, outf, mergeFile, chainFile):
+	bashcmd = "hadd -f %s `%s`" %(outf, inf)  
 	#print bashcmd
-        #print " "
-        fh.write(bashcmd) 	
-	fh.write('\n')
-        outfile = substr(outf_, rootpreeos)
-	f2chain.write("root://cmsxrootd.fnal.gov/%s" %(outfile))
-	f2chain.write('\n')
-        return;
+       	#print " "
+       	mergeFile.write(bashcmd) 	
+	mergeFile.write('\n')
+	outfile = substr(outf, rootpreeos)
+	chainFile.write("root://cmsxrootd.fnal.gov/%s" %(outfile))
+	chainFile.write('\n')
+       	return;
 
+
+#if mergeloop: 	
 
 for i in range(len(massbin)):
-	 FSTATEBIN = fstate + massbin[i] + ptcut + energy + gen
-	 inputf = INPUTDIR + FSTATEBIN + crab + FSTATEBIN + INPUTV + INPUTSUB[i]
-	 inf_ = rootxrd + inputf + greproot
-	 outf_ = rootpreeos + outputdir + FSTATEBIN + rootext  
-	 #print "Merging files: %s" %(inf_)
-	 #print " "
-	 #print "Output at %s" %(outf_)
-	 #print " "
-	 merge(inf_, outf_)
+	FSTATEBIN = fstate + massbin[i] + ptcut + energy + gen
+	inputf = INPUTDIR + FSTATEBIN + crab + FSTATEBIN + INPUTV + INPUTSUB[i]
+	inf_ = rootxrd + inputf + greproot
+ 	outf_ = rootpreeos + outputdir + FSTATEBIN + rootext  
+	#print "Merging files: %s" %(inf_)
+ 	#print " "
+ 	#print "Output at %s" %(outf_)
+ 	#print " "
+ 	merge(inf_, outf_,floop, f2chain)
 
-fh.close()
-print "Created %s to merge files to %s" %(mergerfile, outputdir)
+	
+#else:
+inputf2 = INPATH
+inf_2 = rootxrd + inputf2 + greproot
+outf_2 = rootpreeos + outputdir + fstate + massbin[4]+ ptcut + energy + gen + rootext
+print "outf_2", outf_2
+merge(inf_2,outf_2, fsingle, f2chain)
+
+floop.close()
+fsingle.close()
+
+if mergeloop:
+	print "Created %s to merge files to %s" %(mergerfile, outputdir)
+else:
+	print "Created %s to merge files to %s" %(amergerfile, outputdir)
+
 print "Created %s to chain files with common tree" %(chainerfile)
 print ">> Merging the files...." 
 
-bashcom = "chmod u+rx %s" %(mergerfile)
-process = subprocess.Popen(bashcom.split(), stdout=subprocess.PIPE)
-output, error = process.communicate()
+if mergeloop:
+	bashcom = "chmod u+rx %s" %(mergerfile)
+	process = subprocess.Popen(bashcom.split(), stdout=subprocess.PIPE)
+	output, error = process.communicate()
 
-#runmerger = "bash rootmerger.sh"
-#current working directory
-cwd = os.getcwd()
-#print "%s/rootmerger.sh" %(cwd)
-#######################MERGING##########################
-#bottleneck
-subprocess.call("%s/rootmerger.sh" %(cwd), shell = True)
-########################################################
+	# runmerger = "bash rootmerger.sh"
+	# get current working directory
+	cwd = os.getcwd()
+
+######################MERGING##########################
+#bottleneck--> bash <mergerfile>.sh
+	subprocess.call("%s/%s" %(cwd, mergerfile), shell = True)
+#######################################################
+else:
+	bashcom = "chmod u+rx %s" %(amergerfile)
+	process = subprocess.Popen(bashcom.split(), stdout=subprocess.PIPE)
+	output, error = process.communicate()
+
+	# runmerger = "bash rootmerger.sh"
+	# get current working directory
+	cwd = os.getcwd()
+	
+######################MERGING##########################
+	subprocess.call("%s/%s" %(cwd, amergerfile), shell = True)
+#######################################################
+
 print "Merging process finished. To check, type \n \n root -l root://cmsxrootd.fnal.gov/%s*.root " %(outputdir)
 print " "
+
 sw.Stop()
 print "Processing Time:"
 print "Real time: " + str(sw.RealTime() / 60.0) + " minutes"

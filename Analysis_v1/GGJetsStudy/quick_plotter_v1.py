@@ -18,7 +18,7 @@ filename = 'GGJets_histograms.root'
 #--------------------------------------------------------------------------------
 
 # Draw Options 
-h = True        # Draw histograms as "hist"
+h = False        # Draw histograms as "hist"
 overlay = False # Overlay some histograms. See second loop below   
 
 #--------------------------------------------------------------------------------

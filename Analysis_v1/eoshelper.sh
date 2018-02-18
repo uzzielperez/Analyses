@@ -10,20 +10,19 @@ project='/DiPhotonAnalysis'
 ######################################
 #------ECHO SETTINGS
 #-- Quickcheck
-quickcheck=false
+quickcheck=true
 
 #-- CRAB NTUPLES 
-crabntuples=false    # true to get full path, uncomment appropriate sub
-
-#sub='/Summer16GGJets'
-
+crabntuples=true    # true to get full path, uncomment appropriate sub
+#sub2='/Summer16GGJets'
+sub2='/Summer16GGJetsResubmit'
 #-- MERGED FILES 
 merged=true           # true to get full path, uncomment appropriate sub
 sub='/Summer16_GGJets_Merged'
-
+#sub='/
 #######
 DIR=$eosdir$project$sub
-
+DIR2=$eosdir$project$sub2
 ####### eos aliases 
 eosls='eos root://cmseos.fnal.gov ls'
 eosmkdir='eos root://cmseos.fnal.gov mkdir'
@@ -68,21 +67,24 @@ done
 #------DiPhotonAnalysis Full
 while $crabntuples; do
  echo 'CRAB staged out files in these directories:' 
- for i in `$eosls $DIR`
+ for i in `$eosls $DIR2`
  do 
    #echo $i
-   newdir=$DIR/$i
+   newdir2=$DIR2/$i
    #echo $eosls $newdir
-   for j in `$eosls $newdir`
+   for j in `$eosls $newdir2`
    do
     #echo $j
-    new=$newdir/$j
+    new2=$newdir2/$j
     #echo $eosls $new
    done
-    for k in `$eosls $new`
+   for k in `$eosls $new2`
     do
-     echo $new/$k
-    done
+     echo $new2/$k
+   done
  done
 break
 done
+
+echo 'To check root files'
+echo 'root -l root://cmsxrootd.fnal.gov//store/user/jjesus/rootFile.root'

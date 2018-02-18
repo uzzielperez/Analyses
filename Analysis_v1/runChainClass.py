@@ -3,7 +3,7 @@ import time
 import subprocess
 import os
 
-inputfile = 'ainput.txt'
+inputfile = 'aInputMerged.txt'
 f = open(inputfile)
 lines = f.read().split('\n') #list containing each line
 lines = lines[:-1] #to exclude last slot in lines which is white space
@@ -19,16 +19,12 @@ sw.Start()
 
 #chain.Print()
 #study = "GGJets"
-study = "DiPhoton"
+#study = "DiPhoton"
+study = "GGJetsAdj1"
+
 classname = "Class%s" %(study)
 
 #------------------------------------------
-
-#create empty rootfile for plots
-#rootfile = "%s.root" %(study)
-#outFile = ROOT.TFile(rootfile, "RECREATE")
-#outDir = outFile.mkdir("%sStudy" %(study))
-#outDir.cd()
 
 newfolder = '%sStudy' %(study)
 os.mkdir(newfolder)
@@ -48,7 +44,7 @@ chain = ROOT.TChain(tree)
 print "Adding files to %s" %(tree)
 for e in lines:
 	print e
-	chain.Add(e) 
+	chain.Add(e,0) #second argument to add num_entries 
 print " >> Input evts:",chain.GetEntries()
 chain.MakeClass(classname)
 f.close()
