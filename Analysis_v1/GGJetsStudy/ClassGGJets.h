@@ -1653,7 +1653,7 @@ ClassGGJets::ClassGGJets(TTree *tree) : fChain(0)
       // of trees.
       TChain * chain = new TChain("diphoton/fTree","");
       chain->Add("root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16-GGJets-Merge/GGJets_M-1000To2000_Pt-50_13TeV-sherpa.root/diphoton/fTree");
-      chain->Add("root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16-GGJets-Merge/GGJets_M-2000To4000_Pt-50_13TeV-sherpa.root/diphoton/fTree");
+      chain->Add("root://cmsxrootd.fnal.go//store/user/cuperez/DiPhotonAnalysis/Summer16-GGJets-Merge/GGJets_M-2000To4000_Pt-50_13TeV-sherpa.root/diphoton/fTree");
       chain->Add("root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16-GGJets-Merge/GGJets_M-200To500_Pt-50_13TeV-sherpa.root/diphoton/fTree");
       chain->Add("root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16-GGJets-Merge/GGJets_M-4000To6000_Pt-50_13TeV-sherpa.root/diphoton/fTree");
       chain->Add("root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16-GGJets-Merge/GGJets_M-500To1000_Pt-50_13TeV-sherpa.root/diphoton/fTree");

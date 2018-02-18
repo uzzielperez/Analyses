@@ -3,6 +3,8 @@ import ROOT
 # Reading input
 
 inputfile = 'aInputMerged.txt'
+#inputfile = 'ainput.txt'
+
 f = open(inputfile)
 lines = f.read().split('\n') #list containing each line
 lines = lines[:-1] #to exclude last slot in lines which is white space
@@ -110,10 +112,6 @@ Nt = fullchain.GetEntries()
 print "Weight: ", fullchain.GetWeight()
 print "Entries: ", Nt
 
-#for b in lines:
-#	print b 
-#	LW2 = weightLumiCalc(b, normL, Nt)
-#	print "LumiWeight: ", LW, "\n"
 
 f.close()
 

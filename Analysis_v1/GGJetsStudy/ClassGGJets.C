@@ -42,8 +42,6 @@ void ClassGGJets::Loop()
   	int nPassisGood = 0;
         int Ntotal = 0;
 	
-	int N500to1000 =0;
-
 	//histograms
         Long64_t nentries = fChain->GetEntriesFast();
 	TH1D* diphotonMinv = new TH1D("diphotonMinv", "", 50, 0.,2000.);
@@ -93,47 +91,20 @@ void ClassGGJets::Loop()
       Ntotal++; 
 	//float weight = 0;
 	float weight = Event_weightAll;
-	float newLumi = 0;
-//         if (jentry < 571197){
-//		  if (jentry == 0) weightinfo << " LumiWeight: " << Event_weightLumi <<  endl;
-//		//weight = Event_weight*Event_weightLumi;
-//		  newLumi = 9.62043852292e-05;
-//		  weight = Event_weight*newLumi;
-//	}
-//         if (jentry > 571196 && jentry < 571197+299999){
-//		 if (jentry == 571197) weightinfo << " LumiWeight: " << Event_weightLumi <<  endl;
-//		 newLumi = 6.23531019051e-06; 
-//		 weight = Event_weight*newLumi;		
-//	} 
-//	 if (jentry > 571197+299998  && jentry < 571197+299999+2449553){
-//		 if (jentry == 571197+299999) weightinfo << " LumiWeight: " << Event_weightLumi <<  endl; 
-//                 newLumi = 0.00464394979838;	
-//		 weight = Event_weight*newLumi;
-//	}
-//	 if (jentry > 571197+299999+2449552 && jentry < 5711977+299999+2449553+691454){
-//	       	 if (jentry == 571197+299999+2449553) weightinfo << " LumiWeight: " << Event_weightLumi <<  endl;
-//	 	 newLumi = 4.34847977414e-08; 
-//		 weight = Event_weight*newLumi;
+//	float newLumi = 0;
+//
+//        vector<float> wts;
+//        vector<float> lumiWts;
+//
+//        wts.push_back(Event_weightAll);
+//        lumiWts.push_back(Event_weightLumi);
+//     if (lumiWts[jentry-1] != lumiWts[jentry]){
+//         weightinfo << jentry <<" LumiWeight: " << Event_weightLumi << "; WeightALL: "<< Event_weightAll <<  endl;
+//        // cout << "Change LumiWeight from " << lumiWts[jentry-1] << " to " << lumiWts[jentry] << "." << endl;
 //        }
-//	 if (jentry > 5711977+299999+2449553+691453 && jentry < 571197+299999+2449553+691454+249872){
-//		 if (jentry == 5711977+299999+2449553+691454) weightinfo << " LumiWeight: " << Event_weightLumi <<  endl;
-//	  	 newLumi = 0.001107044703;
-//		 weight = Event_weight*newLumi;
-//	}
-//         if (jentry > 571197+299999+2449553+691454+249871 && jentry < 571197+299999+2449553+691454+249872+99991){
-//		 if (jentry == 571197+299999+2449553+691454+249872) weightinfo << " LumiWeight: " << Event_weightLumi <<  endl;
-//		 newLumi = 3.55644279431e-10;
-//		 weight = Event_weight*newLumi;
-//	}
-//	 if (jentry > 571197+299999+2449553+691454+249872+99991){
-//	         if (jentry == 571197+299999+2449553+691454+249872+99991) weightinfo << " LumiWeight: " << Event_weightLumi << endl;
-//		 newLumi = 0.0293264015104;
-//		 weight = Event_weight*newLumi;
-//	}
-	      
-//  if (jentry%10000 == 0) cout << "Number of processed events: "<< jentry << "; LumiWeight: " << Event_weightLumi << "; Weight:" << Event_weightAll <<  "; NewLumiW: " << newLumi << "; NewWeight: " << weight << endl;
-    
-      if (jentry%10000 == 0) cout << "Number of processed events: " << jentry << endl;
+//
+//      if (jentry%10000 == 0) cout << "Number of processed events: " << jentry << "; LumiWts " << lumiWts[jentry]<< " " << Event_weightAll <<  endl;  
+      if(jentry%10000 == 0) cout << "Number of processed events: " << jentry << endl;
 	     
       if (isGood){ 
         nPassisGood++;

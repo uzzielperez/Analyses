@@ -9,7 +9,7 @@ import subprocess
 ########################################
 # Merge Settings 
 
-mergeloop = False      #Set to false if there is only one INPUTDIR
+mergeloop = True     #Set to false if there is only one INPUTDIR
 
 ############### Commands and Extensions
 rootpreeos = 'root://cmseos.fnal.gov/'
@@ -84,6 +84,16 @@ def merge(inf, outf, mergeFile, chainFile):
 	chainFile.write('\n')
        	return;
 
+def mergeone(inf,outf, mergeFile, chainFile):
+	bashcmd = "hadd -f %s `%s`" %(outf, inf)  
+	#print bashcmd
+       	#print " "
+       	mergeFile.write(bashcmd) 	
+	mergeFile.write('\n')
+	outfile = substr(outf, rootpreeos)
+	print "root://cmsxrootd.fnal.gov/%s" %(outfile)
+       	return;
+
 
 #if mergeloop: 	
 
@@ -104,7 +114,7 @@ inputf2 = INPATH
 inf_2 = rootxrd + inputf2 + greproot
 outf_2 = rootpreeos + outputdir + fstate + massbin[4]+ ptcut + energy + gen + rootext
 print "outf_2", outf_2
-merge(inf_2,outf_2, fsingle, f2chain)
+mergeone(inf_2,outf_2, fsingle, f2chain)
 
 floop.close()
 fsingle.close()
