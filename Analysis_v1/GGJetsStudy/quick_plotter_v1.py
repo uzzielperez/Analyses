@@ -18,9 +18,9 @@ filename = 'GGJets_histograms.root'
 #--------------------------------------------------------------------------------
 
 # Draw Options 
-h = False        # Draw histograms as "hist"
+h = False       # Draw histograms as "hist"
 overlay = False # Overlay some histograms. See second loop below   
-
+fit = True
 #--------------------------------------------------------------------------------
 # Timer 
 sw = ROOT.TStopwatch()
@@ -28,7 +28,7 @@ sw.Start()
 
 ##########################################
 # Extra Cosmetics
-#gStyle.SetOptStat(0)
+gStyle.SetOptStat(0)
 
 #CMS_lumi( TPad* pad, int iPeriod=3, int iPosX=10 )
 ##########################################
@@ -127,7 +127,13 @@ while i<len(histos):
 	
 	histos[i].GetXaxis().SetTitle(xtitle) 
 	histos[i].SetAxisRange(xmin, xmax)
+	#-----------------------
+
+	if fit:
+		if obj[i].find("Phi") != -1:
+			histos[i].Fit("gaus")
 	
+	#-----------------------
 	# --Draw option
 	
 #	h = False
@@ -140,9 +146,7 @@ while i<len(histos):
 #	overlay = False
 	# run loop below		
 	# ----
-
 	#Legend
-	#leg = TLegend(xlegpos1, ylegpos1, xlegpos1, ylegpos1) ###### NEEDS TO BE MODIFIED
 	leg = TLegend(xpos1, ypos1, xpos2, ypos2)
 	leg.SetBorderSize(0)
 	leg.SetFillColor(0)
