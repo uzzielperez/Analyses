@@ -18,9 +18,10 @@ filename = 'GGJets_histograms.root'
 #--------------------------------------------------------------------------------
 
 # Draw Options 
-h = False       # Draw histograms as "hist"
+h = True       # Draw histograms as "hist"
 overlay = False # Overlay some histograms. See second loop below   
 fit = True
+
 #--------------------------------------------------------------------------------
 # Timer 
 sw = ROOT.TStopwatch()
@@ -68,9 +69,23 @@ for k, o in getall(f):
 print obj
 
 #-----------------------------------------
+
+#Overlay canvases
+samePt = ROOT.TCanvas()
+sameFullDetPt = ROOT.TCanvas()
+samepTEBEE = ROOT.TCanvas()
+samepTEBEB = ROOT.TCanvas()
+
+sameEtaAll = ROOT.TCanvas()
+sameDetEta = ROOT.TCanvas()
+sameEta = ROOT.TCanvas()
+
+samePhiAll = ROOT.TCanvas()
+samePhi = ROOT.TCanvas()
+sameDetEta = ROOT.TCanvas()
+
+
 # Basic Plotting Template
-#
-#leg = []
 i = 0
 while i<len(histos):
 
@@ -115,8 +130,33 @@ while i<len(histos):
 	else:
 		legentry = obj[i]
 
-	#------------------	
+	#i = i + 1
 
+	# Overlay Legend Settings
+	legpT = TLegend(xpos1, ypos1, xpos2, ypos2)
+	legpT.SetBorderSize(0)
+	legpT.SetFillColor(0)
+	legpT.SetFillStyle(0)
+	legpT.SetTextFont(42)
+	legpT.SetTextSize(0.035)
+
+	legEtaAll = TLegend(xpos1, ypos1, xpos2, ypos2)
+	legEtaAll.SetBorderSize(0)
+	legEtaAll.SetFillColor(0)
+	legEtaAll.SetFillStyle(0)
+	legEtaAll.SetTextFont(42)
+	legEtaAll.SetTextSize(0.035)
+
+	legPhiAll = TLegend(xpos1, ypos1, xpos2, ypos2)
+	legPhiAll.SetBorderSize(0)
+	legPhiAll.SetFillColor(0)
+	legPhiAll.SetFillStyle(0)
+	legPhiAll.SetTextFont(42)
+	legPhiAll.SetTextSize(0.035)
+
+#i=0
+#while i<len(histos):
+		 
 	# Histogram Name and Draw
 	histos[i] = f.Get(obj[i])
 	histos[i].GetXaxis().SetTitleOffset(1.2)
@@ -128,54 +168,105 @@ while i<len(histos):
 	histos[i].GetXaxis().SetTitle(xtitle) 
 	histos[i].SetAxisRange(xmin, xmax)
 	#-----------------------
-
+	
 	if fit:
 		if obj[i].find("Phi") != -1:
-			histos[i].Fit("gaus")
-	
-	#-----------------------
-	# --Draw option
-	
-#	h = False
-	
-	if h:
-		histos[i].Draw("hist")
-	else:
-		histos[i].Draw()
-	
-#	overlay = False
-	# run loop below		
-	# ----
-	#Legend
-	leg = TLegend(xpos1, ypos1, xpos2, ypos2)
-	leg.SetBorderSize(0)
-	leg.SetFillColor(0)
-	leg.SetFillStyle(0)
-	leg.SetTextFont(42)
-	leg.SetTextSize(0.035)
-	leg.AddEntry(histos[i], legentry ,"l")
-	leg.Draw()
+			histos[i].Fit("pol0")
+			histos[i].GetFunction("pol0").SetLineColor(kRed)
 
-      
-        #place_legend(c[i], None, None, None, None, header="", option="LP")
-	CMS_lumi(c, 4, 11, True) 
-        
-	c.Update()
-	c.Draw()
-	#c.Print("BKGPlots.pdf[", "minv")
-	#c.Print("BKGPlotsminv.pdf")
-	
-	if h:
-		c.Print("v2h%s.png" %(obj[i]))
-	else:
-		c.Print("v2%s.png" %(obj[i]))
+	#------------------------------
+	# Overlay (Set to True to run this)
+	# refer to lines 74-85 for list of canvases
+
+	if overlay:
+		if obj[i].find("photon1") or obj[i].find("photon2") !=1:
+			histos[i].SetLineColor(i)
+			if obj[i].find("Pt") != -1:
+				samePt.cd()
+				samePt.SetLogy()
+				if h:
+					histos[i].Draw("hist same")
+				else:
+					histos[i].Draw("same")
+		
+				legpT.AddEntry(histos[i], obj[i] ,"l")
+				legpT.Draw()
+				samePt.Update()
+			
+			if obj[i].find("Eta") != -1:
+				sameEtaAll.cd()
+				if h:
+					histos[i].Draw("hist same")
+				else:
+					histos[i].Draw("same")			
+				legEtaAll.AddEntry(histos[i], obj[i] ,"l")
+				legEtaAll.Draw()
+				sameEtaAll.Update()
+			if obj[i].find("Phi") != -1:
+				samePhiAll.cd()
+				if h:
+					histos[i].Draw("hist same")
+				else:
+					histos[i].Draw("same")
+		
+				legPhiAll.AddEntry(histos[i], obj[i] ,"l")
+				legPhiAll.Draw()				
+				samePhiAll.Update()
+	else:	
+		#------------------	
+		# Going to default canvas (no overlay)
+		#------------------
+		c.cd()
+		#-----------------------
+		# --Draw option
+			
+		if h:
+			histos[i].Draw("hist")
+		else:
+			histos[i].Draw()
+		
+		#Legend
+		leg = TLegend(xpos1, ypos1, xpos2, ypos2)
+		leg.SetBorderSize(0)
+		leg.SetFillColor(0)
+		leg.SetFillStyle(0)
+		leg.SetTextFont(42)
+		leg.SetTextSize(0.035)
+		leg.AddEntry(histos[i], legentry ,"l")
+		leg.Draw()
+
+	      
+		#place_legend(c[i], None, None, None, None, header="", option="LP")
+		CMS_lumi(c, 4, 11, True) 
+		
+		c.Update()
+		c.Draw()
+		#c.Print("BKGPlots.pdf[", "minv")
+		#c.Print("BKGPlotsminv.pdf")
+		
+		if h:
+			c.Print("%s/v1h%s.png" %(path,obj[i]))
+		else:
+			c.Print("%s/v1%s.png" %(path,obj[i]))
 
 	i = i+1
 
 #-------------------------------------------
 
 #-------------------------------------------
-# Overlay loop (UNDER CONSTRUCTION)  
+# Overlay Draw
+if overlay:
+	samePt.Draw()
+	sameEtaAll.Draw()
+	samePhiAll.Draw()
+	if h:		
+		samePt.Print("%s/hsamePt.png" %(path))
+		sameEtaAll.Print("%s/hsameEtaAll.png" %(path))
+		samePhiAll.Print("%s/hsamePhiAll.png" %(path))
+	else:
+		samePt.Print("%s/samePt.png" %(path))
+		sameEtaAll.Print("%s/sameEtaAll.png" %(path))
+		samePhiAll.Print("%s/samePhiAll.png" %(path))
 
 sw.Stop()
 print "Processing Time:"
