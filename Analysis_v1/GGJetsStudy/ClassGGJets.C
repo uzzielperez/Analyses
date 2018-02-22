@@ -90,21 +90,18 @@ void ClassGGJets::Loop()
       // if (Cut(ientry) < 0) continue;
       Ntotal++; 
 	//float weight = 0;
-	float weight = Event_weightAll;
-//	float newLumi = 0;
-//
-//        vector<float> wts;
-//        vector<float> lumiWts;
-//
-//        wts.push_back(Event_weightAll);
-//        lumiWts.push_back(Event_weightLumi);
-//     if (lumiWts[jentry-1] != lumiWts[jentry]){
-//         weightinfo << jentry <<" LumiWeight: " << Event_weightLumi << "; WeightALL: "<< Event_weightAll <<  endl;
-//        // cout << "Change LumiWeight from " << lumiWts[jentry-1] << " to " << lumiWts[jentry] << "." << endl;
-//        }
-//
-//      if (jentry%10000 == 0) cout << "Number of processed events: " << jentry << "; LumiWts " << lumiWts[jentry]<< " " << Event_weightAll <<  endl;  
-      if(jentry%10000 == 0) cout << "Number of processed events: " << jentry << endl;
+	//Weight Correction
+	weight = Event_weightAll;
+	if (jentry > 3606476 && jentry < 4606396){
+		 cout << "Changing mass bin Event_weight" << endl; 
+		 weight = Event_weightAll * 1.446113552;
+	}
+
+//    if (jentry%10000 == 0){
+//	 cout << "Number of processed events: " << jentry << "; LumiWts: " << Event_weightLumi << "; Weight_All: " << Event_weightAll << "; Weight: " << Event_weight <<  endl;  
+//  	 weightinfo << jentry <<" LumiWeight: " << Event_weightLumi << "; WeightALL: "<< Event_weightAll << "; Weight: " << Event_weight <<  endl; 
+//      }
+     if(jentry%10000 == 0) cout << "Number of processed events: " << jentry << endl;
 	     
       if (isGood){ 
         nPassisGood++;
@@ -148,7 +145,7 @@ void ClassGGJets::Loop()
   cout << "  and in EBEE or EEEB     : " << nEBEEorEEEB << endl;
   cout << endl;
 
-  TFile file_out("GGJets_histograms.root","RECREATE");
+  TFile file_out("WREGGJets_histograms.root","RECREATE");
 
 	diphotonMinv->Write();
 	photon1Pt->Write();
