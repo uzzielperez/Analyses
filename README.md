@@ -29,7 +29,7 @@ python merge.py
 ```
 This will create two files: arootmerger.sh (will be executed with previous command) and a text (afiles2chain.txt) file containing fulls paths to files of the new merged products. 
  
-2.) Using ainput.txt as input, chain trees and make class. Run <br />
+2.) Using aInputMerged.txt as input, chain trees and make class. Run <br />
 ```bash
 
 python RunChainClass.py
@@ -50,7 +50,7 @@ This will write a root file which you can make plots from.
 4.) Using root file created plot with
 ```bash
 
-python quick_plotter.py
+python quick_plotter_v1.py
 
 ```
 This will generate .png or .pdf files that you need for presentation or quick view. Program needs refinement. 
