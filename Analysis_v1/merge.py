@@ -10,6 +10,7 @@ import subprocess
 # Merge Settings 
 
 mergeloop = True     #Set to false if there is only one INPUTDIR
+data = True          # Set to false if mc 
 
 ############### Commands and Extensions
 rootpreeos = 'root://cmseos.fnal.gov/'
@@ -21,34 +22,40 @@ rootext = '.root'
 cmsxrootd = 'root://cmsxrootd.fnal.gov/'
 ################### Input Directory
 # Main
-INPUTDIR = '/store/user/cuperez/DiPhotonAnalysis/Summer16GGJets/'
+#INPUTDIR = '/store/user/cuperez/DiPhotonAnalysis/Summer16GGJets/'
 #INPUTDIR = '/store/user/cuperez/DiPhotonAnalysis/....'
+INPUTDIR = '/store/user/cuperez/DiPhotonAnalysis/Run2016Data/DoubleEG/'
 
 # For Resubmissions
-INPATH = '/store/user/cuperez/DiPhotonAnalysis/Summer16GGJetsResubmit/GGJets_M-500To1000_Pt-50_13TeV-sherpa/crab_GGJets_M-500To1000_Pt-50_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/180216_200831/0000/'
+#INPATH = '/store/user/cuperez/DiPhotonAnalysis/Summer16GGJetsResubmit/GGJets_M-500To1000_Pt-50_13TeV-sherpa/crab_GGJets_M-500To1000_Pt-50_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/180216_200831/0000/'
 
 # FinalState and Mass bin
-fstate = 'GGJets_M-'
-massbin = ["1000To2000", "2000To4000","200To500","4000To6000","500To1000","6000To8000","60To200","8000To13000"]  
+fstate = 'DoubleEG__'
+#fstate = 'GGJets_M-'
+#runormassbin = ["1000To2000", "2000To4000","200To500","4000To6000","500To1000","6000To8000","60To200","8000To13000"]  
+runormassbin = ['Run2016B-03Feb2017_ver2-v2__MINIAOD/', 'Run2016C-03Feb2017-v1__MINIAOD/', 'Run2016D-03Feb2017-v1__MINIAOD/', 'Run2016E-03Feb2017-v1__MINIAOD/', 'Run2016F-03Feb2017-v1__MINIAOD/', 'Run2016G-03Feb2017-v1__MINIAOD/', 'Run2016H-03Feb2017_ver2-v1__MINIAOD/', 'Run2016H-03Feb2017_ver3-v1__MINIAOD/']
 ptcut = '_Pt-50'
 energy ='_13TeV'
 gen = '-sherpa'
 
+#/store/user/cuperez/DiPhotonAnalysis/Run2016Data/DoubleEG/crab_DoubleEG__Run2016B-03Feb2017_ver2-v2__MINIAOD/180307_213615/0000
+
 # Version
-INPUTV = '__80XMiniAODv2__MINIAODSIM'
+#INPUTV = '__80XMiniAODv2__MINIAODSIM'
+#INPUTV = 'ver2-v2__MINIAOD/'
 
 # Subdirectories
-INPUTSUB = ["/180202_203147/0000","/180202_203156/0000","/180202_203125/0000",
-"/180202_203212/0000","/180202_203137/0000","/180202_203224/0000",
-"/180202_203112/0000","/180202_203237/0000"]
-
+#INPUTSUB = ["/180202_203147/0000","/180202_203156/0000","/180202_203125/0000",
+#"/180202_203212/0000","/180202_203137/0000","/180202_203224/0000",
+#"/180202_203112/0000","/180202_203237/0000"]
+INPUTSUB = ['180307_213615/0000','180307_213641/0000', '180307_213658/0000', '180307_213717/0000','180307_213733/0000','180307_213750/0000','180307_213819/0000','180307_213845/0000']
 
 ################# OUTPUT 
 # Main Output Dir
-outputdir = '/store/user/cuperez/DiPhotonAnalysis/Summer16_GGJets_Merged/'
+#outputdir = '/store/user/cuperez/DiPhotonAnalysis/Summer16_GGJets_Merged/'
 #outputdir = '/store/user/cuperez/DiPhotonAnalysis/Summer16-GGJets-Merge/'
+outputdir = '/store/user/cuperez/DiPhotonAnalysis/Run2016Data-Merged/'
 
-#outputfilename = FSTATEBIN + rootext
 
 # Timer
 sw = ROOT.TStopwatch()
@@ -75,57 +82,59 @@ def substr(a, b):
 	return "".join(a.rsplit(b))
 def merge(inf, outf, mergeFile, chainFile):
 	bashcmd = "hadd -f %s `%s`" %(outf, inf)  
-	#print bashcmd
-       	#print " "
-       	mergeFile.write(bashcmd) 	
+	mergeFile.write(bashcmd)	
 	mergeFile.write('\n')
 	outfile = substr(outf, rootpreeos)
 	chainFile.write("root://cmsxrootd.fnal.gov/%s" %(outfile))
 	chainFile.write('\n')
-       	return;
+	return;
 
 def mergeone(inf,outf, mergeFile, chainFile):
 	bashcmd = "hadd -f %s `%s`" %(outf, inf)  
-	#print bashcmd
-       	#print " "
-       	mergeFile.write(bashcmd) 	
+	print (bashcmd)
+	print (" ")
+	mergeFile.write(bashcmd)	
 	mergeFile.write('\n')
 	outfile = substr(outf, rootpreeos)
-	print "root://cmsxrootd.fnal.gov/%s" %(outfile)
-       	return;
+	print ("root://cmsxrootd.fnal.gov/%s" %(outfile))
+	return;
 
 
-#if mergeloop: 	
-
-for i in range(len(massbin)):
-	FSTATEBIN = fstate + massbin[i] + ptcut + energy + gen
-	inputf = INPUTDIR + FSTATEBIN + crab + FSTATEBIN + INPUTV + INPUTSUB[i]
+#if mergeloop:	
+# Name stitching
+for i in range(len(runormassbin)):
+	if data:
+		FSTATEBIN = fstate + runormassbin[i]
+		inputf = INPUTDIR + crab + FSTATEBIN  + INPUTSUB[i]
+	else:
+		FSTATEBIN = fstate + runormassbin[i] + ptcut + energy + gen
+		inputf = INPUTDIR + FSTATEBIN + crab + FSTATEBIN + INPUTV + INPUTSUB[i]
 	inf_ = rootxrd + inputf + greproot
- 	outf_ = rootpreeos + outputdir + FSTATEBIN + rootext  
+	outf_ = rootpreeos + outputdir + FSTATEBIN + 'out' + rootext  
 	#print "Merging files: %s" %(inf_)
- 	#print " "
- 	#print "Output at %s" %(outf_)
- 	#print " "
- 	merge(inf_, outf_,floop, f2chain)
+	#print " "
+	print ("Output at %s" %(outf_))
+	#print " "
+	merge(inf_, outf_,floop, f2chain)
 
 	
 #else:
-inputf2 = INPATH
-inf_2 = rootxrd + inputf2 + greproot
-outf_2 = rootpreeos + outputdir + fstate + massbin[4]+ ptcut + energy + gen + rootext
-print "outf_2", outf_2
-mergeone(inf_2,outf_2, fsingle, f2chain)
+#inputf2 = INPATH
+#inf_2 = rootxrd + inputf2 + greproot
+#outf_2 = rootpreeos + outputdir + fstate + runormassbin[4]+ ptcut + energy + gen + rootext
+#print ("outf_2", outf_2)
+#mergeone(inf_2,outf_2, fsingle, f2chain)
 
 floop.close()
 fsingle.close()
 
 if mergeloop:
-	print "Created %s to merge files to %s" %(mergerfile, outputdir)
+	print ("Created %s to merge files to %s" %(mergerfile, outputdir))
 else:
-	print "Created %s to merge files to %s" %(amergerfile, outputdir)
+	print ("Created %s to merge files to %s" %(amergerfile, outputdir))
 
-print "Created %s to chain files with common tree" %(chainerfile)
-print ">> Merging the files...." 
+print ("Created %s to chain files with common tree" %(chainerfile))
+print (">> Merging the files....")
 
 if mergeloop:
 	bashcom = "chmod u+rx %s" %(mergerfile)
@@ -153,10 +162,10 @@ else:
 	subprocess.call("%s/%s" %(cwd, amergerfile), shell = True)
 #######################################################
 
-print "Merging process finished. To check, type \n \n root -l root://cmsxrootd.fnal.gov/%s*.root " %(outputdir)
-print " "
+print ("Merging process finished. To check, type \n \n root -l root://cmsxrootd.fnal.gov/%s*.root " %(outputdir))
+print (" ")
 
 sw.Stop()
-print "Processing Time:"
-print "Real time: " + str(sw.RealTime() / 60.0) + " minutes"
-print "CPU time: " + str(sw.CpuTime() /60.0) + " minutes"
+print ("Processing Time:")
+print ("Real time: " + str(sw.RealTime() / 60.0) + " minutes")
+print ("CPU time: " + str(sw.CpuTime() /60.0) + " minutes")
