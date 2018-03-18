@@ -39,10 +39,10 @@ python runChainClass.py
 This will create a new <Classname>.C, <Classname>.h, analyze<Classname>.C. To start a new analysis with different cuts make new directory and do your analysis there. Otherwise
 you risk overwriting your main analysis codes. RunChainClass.py actually makes the directory for you and you can start working there. 
 
-3.) Configure class for selection and execute analyze<Classname>.C to loop over events. One can do, <br />
+3.) Configure class for selection and execute analyze.C to loop over events. One can do, <br />
 ```bash
 
-root -l analyze<Classname>.C
+root -l analyze.C
 
 ```
 This will write a root file which you can make plots from. 
