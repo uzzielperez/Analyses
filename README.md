@@ -29,10 +29,10 @@ python merge.py
 ```
 This will create two files: arootmerger.sh (will be executed with previous command) and a text (afiles2chain.txt) file containing fulls paths to files of the new merged products. 
  
-2.) Using aInputMerged.txt as input, chain trees and make class. Run <br />
+2.) Using aInputMerged.txt as input, chain trees and make class. Change the work directory (study) in the runChainClass.py file and run <br />
 ```bash
 
-python RunChainClass.py
+python runChainClass.py
 
 ```
 
