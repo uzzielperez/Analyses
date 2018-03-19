@@ -86,34 +86,34 @@ void ClassDoubleEGData::Loop()
  if(jentry%10000 == 0) cout << "Number of processed events: " << jentry << endl;
     if (isGood){ 
         nPassisGood++;
-        diphotonMinv->Fill(Diphoton_Minv, Event_weightAll);
-	photon1Pt->Fill(Photon1_pt, Event_weightAll);
-	photon1Eta->Fill(Photon1_eta, Event_weightAll);
-	photon1Phi->Fill(Photon1_phi, Event_weightAll);
-	photon2Pt->Fill(Photon2_pt, Event_weightAll);
-	photon2Eta->Fill(Photon2_eta, Event_weightAll);
-	photon2Phi->Fill(Photon2_phi, Event_weightAll);
+        diphotonMinv->Fill(Diphoton_Minv);
+	photon1Pt->Fill(Photon1_pt);
+	photon1Eta->Fill(Photon1_eta);
+	photon1Phi->Fill(Photon1_phi);
+	photon2Pt->Fill(Photon2_pt);
+	photon2Eta->Fill(Photon2_eta);
+	photon2Phi->Fill(Photon2_phi);
 	
-	photon1detEta->Fill(Photon1_scEta, Event_weightAll);
-	photon1detPhi->Fill(Photon1_scPhi, Event_weightAll); 
-	photon2detEta->Fill(Photon2_scEta, Event_weightAll);
-	photon2detPhi->Fill(Photon2_scPhi, Event_weightAll); 
+	photon1detEta->Fill(Photon1_scEta);
+	photon1detPhi->Fill(Photon1_scPhi); 
+	photon2detEta->Fill(Photon2_scEta);
+	photon2detPhi->Fill(Photon2_scPhi); 
 
 	//EBEB
 	if (fabs(Photon1_scEta) < 1.4442 && fabs(Photon2_scEta) < 1.4442) {
                 nEBEB++;
-		diphotonMinvEBEB->Fill(Diphoton_Minv, Event_weightAll);
-		photon1PtEBEB->Fill(Photon1_pt, Event_weightAll);
-		photon2PtEBEB->Fill(Photon2_pt, Event_weightAll);
+		diphotonMinvEBEB->Fill(Diphoton_Minv);
+		photon1PtEBEB->Fill(Photon1_pt);
+		photon2PtEBEB->Fill(Photon2_pt);
 	}//end EBEB
 	
 	// EBEE or EEBE 
 	if ((fabs(Photon1_scEta) < 1.4442 && 1.566 < fabs(Photon2_scEta) && fabs(Photon2_scEta) < 2.5) ||
 	(fabs(Photon2_scEta) < 1.4442 && 1.566 < fabs(Photon1_scEta) && fabs(Photon1_scEta) < 2.5) ) {
      		nEBEEorEEEB++;
-		diphotonMinvEBEE->Fill(Diphoton_Minv, Event_weightAll);
-		photon1PtEBEE->Fill(Photon1_pt, Event_weightAll);
-		photon2PtEBEE->Fill(Photon2_pt, Event_weightAll);
+		diphotonMinvEBEE->Fill(Diphoton_Minv);
+		photon1PtEBEE->Fill(Photon1_pt);
+		photon2PtEBEE->Fill(Photon2_pt);
 	}//end EBEE or EEBE
 	}//end isGood
    }// end loop over events
