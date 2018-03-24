@@ -34,6 +34,8 @@ void ClassDoubleEGData::Loop()
 	int nEBEB = 0;
   	int nEBEEorEEEB = 0;
   	int nPassisGood = 0;
+        int nDiphMinv = 0;
+        int npT = 0;
         int Ntotal = 0;
 	
 	// histograms
@@ -65,6 +67,24 @@ void ClassDoubleEGData::Loop()
  	TH1D* photon2PtEBEE = new TH1D("photon2PtEBEE","",80,0.,2000.);
  	photon2PtEBEB->Sumw2();
  	photon2PtEBEE->Sumw2();
+	
+	TH1D* photon1EtaEBEB = new TH1D("photon1EtaEBEB", "", 80, -3,3);
+        TH1D* photon1PhiEBEB = new TH1D("photon1PhiEBEB", "", 80, -3.5,3.5);
+        TH1D* photon2EtaEBEB = new TH1D("photon2EtaEBEB", "", 80, -3,3);
+        TH1D* photon2PhiEBEB = new TH1D("photon2PhiEBEB", "", 80, -3.5,3.5);
+
+        TH1D* photon1EtaEBEE = new TH1D("photon1EtaEBEE", "", 80, -3,3);
+        TH1D* photon1PhiEBEE = new TH1D("photon1PhiEBEE", "", 80, -3.5,3.5);
+        TH1D* photon2EtaEBEE = new TH1D("photon2EtaEBEE", "", 80, -3,3);
+        TH1D* photon2PhiEBEE = new TH1D("photon2PhiEBEE", "", 80, -3.5,3.5);
+        photon1EtaEBEB->Sumw2();
+        photon1PhiEBEB->Sumw2();
+        photon2EtaEBEB->Sumw2();
+        photon2PhiEBEB->Sumw2();
+        photon1EtaEBEE->Sumw2();
+        photon1PhiEBEE->Sumw2();
+        photon2EtaEBEE->Sumw2();
+        photon2PhiEBEE->Sumw2();
 
 	// Detector Eta and Phi
 	TH1D* photon1detEta = new TH1D("photon1detEta", "", 80, -3,3);
@@ -86,6 +106,10 @@ void ClassDoubleEGData::Loop()
  if(jentry%10000 == 0) cout << "Number of processed events: " << jentry << endl;
     if (isGood){ 
         nPassisGood++;
+    if (Diphoton_Minv > 500){
+        nDiphMinv++;
+    if (Photon1_pt > 75 && Photon2_pt > 75){
+        npT++;
         diphotonMinv->Fill(Diphoton_Minv);
 	photon1Pt->Fill(Photon1_pt);
 	photon1Eta->Fill(Photon1_eta);
@@ -105,6 +129,11 @@ void ClassDoubleEGData::Loop()
 		diphotonMinvEBEB->Fill(Diphoton_Minv);
 		photon1PtEBEB->Fill(Photon1_pt);
 		photon2PtEBEB->Fill(Photon2_pt);
+
+		photon1EtaEBEB->Fill(Photon1_eta);
+                photon2EtaEBEB->Fill(Photon2_eta);
+                photon1PhiEBEB->Fill(Photon1_phi);
+                photon2PhiEBEB->Fill(Photon2_phi);
 	}//end EBEB
 	
 	// EBEE or EEBE 
@@ -114,17 +143,26 @@ void ClassDoubleEGData::Loop()
 		diphotonMinvEBEE->Fill(Diphoton_Minv);
 		photon1PtEBEE->Fill(Photon1_pt);
 		photon2PtEBEE->Fill(Photon2_pt);
+
+		photon1EtaEBEE->Fill(Photon1_eta);
+                photon2EtaEBEE->Fill(Photon2_eta);
+                photon1PhiEBEE->Fill(Photon1_phi);
+                photon2PhiEBEE->Fill(Photon2_phi);
 	}//end EBEE or EEBE
+	}//end pT cut
+	}//end DiphMinv cut
 	}//end isGood
    }// end loop over events
   cout << endl;
   cout << "Total entries             : " << nentries << endl;
   cout << " Passed isGood cut        : " << nPassisGood << endl;
+  cout << " Passed DiphMinv cut      : " << nDiphMinv << endl;
+  cout << " Passed pT cut            : " << npT << endl;
   cout << "  and in EBEB             : " << nEBEB << endl;
   cout << "  and in EBEE or EEEB     : " << nEBEEorEEEB << endl;
   cout << endl;
 
-  TFile file_out("DoubleEG_histograms.root","RECREATE");
+  TFile file_out("DoubleEG_histogramsFULLcuts.root","RECREATE");
 
 	diphotonMinv->Write();
 	photon1Pt->Write();
@@ -146,6 +184,15 @@ void ClassDoubleEGData::Loop()
 	photon1detPhi->Write();
 	photon2detEta->Write();
 	photon2detPhi->Write();
+
+        photon1EtaEBEB->Write();
+        photon1PhiEBEB->Write();
+        photon2EtaEBEB->Write();
+        photon2PhiEBEB->Write();
+        photon1EtaEBEE->Write();
+        photon1PhiEBEE->Write();
+        photon2EtaEBEE->Write();
+        photon2PhiEBEE->Write();
 
 
 } // end Class 
