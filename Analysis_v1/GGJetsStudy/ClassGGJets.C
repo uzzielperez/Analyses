@@ -40,6 +40,8 @@ void ClassGGJets::Loop()
   	int nEBEB = 0;
   	int nEBEEorEEEB = 0;
   	int nPassisGood = 0;
+  	int nDiphMinv = 0; 
+	int npT = 0; 
         int Ntotal = 0;
 	
 	//histograms
@@ -71,6 +73,16 @@ void ClassGGJets::Loop()
  	TH1D* photon2PtEBEE = new TH1D("photon2PtEBEE","",80,0.,2000.);
  	photon2PtEBEB->Sumw2();
  	photon2PtEBEE->Sumw2();
+
+	TH1D* photon1EtaEBEB = new TH1D("photon1EtaEBEB", "", 80, -3,3); 
+	TH1D* photon1PhiEBEB = new TH1D("photon1PhiEBEB", "", 80, -3.5,3.5); 
+	TH1D* photon2EtaEBEB = new TH1D("photon2EtaEBEB", "", 80, -3,3); 
+	TH1D* photon2PhiEBEB = new TH1D("photon2PhiEBEB", "", 80, -3.5,3.5); 
+
+	TH1D* photon1EtaEBEE = new TH1D("photon1EtaEBEE", "", 80, -3,3); 
+	TH1D* photon1PhiEBEE = new TH1D("photon1PhiEBEE", "", 80, -3.5,3.5); 
+	TH1D* photon2EtaEBEE = new TH1D("photon2EtaEBEE", "", 80, -3,3); 
+	TH1D* photon2PhiEBEE = new TH1D("photon2PhiEBEE", "", 80, -3.5,3.5); 
 
 	// Detector Eta and Phi
 	TH1D* photon1detEta = new TH1D("photon1detEta", "", 80, -3,3);
@@ -106,7 +118,11 @@ void ClassGGJets::Loop()
 //      if (jentry%10000 == 0) cout << "Number of processed events: " << jentry << "; LumiWts " << lumiWts[jentry]<< " " << Event_weightAll <<  endl;  
       if(jentry%10000 == 0) cout << "Number of processed events: " << jentry << endl;
 	     
-      if (isGood){ 
+      if (isGood){
+      //apply Minv cut 
+      //apply pT cut 
+      if (Diphoton_Minv > 500){
+      if (Photon1_pt > 75 && Photon2_pt > 75){ 
         nPassisGood++;
         diphotonMinv->Fill(Diphoton_Minv, weight);
 	photon1Pt->Fill(Photon1_pt, weight);
@@ -127,6 +143,12 @@ void ClassGGJets::Loop()
 		diphotonMinvEBEB->Fill(Diphoton_Minv, weight);
 		photon1PtEBEB->Fill(Photon1_pt, weight);
 		photon2PtEBEB->Fill(Photon2_pt, weight);
+		
+		photon1EtaEBEB->Fill(Photon1_eta, weight); 
+		photon2EtaEBEB->Fill(Photon2_eta, weight); 
+		photon1PhiEBEB->Fill(Photon1_phi, weight); 
+		photon2PhiEBEB->Fill(Photon2_phi, weight); 
+
 	}//end EBEB
 	
 	// EBEE or EEBE 
@@ -136,7 +158,14 @@ void ClassGGJets::Loop()
 		diphotonMinvEBEE->Fill(Diphoton_Minv, weight);
 		photon1PtEBEE->Fill(Photon1_pt, weight);
 		photon2PtEBEE->Fill(Photon2_pt, weight);
+
+		photon1EtaEBEE->Fill(Photon1_eta, weight); 
+		photon2EtaEBEE->Fill(Photon2_eta, weight); 
+		photon1PhiEBEE->Fill(Photon1_phi, weight); 
+		photon2PhiEBEE->Fill(Photon2_phi, weight); 
 	}//end EBEE or EEBE
+	}//end DiphMinv cut
+	}//end pT cut
 	}//end isGood
 
    }//end loop over events
@@ -148,7 +177,7 @@ void ClassGGJets::Loop()
   cout << "  and in EBEE or EEEB     : " << nEBEEorEEEB << endl;
   cout << endl;
 
-  TFile file_out("GGJets_histograms.root","RECREATE");
+  TFile file_out("GGJets_histogramsFULLcuts.root","RECREATE");
 
 	diphotonMinv->Write();
 	photon1Pt->Write();
