@@ -15,8 +15,8 @@ from CMSlumi_ratio import CMS_lumi
 #--------------------------------------------------------------------------------
 MCpath = '/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/Analysis_v1/GGJetsStudy'
 DATApath = '/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/Analysis_v1/DoubleEGDataStudy'
-mcfile = 'GGJets_histograms300-2000.root' 
-datafile = 'DoubleEG_histograms300-2000.root'
+mcfile = 'GGJets_histograms2.root' 
+datafile = 'DoubleEG_histograms2.root'
 #--------------------------------------------------------------------------------
 # Timer 
 sw = ROOT.TStopwatch()
@@ -168,7 +168,11 @@ while i<len(objMC):
 		xpos1, ypos1, xpos2, ypos2 = .72, 0.75, 1.0, .85
 		#xpos1, ypos1, xpos2, ypos2 = .60, 0.65, 1.0, .85 
 	elif objMC[i].find("Eta") != -1:
-		xtitle = r"#eta" 
+		xtitle = r"#eta"
+		if objMC[i].find("sc") != -1:
+			xtitle = r"#scale[0.7]{sc} " + xtitle 
+		if objMC[i].find("det") != -1:
+			xtitle = r"#scale[0.7]{det} " + xtitle
 		xmin = -3.0
 		xmax = 3.0
 		scale = 35.9		
@@ -177,6 +181,10 @@ while i<len(objMC):
 		#xpos1, ypos1, xpos2, ypos2 = .45, 0.20, .85, .38
 	elif objMC[i].find("Phi") != -1:
 		xtitle = r"#phi"
+		if objMC[i].find("sc") != -1:
+			xtitle = r"#scale[0.7]{sc} " + xtitle
+		if objMC[i].find("det") != -1:
+			xtitle = r"#scale[0.7]{det} " + xtitle
 		xmin = -3.5
 		xmax = 3.5
 		scale = 35.9	
@@ -194,6 +202,17 @@ while i<len(objMC):
 		legentry = r"#gamma_{2}"
 	else:
 		legentry = objMC[i]
+
+	# EBEE or EBEB 
+	if objMC[i].find("EBEE") != -1:
+		xtitle = xtitle + r" #scale[0.45]{(EBEE)}"
+	if objMC[i].find("EBEB") != -1:
+		xtitle = xtitle + r" #scale[0.45]{(EBEB)}"
+	# Photon1 or Photon2
+	if objMC[i].find("photon1") != -1:	
+		xtitle = r"#scale[0.80]{#gamma_{1}: }" + xtitle 
+	if objMC[i].find("photon2") != -1:	
+		xtitle = r"#scale[0.80]{#gamma_{2}: }" + xtitle 
 
         # Draw histos & additional Settings
 	pad1.cd()
