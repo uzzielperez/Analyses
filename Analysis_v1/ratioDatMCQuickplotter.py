@@ -93,7 +93,8 @@ def createCanvasPads():
     pad2 = TPad("pad2", "pad2", 0, 0.05, 1, 0.3)
     pad2.SetTopMargin(0)  # joins upper and lower plot
     pad2.SetBottomMargin(0.2)
-    pad2.SetGridx()
+    pad2.SetGridy()
+    #pad2.SetGridx()
     pad2.Draw()
     
     return c, pad1, pad2
@@ -142,7 +143,7 @@ print "objMC", objMC
 # Looping over the root files 
 i = 0
 while i<len(objMC):
-	
+	ytitle = "Events"	
 	# Create Histograms
 	#hMC = createHist(f_mc, kBlue+1, objMC[i])
 	#hDATA = createHist(f_data, kBlack, objData[i])
@@ -152,16 +153,16 @@ while i<len(objMC):
 	#--------------- String Finder	
 	if objMC[i].find("Minv") != -1:
 		xtitle = r"m_{#gamma#gamma} #scale[0.8]{(GeV)}"
-		xmin = 200
-		xmax = 1600
+		xmin = 500
+		xmax = 1000
 		scale = 39.5 
 	        c.SetLogy()			
 		xpos1, ypos1, xpos2, ypos2 = .72, 0.75, 1.0, .85
 		#xpos1, ypos1, xpos2, ypos2 = .60, 0.65, 1.0, .85
 	elif objMC[i].find("Pt") != -1:
 		xtitle = "p_{T} (GeV)"
-		xmin = 200
-		xmax = 1600
+		xmin = 500
+		xmax = 1000
 		scale = 35.9
 		c.SetLogy()	
 		xpos1, ypos1, xpos2, ypos2 = .72, 0.75, 1.0, .85
@@ -199,10 +200,11 @@ while i<len(objMC):
 	hMC[i].Scale(scale) # rescale to 35.9 fb^-1
 	hMC[i].SetFillColor(kBlue -3)
 	hMC[i].SetTitle(objMC[i])
-	hMC[i].GetYaxis().SetTitle("weighted Events")
+	#hMC[i].GetYaxis().SetTitle("weighted Events")
 	hMC[i].GetYaxis().SetTitleOffset(1.4)
-	hDATA[i].GetXaxis().SetRangeUser(500, 1800)	
-
+	hMC[i].GetXaxis().SetRangeUser(xmin, xmax)
+	hDATA[i].GetXaxis().SetRangeUser(xmin, xmax)	
+	hDATA[i].GetYaxis().SetTitle("Events") 
 	hDATA[i].SetMarkerStyle(20)
 	hDATA[i].Draw("esamex0")
 	hMC[i].Draw("hist same")
@@ -227,7 +229,11 @@ while i<len(objMC):
         # RATIO  
 	pad2.cd()
 	hMC[i].GetYaxis().SetTitle("ratio %s/%s" %("MC", "DATA"))
-	hRatio.GetXaxis().SetRangeUser(500, 1800) 
+	#hRatio.GetXaxis().SetRangeUser(xmin, xmax)
+	x = hRatio.GetXaxis()
+	x.SetRangeUser(xmin, xmax)
+	x.SetTitleOffset(2.0)
+	x.SetTitle(xtitle) 
 	y = hRatio.GetYaxis()
 	y.SetTitle("Ratio")
 	y.SetTitleSize(20)
@@ -258,7 +264,7 @@ while i<len(objMC):
 	#from ROOT import gROOT 
 	#gROOT.GetListOfCanvases().Draw() 		 
 	#gROOT.GetListOfCanvases().Print("ratioplots/ratio%s/png" %(objMC[i]))		
-	c.Print("%s/Ratio_%s.png" %("ratioplots",objMC[i]))
+	c.Print("%s/REratio_%s.png" %("ratioplots",objMC[i]))
 
 	# move to next object in root file
 	i = i + 1
