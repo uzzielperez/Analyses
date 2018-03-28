@@ -152,15 +152,15 @@ while i<len(objMC):
 #	c = ROOT.TCanvas()
 	#--------------- String Finder	
 	if objMC[i].find("Minv") != -1:
-		xtitle = r"m_{#gamma#gamma} #scale[0.8]{(GeV)}"
+		xtitle =   r"m_{#gamma#gamma}#scale[0.8]{(GeV)}" # r"#scale[0.8]{m_{#gamma#gamma}(GeV)}"
 		xmin = 500
 		xmax = 1000
-		scale = 39.5 
+		scale = 35.9 
 	        c.SetLogy()			
 		xpos1, ypos1, xpos2, ypos2 = .72, 0.75, 1.0, .85
 		#xpos1, ypos1, xpos2, ypos2 = .60, 0.65, 1.0, .85
 	elif objMC[i].find("Pt") != -1:
-		xtitle = "p_{T} (GeV)"
+		xtitle = "#scale[0.8]{p_{T}(GeV)}"
 		xmin = 500
 		xmax = 1000
 		scale = 35.9
@@ -232,7 +232,8 @@ while i<len(objMC):
 	#hRatio.GetXaxis().SetRangeUser(xmin, xmax)
 	x = hRatio.GetXaxis()
 	x.SetRangeUser(xmin, xmax)
-	x.SetTitleOffset(2.0)
+	x.SetTitleOffset(2.5)
+	x.SetTitleSize(35)
 	x.SetTitle(xtitle) 
 	y = hRatio.GetYaxis()
 	y.SetTitle("Ratio")
