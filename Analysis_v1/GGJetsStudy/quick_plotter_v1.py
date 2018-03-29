@@ -14,7 +14,7 @@ from CMSlumi import CMS_lumi
 
 #--------------------------------------------------------------------------------
 path = '/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/Analysis_v1/GGJetsStudy'
-filename = 'GGJets_histograms.root' 
+filename = 'GGJets_histograms3.root' 
 #--------------------------------------------------------------------------------
 
 # Draw Options 
@@ -83,14 +83,14 @@ while i<len(histos):
 	#--------------- String Finder	
 	if obj[i].find("Minv") != -1:
 		xtitle = r"m_{#gamma#gamma} #scale[0.8]{(GeV)}"
-		xmin = 200
-		xmax = 1600 
+		xmin = 0
+		xmax = 3000 
 	        c.SetLogy()	
 		xpos1, ypos1, xpos2, ypos2 = .60, 0.75, 1.0, .85
 	elif obj[i].find("Pt") != -1:
 		xtitle = "p_{T} (GeV)"
-		xmin = 200
-		xmax = 1600
+		xmin = 0
+		xmax = 3000
 		c.SetLogy()	
 		xpos1, ypos1, xpos2, ypos2 = .60, 0.75, 1.0, .85 
 	elif obj[i].find("Eta") != -1:
@@ -114,7 +114,12 @@ while i<len(histos):
 		legentry = r"#gamma_{2}"
 	else:
 		legentry = obj[i]
-
+	
+	# EBEE or EBEB 
+	if obj[i].find("EBEE") != -1:
+		xtitle = xtitle + r" #scale[0.45]{(EBEE)}"
+	if obj[i].find("EBEB") != -1:
+		xtitle = xtitle + r" #scale[0.45]{(EBEB)}"
 	#------------------	
 
 	# Histogram Name and Draw
@@ -162,9 +167,9 @@ while i<len(histos):
 	#c.Print("BKGPlotsminv.pdf")
 	
 	if h:
-		c.Print("v2h%s.png" %(obj[i]))
+		c.Print("MCh%s.png" %(obj[i]))
 	else:
-		c.Print("v2%s.png" %(obj[i]))
+		c.Print("MC%s.png" %(obj[i]))
 
 	i = i+1
 
