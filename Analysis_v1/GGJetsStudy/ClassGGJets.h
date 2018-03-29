@@ -1652,14 +1652,23 @@ ClassGGJets::ClassGGJets(TTree *tree) : fChain(0)
       // The following code should be used if you want this class to access a chain
       // of trees.
       TChain * chain = new TChain("diphoton/fTree","");
-      chain->Add("root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16-GGJets-Merge/GGJets_M-1000To2000_Pt-50_13TeV-sherpa.root/diphoton/fTree");
-      chain->Add("root://cmsxrootd.fnal.go//store/user/cuperez/DiPhotonAnalysis/Summer16-GGJets-Merge/GGJets_M-2000To4000_Pt-50_13TeV-sherpa.root/diphoton/fTree");
-      chain->Add("root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16-GGJets-Merge/GGJets_M-200To500_Pt-50_13TeV-sherpa.root/diphoton/fTree");
-      chain->Add("root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16-GGJets-Merge/GGJets_M-4000To6000_Pt-50_13TeV-sherpa.root/diphoton/fTree");
-      chain->Add("root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16-GGJets-Merge/GGJets_M-500To1000_Pt-50_13TeV-sherpa.root/diphoton/fTree");
-      chain->Add("root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16-GGJets-Merge/GGJets_M-6000To8000_Pt-50_13TeV-sherpa.root/diphoton/fTree");
-      chain->Add("root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16-GGJets-Merge/GGJets_M-60To200_Pt-50_13TeV-sherpa.root/diphoton/fTree");
-      chain->Add("root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16-GGJets-Merge/GGJets_M-8000To13000_Pt-50_13TeV-sherpa.root/diphoton/fTree");
+      chain->Add("root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16_GGJets_Merged/GGJets_M-1000To2000_Pt-50_13TeV-sherpa.root");
+      chain->Add("root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16_GGJets_Merged/GGJets_M-2000To4000_Pt-50_13TeV-sherpa.root");
+      chain->Add("root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16_GGJets_Merged/GGJets_M-200To500_Pt-50_13TeV-sherpa.root");
+      chain->Add("root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16_GGJets_Merged/GGJets_M-4000To6000_Pt-50_13TeV-sherpa.root");
+      chain->Add("root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16_GGJets_Merged/GGJets_M-500To1000_Pt-50_13TeV-sherpa.root");
+      chain->Add("root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16_GGJets_Merged/GGJets_M-6000To8000_Pt-50_13TeV-sherpa.root");
+      chain->Add("root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16_GGJets_Merged/GGJets_M-60To200_Pt-50_13TeV-sherpa.root");
+      chain->Add("root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16_GGJets_Merged/GGJets_M-8000To13000_Pt-50_13TeV-sherpa.root");
+    
+//      chain->Add("root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16-GGJets-Merge/GGJets_M-1000To2000_Pt-50_13TeV-sherpa.root/diphoton/fTree");
+//      chain->Add("root://cmsxrootd.fnal.go//store/user/cuperez/DiPhotonAnalysis/Summer16-GGJets-Merge/GGJets_M-2000To4000_Pt-50_13TeV-sherpa.root/diphoton/fTree");
+//      chain->Add("root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16-GGJets-Merge/GGJets_M-200To500_Pt-50_13TeV-sherpa.root/diphoton/fTree");
+//      chain->Add("root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16-GGJets-Merge/GGJets_M-4000To6000_Pt-50_13TeV-sherpa.root/diphoton/fTree");
+//      chain->Add("root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16-GGJets-Merge/GGJets_M-500To1000_Pt-50_13TeV-sherpa.root/diphoton/fTree");
+//      chain->Add("root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16-GGJets-Merge/GGJets_M-6000To8000_Pt-50_13TeV-sherpa.root/diphoton/fTree");
+//      chain->Add("root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16-GGJets-Merge/GGJets_M-60To200_Pt-50_13TeV-sherpa.root/diphoton/fTree");
+//      chain->Add("root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16-GGJets-Merge/GGJets_M-8000To13000_Pt-50_13TeV-sherpa.root/diphoton/fTree");
       tree = chain;
 #endif // SINGLE_TREE
 

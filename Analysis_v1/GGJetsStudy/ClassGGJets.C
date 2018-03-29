@@ -33,8 +33,8 @@ void ClassGGJets::Loop()
 //by  b_branchname->GetEntry(ientry); //read only this branch
    if (fChain == 0) return;
 	// fileout
-	ofstream weightinfo;
-	weightinfo.open("weightinfo.txt",ios::app);
+	//ofstream weightinfo;
+	//weightinfo.open("weightinfo.txt",ios::app);
 
 	// counters
   	int nEBEB = 0;
@@ -46,14 +46,14 @@ void ClassGGJets::Loop()
 	
 	//histograms
         Long64_t nentries = fChain->GetEntriesFast();
-	TH1D* diphotonMinv = new TH1D("diphotonMinv", "", 50, 0.,2000.);
+	TH1D* diphotonMinv = new TH1D("diphotonMinv", "", 50,  0.,3000.);
 	diphotonMinv->Sumw2();
-	TH1D* photon1Pt  = new TH1D("photon1Pt", "", 50, 0.,2000.);
-	TH1D* photon1Eta = new TH1D("photon1Eta", "", 80, -3,3);
-	TH1D* photon1Phi = new TH1D("photon1Phi", "", 80, -3.5,3.5);
-	TH1D* photon2Pt  = new TH1D("photon2Pt", "", 80, 0.,2000.);
-	TH1D* photon2Eta = new TH1D("photon2Eta", "", 80, -3,3);
-	TH1D* photon2Phi = new TH1D("photon2Phi", "", 80, -3.5,3.5);
+	TH1D* photon1Pt  = new TH1D("photon1Pt", "", 50,  0.,3000.);
+	TH1D* photon1Eta = new TH1D("photon1Eta", "",80,  -3,3);
+	TH1D* photon1Phi = new TH1D("photon1Phi", "",80,  -3.5,3.5);
+	TH1D* photon2Pt  = new TH1D("photon2Pt", "", 50,  0.,3000.);
+	TH1D* photon2Eta = new TH1D("photon2Eta", "",80,  -3,3);
+	TH1D* photon2Phi = new TH1D("photon2Phi", "",80,  -3.5,3.5);
 	photon1Pt->Sumw2();
 	photon1Eta->Sumw2();
 	photon1Phi->Sumw2();
@@ -61,34 +61,42 @@ void ClassGGJets::Loop()
 	photon2Eta->Sumw2();
 	photon2Phi->Sumw2();
 	
-	TH1D* diphotonMinvEBEB = new TH1D("diphotonMinvEBEB","",80,0.,2000.);
-        TH1D* diphotonMinvEBEE = new TH1D("diphotonMinvEBEE","",80,0.,2000.);
+	TH1D* diphotonMinvEBEB = new TH1D("diphotonMinvEBEB","", 50, 0.,3000.);
+        TH1D* diphotonMinvEBEE = new TH1D("diphotonMinvEBEE","", 50, 0.,3000.);
         diphotonMinvEBEB->Sumw2();
         diphotonMinvEBEE->Sumw2();
-        TH1D* photon1PtEBEB = new TH1D("photon1PtEBEB","",80,0.,2000.);
-        TH1D* photon1PtEBEE = new TH1D("photon1PtEBEE","",80,0.,2000.);
+        TH1D* photon1PtEBEB = new TH1D("photon1PtEBEB","", 50, 0.,3000.);
+        TH1D* photon1PtEBEE = new TH1D("photon1PtEBEE","", 50, 0.,3000.);
         photon1PtEBEB->Sumw2();
         photon1PtEBEE->Sumw2();
-        TH1D* photon2PtEBEB = new TH1D("photon2PtEBEB","",80,0.,2000.);
- 	TH1D* photon2PtEBEE = new TH1D("photon2PtEBEE","",80,0.,2000.);
+        TH1D* photon2PtEBEB = new TH1D("photon2PtEBEB","", 50, 0.,3000.);
+ 	TH1D* photon2PtEBEE = new TH1D("photon2PtEBEE","", 50, 0.,3000.);
  	photon2PtEBEB->Sumw2();
  	photon2PtEBEE->Sumw2();
 
-	TH1D* photon1EtaEBEB = new TH1D("photon1EtaEBEB", "", 80, -3,3); 
-	TH1D* photon1PhiEBEB = new TH1D("photon1PhiEBEB", "", 80, -3.5,3.5); 
-	TH1D* photon2EtaEBEB = new TH1D("photon2EtaEBEB", "", 80, -3,3); 
-	TH1D* photon2PhiEBEB = new TH1D("photon2PhiEBEB", "", 80, -3.5,3.5); 
+	TH1D* photon1EtaEBEB = new TH1D("photon1EtaEBEB", "",80,  -3,3); 
+	TH1D* photon1PhiEBEB = new TH1D("photon1PhiEBEB", "",80,  -3.5,3.5); 
+	TH1D* photon2EtaEBEB = new TH1D("photon2EtaEBEB", "",80,  -3,3); 
+	TH1D* photon2PhiEBEB = new TH1D("photon2PhiEBEB", "",80,  -3.5,3.5); 
 
-	TH1D* photon1EtaEBEE = new TH1D("photon1EtaEBEE", "", 80, -3,3); 
-	TH1D* photon1PhiEBEE = new TH1D("photon1PhiEBEE", "", 80, -3.5,3.5); 
-	TH1D* photon2EtaEBEE = new TH1D("photon2EtaEBEE", "", 80, -3,3); 
-	TH1D* photon2PhiEBEE = new TH1D("photon2PhiEBEE", "", 80, -3.5,3.5); 
-
+	TH1D* photon1EtaEBEE = new TH1D("photon1EtaEBEE", "",80,  -3,3); 
+	TH1D* photon1PhiEBEE = new TH1D("photon1PhiEBEE", "",80,  -3.5,3.5); 
+	TH1D* photon2EtaEBEE = new TH1D("photon2EtaEBEE", "",80,  -3,3); 
+	TH1D* photon2PhiEBEE = new TH1D("photon2PhiEBEE", "",80,  -3.5,3.5); 
+	photon1EtaEBEB->Sumw2();
+	photon1PhiEBEB->Sumw2();
+	photon2EtaEBEB->Sumw2();
+	photon2PhiEBEB->Sumw2();
+	photon1EtaEBEE->Sumw2();
+	photon1PhiEBEE->Sumw2();
+	photon2EtaEBEE->Sumw2();
+	photon2PhiEBEE->Sumw2();
+	
 	// Detector Eta and Phi
-	TH1D* photon1detEta = new TH1D("photon1detEta", "", 80, -3,3);
-	TH1D* photon1detPhi = new TH1D("photon1detPhi", "", 80, -3.5,3.5);
-	TH1D* photon2detEta = new TH1D("photon2detEta", "", 80, -3,3);
-	TH1D* photon2detPhi = new TH1D("photon2detPhi", "", 80, -3.5,3.5);
+	TH1D* photon1detEta = new TH1D("photon1detEta", "",80,  -3,3);
+	TH1D* photon1detPhi = new TH1D("photon1detPhi", "",80,  -3.5,3.5);
+	TH1D* photon2detEta = new TH1D("photon2detEta", "",80,  -3,3);
+	TH1D* photon2detPhi = new TH1D("photon2detPhi", "",80,  -3.5,3.5);
 	photon1detEta->Sumw2();
 	photon1detPhi->Sumw2();
 	photon2detEta->Sumw2();
@@ -119,11 +127,11 @@ void ClassGGJets::Loop()
       if(jentry%10000 == 0) cout << "Number of processed events: " << jentry << endl;
 	     
       if (isGood){
-      //apply Minv cut 
-      //apply pT cut 
+    	  nPassisGood++;
       if (Diphoton_Minv > 500){
-      if (Photon1_pt > 75 && Photon2_pt > 75){ 
-        nPassisGood++;
+	nDiphMinv++; 
+      if (Photon1_pt > 75 && Photon2_pt > 75){
+	npT++;  
         diphotonMinv->Fill(Diphoton_Minv, weight);
 	photon1Pt->Fill(Photon1_pt, weight);
 	photon1Eta->Fill(Photon1_eta, weight);
@@ -171,13 +179,15 @@ void ClassGGJets::Loop()
    }//end loop over events
 
   cout << endl;
-  cout << "Total entries             : " << nentries << endl;
+  cout << "Total entries             : " << Ntotal << endl;
   cout << " Passed isGood cut        : " << nPassisGood << endl;
+  cout << " Passed DiphMinv cut      : " << nDiphMinv << endl;
+  cout << " Passed pT cut            : " << npT << endl;
   cout << "  and in EBEB             : " << nEBEB << endl;
   cout << "  and in EBEE or EEEB     : " << nEBEEorEEEB << endl;
   cout << endl;
 
-  TFile file_out("GGJets_histogramsFULLcuts.root","RECREATE");
+  TFile file_out("GGJets_histograms3.root","RECREATE");
 
 	diphotonMinv->Write();
 	photon1Pt->Write();
@@ -200,5 +210,14 @@ void ClassGGJets::Loop()
 	photon2detEta->Write();
 	photon2detPhi->Write();
 
-	weightinfo.close();		
+	photon1EtaEBEB->Write();
+	photon1PhiEBEB->Write();
+	photon2EtaEBEB->Write();
+	photon2PhiEBEB->Write();
+	photon1EtaEBEE->Write();
+	photon1PhiEBEE->Write();
+	photon2EtaEBEE->Write();
+	photon2PhiEBEE->Write();
+	
+//	weightinfo.close();		
 }//end Class
