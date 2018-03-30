@@ -12,13 +12,16 @@ project='/DiPhotonAnalysis'
 #-- Quickcheck
 quickcheck=true
 
-#-- CRAB NTUPLES 
+#-- CRAB NTUPLES
+crabntuplesDEEP=true #To search deep for ALL the unmerged CRAB ntuples 
 crabntuples=true    # true to get full path, uncomment appropriate sub
 #sub2='/Summer16GGJets'
-sub2='/Summer16GGJetsResubmit'
+#sub2='/Summer16GGJetsResubmit'
+sub2='/Run2016Data'
 #-- MERGED FILES 
 merged=true           # true to get full path, uncomment appropriate sub
-sub='/Summer16_GGJets_Merged'
+#sub='/Summer16_GGJets_Merged'
+sub='/Run2016Data-Merged'
 #sub='/
 #######
 DIR=$eosdir$project$sub
@@ -48,7 +51,7 @@ while $quickcheck; do
 break
 done
 
-#-------/store/user/cuperez/projectname/sub
+#-------/store/user/cuperez/projectname/sub ------>  MERGED
 while $merged; do
  echo 'Printing out Contents of Directories with Merged files':
  for i in `$eosls $DIR`
@@ -64,23 +67,47 @@ while $merged; do
 break
 done
 
-#------DiPhotonAnalysis Full
+#-------/store/user/cuperez/projectname/sub2 -----> CRABNTUPLES
 while $crabntuples; do
- echo 'CRAB staged out files in these directories:' 
+ echo 'CRAB Ntuples here:'
+ for i in `$eosls $DIR2`
+ do
+  newdir2=$DIR2/$i
+  for j in `$eosls $newdir2`
+  do
+   new2=$newdir2/$j
+   echo $new2 
+  done
+ done
+break
+done
+
+#------DiPhotonAnalysis Full
+while $crabntuplesDEEP; do
+ echo 'CRAB unmerged ntuples:' 
  for i in `$eosls $DIR2`
  do 
    #echo $i
-   newdir2=$DIR2/$i
+   newdir3=$DIR2/$i
    #echo $eosls $newdir
-   for j in `$eosls $newdir2`
+   for j in `$eosls $newdir3`
    do
-    #echo $j
-    new2=$newdir2/$j
-    #echo $eosls $new
-   done
-   for k in `$eosls $new2`
+    new3=$newdir3/$j
+    for k in `$eosls $new3`
     do
-     echo $new2/$k
+     new4=$new3/$k
+     #echo $new3/$k ---> just up to datesdir
+     for l in `$eosls $new4`
+     do 
+      new5=$new4/$l	
+      echo $new5 # -----> just up to 0000/
+      for m in `$eosls $new5`
+      do
+       new6=$new5/$m
+       echo $new6
+      done
+     done
+    done
    done
  done
 break
