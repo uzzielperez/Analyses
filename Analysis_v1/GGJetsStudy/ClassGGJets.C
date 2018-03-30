@@ -46,12 +46,12 @@ void ClassGGJets::Loop()
 	
 	//histograms
         Long64_t nentries = fChain->GetEntriesFast();
-	TH1D* diphotonMinv = new TH1D("diphotonMinv", "", 50,  0.,3000.);
+	TH1D* diphotonMinv = new TH1D("diphotonMinv", "", 30,  0.,3000.);
 	diphotonMinv->Sumw2();
-	TH1D* photon1Pt  = new TH1D("photon1Pt", "", 50,  0.,3000.);
+	TH1D* photon1Pt  = new TH1D("photon1Pt", "", 30,  0.,3000.);
 	TH1D* photon1Eta = new TH1D("photon1Eta", "",80,  -3,3);
 	TH1D* photon1Phi = new TH1D("photon1Phi", "",80,  -3.5,3.5);
-	TH1D* photon2Pt  = new TH1D("photon2Pt", "", 50,  0.,3000.);
+	TH1D* photon2Pt  = new TH1D("photon2Pt", "", 30,  0.,3000.);
 	TH1D* photon2Eta = new TH1D("photon2Eta", "",80,  -3,3);
 	TH1D* photon2Phi = new TH1D("photon2Phi", "",80,  -3.5,3.5);
 	photon1Pt->Sumw2();
@@ -61,16 +61,16 @@ void ClassGGJets::Loop()
 	photon2Eta->Sumw2();
 	photon2Phi->Sumw2();
 	
-	TH1D* diphotonMinvEBEB = new TH1D("diphotonMinvEBEB","", 50, 0.,3000.);
-        TH1D* diphotonMinvEBEE = new TH1D("diphotonMinvEBEE","", 50, 0.,3000.);
+	TH1D* diphotonMinvEBEB = new TH1D("diphotonMinvEBEB","", 30, 0.,3000.);
+        TH1D* diphotonMinvEBEE = new TH1D("diphotonMinvEBEE","", 30, 0.,3000.);
         diphotonMinvEBEB->Sumw2();
         diphotonMinvEBEE->Sumw2();
-        TH1D* photon1PtEBEB = new TH1D("photon1PtEBEB","", 50, 0.,3000.);
-        TH1D* photon1PtEBEE = new TH1D("photon1PtEBEE","", 50, 0.,3000.);
+        TH1D* photon1PtEBEB = new TH1D("photon1PtEBEB","", 30, 0.,3000.);
+        TH1D* photon1PtEBEE = new TH1D("photon1PtEBEE","", 30, 0.,3000.);
         photon1PtEBEB->Sumw2();
         photon1PtEBEE->Sumw2();
-        TH1D* photon2PtEBEB = new TH1D("photon2PtEBEB","", 50, 0.,3000.);
- 	TH1D* photon2PtEBEE = new TH1D("photon2PtEBEE","", 50, 0.,3000.);
+        TH1D* photon2PtEBEB = new TH1D("photon2PtEBEB","", 30, 0.,3000.);
+ 	TH1D* photon2PtEBEE = new TH1D("photon2PtEBEE","", 30, 0.,3000.);
  	photon2PtEBEB->Sumw2();
  	photon2PtEBEE->Sumw2();
 
