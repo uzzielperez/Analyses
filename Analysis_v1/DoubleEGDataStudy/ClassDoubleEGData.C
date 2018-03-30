@@ -40,14 +40,14 @@ void ClassDoubleEGData::Loop()
 	
 	// histograms
         Long64_t nentries = fChain->GetEntriesFast();
-	TH1D* diphotonMinv = new TH1D("diphotonMinv", "", 50, 0.,2000.);
+	TH1D* diphotonMinv = new TH1D("diphotonMinv", "", 30, 0.,3000.);
 	diphotonMinv->Sumw2();
-	TH1D* photon1Pt  = new TH1D("photon1Pt", "", 50, 0.,2000.);
-	TH1D* photon1Eta = new TH1D("photon1Eta", "", 80, -3,3);
-	TH1D* photon1Phi = new TH1D("photon1Phi", "", 80, -3.5,3.5);
-	TH1D* photon2Pt  = new TH1D("photon2Pt", "", 80, 0.,2000.);
-	TH1D* photon2Eta = new TH1D("photon2Eta", "", 80, -3,3);
-	TH1D* photon2Phi = new TH1D("photon2Phi", "", 80, -3.5,3.5);
+	TH1D* photon1Pt  = new TH1D("photon1Pt", "", 30, 0.,3000.);
+	TH1D* photon1Eta = new TH1D("photon1Eta", "",80, -3,3);
+	TH1D* photon1Phi = new TH1D("photon1Phi", "",80, -3.5,3.5);
+	TH1D* photon2Pt  = new TH1D("photon2Pt", "", 30, 0.,3000.);
+	TH1D* photon2Eta = new TH1D("photon2Eta", "",80, -3,3);
+	TH1D* photon2Phi = new TH1D("photon2Phi", "",80, -3.5,3.5);
 	photon1Pt->Sumw2();
 	photon1Eta->Sumw2();
 	photon1Phi->Sumw2();
@@ -55,28 +55,28 @@ void ClassDoubleEGData::Loop()
 	photon2Eta->Sumw2();
 	photon2Phi->Sumw2();
 	
-	TH1D* diphotonMinvEBEB = new TH1D("diphotonMinvEBEB","",80,0.,2000.);
-        TH1D* diphotonMinvEBEE = new TH1D("diphotonMinvEBEE","",80,0.,2000.);
+	TH1D* diphotonMinvEBEB = new TH1D("diphotonMinvEBEB","", 30,0.,3000.);
+        TH1D* diphotonMinvEBEE = new TH1D("diphotonMinvEBEE","", 30,0.,3000.);
         diphotonMinvEBEB->Sumw2();
         diphotonMinvEBEE->Sumw2();
-        TH1D* photon1PtEBEB = new TH1D("photon1PtEBEB","",80,0.,2000.);
-        TH1D* photon1PtEBEE = new TH1D("photon1PtEBEE","",80,0.,2000.);
+        TH1D* photon1PtEBEB = new TH1D("photon1PtEBEB","", 30,0.,3000.);
+        TH1D* photon1PtEBEE = new TH1D("photon1PtEBEE","", 30,0.,3000.);
         photon1PtEBEB->Sumw2();
         photon1PtEBEE->Sumw2();
-        TH1D* photon2PtEBEB = new TH1D("photon2PtEBEB","",80,0.,2000.);
- 	TH1D* photon2PtEBEE = new TH1D("photon2PtEBEE","",80,0.,2000.);
+        TH1D* photon2PtEBEB = new TH1D("photon2PtEBEB","", 30,0.,3000.);
+ 	TH1D* photon2PtEBEE = new TH1D("photon2PtEBEE","", 30,0.,3000.);
  	photon2PtEBEB->Sumw2();
  	photon2PtEBEE->Sumw2();
 	
-	TH1D* photon1EtaEBEB = new TH1D("photon1EtaEBEB", "", 80, -3,3);
-        TH1D* photon1PhiEBEB = new TH1D("photon1PhiEBEB", "", 80, -3.5,3.5);
-        TH1D* photon2EtaEBEB = new TH1D("photon2EtaEBEB", "", 80, -3,3);
-        TH1D* photon2PhiEBEB = new TH1D("photon2PhiEBEB", "", 80, -3.5,3.5);
+	TH1D* photon1EtaEBEB = new TH1D("photon1EtaEBEB", "",80, -3,3);
+        TH1D* photon1PhiEBEB = new TH1D("photon1PhiEBEB", "",80, -3.5,3.5);
+        TH1D* photon2EtaEBEB = new TH1D("photon2EtaEBEB", "",80, -3,3);
+        TH1D* photon2PhiEBEB = new TH1D("photon2PhiEBEB", "",80, -3.5,3.5);
 
-        TH1D* photon1EtaEBEE = new TH1D("photon1EtaEBEE", "", 80, -3,3);
-        TH1D* photon1PhiEBEE = new TH1D("photon1PhiEBEE", "", 80, -3.5,3.5);
-        TH1D* photon2EtaEBEE = new TH1D("photon2EtaEBEE", "", 80, -3,3);
-        TH1D* photon2PhiEBEE = new TH1D("photon2PhiEBEE", "", 80, -3.5,3.5);
+        TH1D* photon1EtaEBEE = new TH1D("photon1EtaEBEE", "",80, -3,3);
+        TH1D* photon1PhiEBEE = new TH1D("photon1PhiEBEE", "",80, -3.5,3.5);
+        TH1D* photon2EtaEBEE = new TH1D("photon2EtaEBEE", "",80, -3,3);
+        TH1D* photon2PhiEBEE = new TH1D("photon2PhiEBEE", "",80, -3.5,3.5);
         photon1EtaEBEB->Sumw2();
         photon1PhiEBEB->Sumw2();
         photon2EtaEBEB->Sumw2();
@@ -87,10 +87,10 @@ void ClassDoubleEGData::Loop()
         photon2PhiEBEE->Sumw2();
 
 	// Detector Eta and Phi
-	TH1D* photon1detEta = new TH1D("photon1detEta", "", 80, -3,3);
-	TH1D* photon1detPhi = new TH1D("photon1detPhi", "", 80, -3.5,3.5);
-	TH1D* photon2detEta = new TH1D("photon2detEta", "", 80, -3,3);
-	TH1D* photon2detPhi = new TH1D("photon2detPhi", "", 80, -3.5,3.5);
+	TH1D* photon1detEta = new TH1D("photon1detEta", "",80, -3,3);
+	TH1D* photon1detPhi = new TH1D("photon1detPhi", "",80, -3.5,3.5);
+	TH1D* photon2detEta = new TH1D("photon2detEta", "",80, -3,3);
+	TH1D* photon2detPhi = new TH1D("photon2detPhi", "",80, -3.5,3.5);
 	photon1detEta->Sumw2();
 	photon1detPhi->Sumw2();
 	photon2detEta->Sumw2();
@@ -154,7 +154,7 @@ void ClassDoubleEGData::Loop()
 	}//end isGood
    }// end loop over events
   cout << endl;
-  cout << "Total entries             : " << nentries << endl;
+  cout << "Total entries             : " << Ntotal << endl; //instead of nentries
   cout << " Passed isGood cut        : " << nPassisGood << endl;
   cout << " Passed DiphMinv cut      : " << nDiphMinv << endl;
   cout << " Passed pT cut            : " << npT << endl;
@@ -162,7 +162,7 @@ void ClassDoubleEGData::Loop()
   cout << "  and in EBEE or EEEB     : " << nEBEEorEEEB << endl;
   cout << endl;
 
-  TFile file_out("DoubleEG_histogramsFULLcuts.root","RECREATE");
+  TFile file_out("DoubleEG_histograms3.root","RECREATE");
 
 	diphotonMinv->Write();
 	photon1Pt->Write();
