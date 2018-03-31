@@ -98,13 +98,17 @@ while $crabntuplesDEEP; do
      new4=$new3/$k
      #echo $new3/$k ---> just up to datesdir
      for l in `$eosls $new4`
-     do 
+     do
+      #echo $l 
       new5=$new4/$l	
-      echo $new5 # -----> just up to 0000/
+      #echo $new5 # -----> just up to 0000/
       for m in `$eosls $new5`
       do
        new6=$new5/$m
        echo $new6
+       # echo $m # filename only
+       #echo $new6 >> ${k}fi.txt
+       echo $new6 >> ${j}fi.txt
       done
      done
     done
