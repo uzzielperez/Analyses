@@ -1,8 +1,17 @@
-import ROOT 
+import ROOT
+import argparse
+
+# Command Line Options 
+parser = argparse.ArgumentParser(description='Calculates weight, number of events of given root files.')
+parser.add_argument('-i', '--input', help='Input file/s.', required=True, type=str)
+#parser.add_argument('-i', '--input', nargs= '+', help='Input file/s.', required=True, type=str)
+args = parser.parse_args()
+  
 #-----------------------------------------
 # Reading input
 
-inputfile = 'aInputMerged.txt'
+inputfile = args.input
+#inputfile = 'aInputMerged.txt'
 #inputfile = 'ainput.txt'
 
 f = open(inputfile)
@@ -103,14 +112,15 @@ for e in lines:
          print e 
 	 W = chain.GetWeight()
 	 N = chain.GetEntries()
-	 sigma = xsecF(e) 
-	 calcW = weightCalc(sigma, L, N)  
-	 LW = weightLumiCalc(e, normL, N) 
-       	 print "xsec: ", sigma, ", Lumi: ", L, ", Entries: ", N, "CalcWeight: ", calcW, "Weight: ", W, "Lumiweight: ", LW, "\n"       	 
+	 #sigma = xsecF(e) 
+	 #calcW = weightCalc(sigma, L, N)  
+	 #LW = weightLumiCalc(e, normL, N)
+	 print "Entries: ", N 
+       	 #print "xsec: ", sigma, ", Lumi: ", L, ", Entries: ", N, "CalcWeight: ", calcW, "Weight: ", W, "Lumiweight: ", LW, "\n"       	 
 
 Nt = fullchain.GetEntries()
 print "Weight: ", fullchain.GetWeight()
-print "Entries: ", Nt
+print "Total Entries: ", Nt
 
 
 f.close()
