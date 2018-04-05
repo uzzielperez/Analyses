@@ -26,21 +26,21 @@ args = parser.parse_args()
 
 #-----------
 # Run Card Settings Overwrite 
-kkconv = args.kk_convention
-ned = args.NED
-ms = args.M_S
-massMin = args.massminimum
-massMax = args.massmaximum
-pTcut = args.ptcut
-
+kkconv = str(args.kk_convention)
+ned = str(args.NED)
+ms = str(args.M_S)
+massMin = str(args.massminimum)
+massMax = str(args.massmaximum)
+pTcut = str(args.ptcut)
+COM = str(args.com)
 #------------
 # Read from Template and Generate New Run Card
 RunCardTemplate = args.template #TemplateRun.dat_signal 
-RunCard_out = 'Run.dat_ADDGravToGG_KK-%d_NED-%d_MS-%d_M-%dTo%d_Pt%d_%dTeV-sherpa' %(kk-conv, ned, ms, massMin, massMax, pTcut, COM)
+RunCard_out = 'Run.dat_ADDGravToGG_KK-%s_NED-%s_MS-%s_M-%sTo%s_Pt%s_%sTeV-sherpa' %(kkconv, ned, ms, massMin, massMax, pTcut, COM)
 RunCard = open(RunCard_out, "w+")
 
 with open(RunCardTemplate, 'r') as f:
-	r1 = f.read().replace('*kk-conv*', kkconv)
+	r1 = f.read().replace('*kkconv*', kkconv)
 	r2 = f.read().replace('*ned*', ned) 
 	r3 = f.read().replace('*ms*', ms)
 	r4 = f.read().replace('*massMin*', massMin)
