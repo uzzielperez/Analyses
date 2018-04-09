@@ -19,9 +19,9 @@
 
 (model){
   MODEL ADD;
-  KK_CONVENTION *kkconv*;
-  N_ED *ned*;
-  M_S *ms*;
+  KK_CONVENTION ${kkconv};
+  N_ED ${ned};
+  M_S ${ms};
 }(model)
 
 (processes){
@@ -37,7 +37,7 @@
 }(processes)
 
 (selector){
-  Mass 22 22 *massMin* *massMax*;
-  PT 22 *pTcut* E_CMS;
+  Mass 22 22 ${massMin} ${massMax};
+  PT 22 ${pTcut} E_CMS;
   PseudoRapidity 22 -2.8 2.8;
 }(selector)
