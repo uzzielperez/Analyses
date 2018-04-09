@@ -3,10 +3,11 @@ import time
 import subprocess
 import os
 import argparse
-#
+from string import Template 
+
 ## Command Line Options
 parser = argparse.ArgumentParser(description='Run Card Settings')
-parser.add_argument('-t', '--template', help='Choose Run Card template.', required=True, type=str,
+parser.add_argument('-t', '--template', help='Choose Run Card template.', type=str,
 			default='TemplateRun.dat_signal')
 parser.add_argument('-kk', '--kk_convention', type=int, default=1,
                     help='See documentation.')
@@ -26,31 +27,33 @@ args = parser.parse_args()
 
 #-----------
 # Run Card Settings Overwrite 
-kkconv = str(args.kk_convention)
-ned = str(args.NED)
-ms = str(args.M_S)
-massMin = str(args.massminimum)
-massMax = str(args.massmaximum)
-pTcut = str(args.ptcut)
-COM = str(args.com)
+kkconv = args.kk_convention
+ned = args.NED
+ms = args.M_S
+massMin = args.massminimum
+massMax = args.massmaximum
+pTcut = args.ptcut
+COM = args.com/1000 # in TeV
 #------------
 # Read from Template and Generate New Run Card
 RunCardTemplate = args.template #TemplateRun.dat_signal 
-RunCard_out = 'Run.dat_ADDGravToGG_KK-%s_NED-%s_MS-%s_M-%sTo%s_Pt%s_%sTeV-sherpa' %(kkconv, ned, ms, massMin, massMax, pTcut, COM)
-RunCard = open(RunCard_out, "w+")
 
-with open(RunCardTemplate, 'r') as f:
-	r1 = f.read().replace('*kkconv*', kkconv)
-	r2 = f.read().replace('*ned*', ned) 
-	r3 = f.read().replace('*ms*', ms)
-	r4 = f.read().replace('*massMin*', massMin)
-	r5 = f.read().replace('*massMax*', massMax)
-	r6 = f.read().replace('*pTcut*', pTcut)
-	RunCard.write(r1)
-	RunCard.write(r2)
-	RunCard.write(r3)
-	RunCard.write(r4)
-	RunCard.write(r5)
-	RunCard.write(r6) 
+# This is the naming convention we agreed upon
+RunCard_out = 'Run.dat_ADDGravToGG_KK-%d_NED-%d_MS-%d_M-%dTo%d_%dTeV-sherpa' %(kkconv, ned, ms, massMin, massMax, COM)
+#RunCard_out = 'Run.dat_ADDGravToGG_KK-%d_NED-%d_MS-%d_M-%dTo%d_Pt%d_%dTeV-sherpa' %(kkconv, ned, ms, massMin, massMax, pTcut, COM)
+outfile = open(RunCard_out, "w+")
+
+# Dictionary
+d= {'kkconv':kkconv, 
+    'ned':ned,
+    'ms':ms,
+    'massMin':massMin, 
+    'massMax':massMax,
+    'pTcut':pTcut}
+
+filein = open(RunCardTemplate)
+src = Template( filein.read())
+sub = src.substitute(d) 
+outfile.write(sub)
 
 print "Generated %s" %(RunCard_out)
