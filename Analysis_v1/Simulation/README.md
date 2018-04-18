@@ -40,9 +40,13 @@ To use OpenMPI parallelization you can use this instead:
 
 # Create Sherpack 
 After making SherpaLibs, create Sherpack 
+```bash
+
 ./PrepareSherpaLibs.sh -p [XYZ]
 
+```
 # test locally
+```bash
 
 mv sherpa_[XYZ]_MASTER_cff.py $TOPDIR/<StudyName>/PROJECT/python
 cd ..
@@ -50,3 +54,5 @@ scram b
 cd test
 cmsDriver.py <StudyName>/PROJECT/python/sherpa_[XYZ]_MASTER_cff.py -s GEN -n 100 --no_exec --conditions auto:mc --eventcontent RAWSIM
 cmsRun sherpa_[XYZ]_MASTER_cff_py_GEN.py 
+
+```
