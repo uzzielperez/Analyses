@@ -83,6 +83,7 @@ break
 done
 
 #------DiPhotonAnalysis Full
+redirector='root://cmsxrootd.fnal.gov/'
 while $crabntuplesDEEP; do
  echo 'CRAB unmerged ntuples:' 
  for i in `$eosls $DIR2`
@@ -108,7 +109,7 @@ while $crabntuplesDEEP; do
        echo $new6
        # echo $m # filename only
        #echo $new6 >> ${k}fi.txt
-       echo $new6 >> ${j}fi.txt
+       echo $redirector$new6 >> ${j}fi.txt
       done
      done
     done

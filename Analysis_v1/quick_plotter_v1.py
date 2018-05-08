@@ -13,8 +13,10 @@ sys.path.append(CMSlumiPath)
 from CMSlumi import CMS_lumi
 
 #--------------------------------------------------------------------------------
-path = '/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/Analysis_v1/GGJetsStudy'
-filename = 'GGJets_histograms.root' 
+#path = '/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/Analysis_v1/GGJetsStudy'
+path = '/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/Analysis_v1/DoubleEGDataStudy'
+#filename = 'GGJets_histograms.root' 
+filename = 'DoubleEG_histograms.root'
 #--------------------------------------------------------------------------------
 
 # Draw Options 
@@ -34,7 +36,7 @@ gStyle.SetOptStat(0)
 #CMS_lumi( TPad* pad, int iPeriod=3, int iPosX=10 )
 ##########################################
 
-f = ROOT.TFile(filename, "READ")
+f = ROOT.TFile(path+"/"+filename, "READ")
 #f.ls()
 
 #----------------------------------------

@@ -8,9 +8,12 @@ from ROOT import gBenchmark, gStyle, gROOT, gDirectory
 from legend import *
 
 import sys  
+
 CMSlumiPath = '/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/pyroot'
+#CMSlumiPath = '/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/Analysis_v1/FigGuideCMS'
 sys.path.append(CMSlumiPath)  
 from CMSlumi import CMS_lumi
+#from CMS_lumi import CMS_lumi
 
 #--------------------------------------------------------------------------------
 MCpath = '/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/Analysis_v1/GGJetsStudy'
@@ -124,7 +127,7 @@ objData = []
 
 # get obj and keys
 for k, o in getall(f_mc):
-    print "h_%s" %(k[1:]) 
+   # print "h_%s" %(k[1:]) 
     objMC.append(k[1:])
     cMC.append("c_%s"%(k[1:]))
     hmc = createHist(f_mc, kBlue+1, k[1:])
@@ -143,34 +146,33 @@ print "objMC", objMC
 i = 0
 while i<len(objMC):
 	
-	# Create Histograms
-	#hMC = createHist(f_mc, kBlue+1, objMC[i])
-	#hDATA = createHist(f_data, kBlack, objData[i])
-# 	hRatio = createRatio(hDATA[i], hMC[i])
-#	c, pad1, pad2 = createCanvasPads()
 	c = ROOT.TCanvas()
 	#--------------- String Finder	
 	if objMC[i].find("Minv") != -1:
 		xtitle = r"m_{#gamma#gamma} #scale[0.8]{(GeV)}"
 		xmin = 200
-		xmax = 1600 
+		xmax = 1600
+		scale = 35.9 
 	        c.SetLogy()	
 		xpos1, ypos1, xpos2, ypos2 = .60, 0.65, 1.0, .85
 	elif objMC[i].find("Pt") != -1:
 		xtitle = "p_{T} (GeV)"
 		xmin = 200
 		xmax = 1600
+		scale = 39.5
 		c.SetLogy()	
 		xpos1, ypos1, xpos2, ypos2 = .60, 0.65, 1.0, .85 
 	elif objMC[i].find("Eta") != -1:
 		xtitle = r"#eta" 
 		xmin = -3.0
 		xmax = 3.0
+		scale = 39.5*39.5
 		xpos1, ypos1, xpos2, ypos2 = .45, 0.20, .85, .38
 	elif objMC[i].find("Phi") != -1:
 		xtitle = r"#phi"
 		xmin = -3.5
-		xmax = 3.5	
+		xmax = 3.5
+		scale = 39.5*39.5	
 		xpos1, ypos1, xpos2, ypos2 = .45, 0.20, .85, .38
 	else:
 		continue
@@ -185,8 +187,7 @@ while i<len(objMC):
 		legentry = objMC[i]
 
         # Draw histos & additional Settings
-	#pad1.cd()
-	hMC[i].Scale(39.5) # rescale to 39.5 fb^-1
+	hMC[i].Scale(scale) # rescale to 39.5 fb^-1
 	hMC[i].SetFillColor(kBlue -3)
 	hMC[i].SetTitle(objMC[i])
 	hMC[i].GetYaxis().SetTitle("weighted Events")
@@ -196,35 +197,22 @@ while i<len(objMC):
 	hDATA[i].SetMarkerStyle(20)
 	hDATA[i].Draw("esamex0")
 
-	#to avoid clipping the bottom zero, redraw a small axis
-	#hright.GetYaxis().SetLabelSize(0.0)
-	#axis = TGaxis(-5, 20, -5, 220, 20, 220, 510, "")
-	#axis.SetLabelFont(43)
-	#axis.SetLabelSize(15)
-	#axis.Draw()
 
-#        # RATIO  
-#	pad2.cd()
-#	hMC[i].GetYaxis().SetTitle("ratio %s/%s" %("MC", "DATA"))
-#	y = hRatio.GetYaxis()
-#	y.SetTitleSize(20)
-#	y.SetTitleFont(43)
-#	hRatio.Draw("ep")
-#
 	#Legend
-	#leg = TLegend(xpos1, ypos1, xpos2, ypos2)
-	#leg.SetBorderSize(0)
-	#leg.SetFillColor(0)
-	#leg.SetFillStyle(0)
-	#leg.SetTextFont(42)
-	#leg.SetTextSize(0.035)
-	#leg.AddEntry(hMC, "MC", "lpf")
-	#leg.AddEntry(hDATA, "DATA", "lpf")
-	#leg.Draw()
+	leg = TLegend(xpos1, ypos1, xpos2, ypos2)
+	leg.SetBorderSize(0)
+	leg.SetFillColor(0)
+	leg.SetFillStyle(0)
+	leg.SetTextFont(42)
+	leg.SetTextSize(0.035)
+	leg.AddEntry(hMC[i], "MC", "f")
+	leg.AddEntry(hDATA[i], "DATA", "l")
+	leg.Draw()
 
 	      
 	#place_legend(c[i], None, None, None, None, header="", option="LP")
-	CMS_lumi(c, 4, 11, True) 
+        #CMS_lumi(pad, iPeriod, iPosX, MC):
+	CMS_lumi(c, 4, 11, False) #iPeriod: {4:13TeV}, iPos: {iPos=11: top-left, left-aligned}  
 	
 	#c.Update()
 	#c.Draw()
@@ -235,8 +223,8 @@ while i<len(objMC):
 	#from ROOT import gROOT 
 	#gROOT.GetListOfCanvases().Draw() 		 
 	#gROOT.GetListOfCanvases().Print("ratioplots/ratio%s/png" %(objMC[i]))		
-	c.Print("%s/ratio_%s.png" %("ratioplots",objMC[i]))
-	
+	c.Print("%s/legdataVsMC_%s.png" %("ratioplots",objMC[i]))
+
 	# move to next object in root file
 	i = i + 1
 #-------------------------------------------

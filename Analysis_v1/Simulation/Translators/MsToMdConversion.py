@@ -1,3 +1,4 @@
+from __future__ import division
 import math
 from math import gamma
 import numpy as np
@@ -24,6 +25,7 @@ print "gamma(4)= ", Gamma_function_part(GRW_NED)
 print "gamma(2)= ", Gamma_function_part(HLZ_NED)
 
 # GRW M_d
+print "GRW Ms:", GRW_Mslst
 print "GRW: ", M_d(GRW_NED, GRW_Mslst) 
 # HLZ M_d 
 print "HLZ: ", M_d(HLZ_NED, HLZ_Mslst)
