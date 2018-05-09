@@ -28,6 +28,11 @@
 #include "FWCore/Framework/interface/MakerMacros.h"
 
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
+
+// Misc.
+#include "DataFormats/HepMCCandidate/interface/GenParticle.h"
+
+
 //
 // class declaration
 //
@@ -92,9 +97,8 @@ void
 DiPhotonAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 {
    using namespace edm;
-
-
-
+   using namespace std;
+  
 #ifdef THIS_IS_AN_EVENT_EXAMPLE
    Handle<ExampleData> pIn;
    iEvent.getByLabel("example",pIn);
