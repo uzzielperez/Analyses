@@ -5,7 +5,7 @@
 // 
 /**\class DiPhotonAnalyzer DiPhotonAnalyzer.cc Analyses/DiPhotonAnalyzer/plugins/DiPhotonAnalyzer.cc
 
- Description: [one line class summary]
+ Description: GEN only analyzer (Based on Andrew's RSG Analyzer)
 
  Implementation:
      [Notes on implementation]
@@ -35,6 +35,7 @@
 // Misc.
 #include "DataFormats/HepMCCandidate/interface/GenParticle.h"
 #include "DataFormats/PatCandidates/interface/Photon.h"
+#include "DataFormats/Common/interface/Handle.h"
 
 //TFile Service
 #include "TTree.h"
@@ -74,28 +75,7 @@ class DiPhotonAnalyzer : public edm::one::EDAnalyzer<edm::one::SharedResources> 
 
       
       // ----------member data ---------------------------
-      TTree *fTree;
-
-
-};
-
-//
-// constants, enums and typedefs
-//
-
-//
-// static data member definitions
-//
-
-//
-// constructors and destructor
-//
-DiPhotonAnalyzer::DiPhotonAnalyzer(const edm::ParameterSet& iConfig)
-
-{
-   //now do what ever initialization is needed
-   usesResource("TFileService");
-
+    TTree *fgenTree;
    //Could be in ExoDiPhotons namespace (Common Classes). Implement here fully for the first time
    struct eventInfo_t {
       Long64_t run;
@@ -115,6 +95,33 @@ DiPhotonAnalyzer::DiPhotonAnalyzer(const edm::ParameterSet& iConfig)
     
     double fGravitonMass; 
     
+    struct genDiPhotonInfo_t{
+      //kinematics 
+      double Minv; 
+      double qt; 
+    }; 
+    
+    genDiPhotonInfo_t fSignalDiPhoton;    
+};
+
+// constants, enums and typedefs
+// static data member definitions
+
+// constructors and destructor
+DiPhotonAnalyzer::DiPhotonAnalyzer(const edm::ParameterSet& iConfig)
+
+{
+   //now do what ever initialization is needed
+   usesResource("TFileService");
+   edm::Service<TFileService> fs;
+  
+   fgenTree = fs->make<TTree>("fgenTree","GENDiphotonTree");
+   
+   fgenTree->Branch("genPhoton1", &fSignalPhoton1, "pt/D:eta:phi");
+   fgenTree->Branch("genPhoton2", &fSignalPhoton2, "pt/D:eta:phi");
+   fgenTree->Branch("genDiPhoton", &fSignalDiPhoton, "Minv/D:qt");
+   //fgenTree->Branch("Graviton", &fGravitonMass, "Mass/D");
+
 }
 
 
@@ -137,7 +144,87 @@ DiPhotonAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetu
 {
    using namespace edm;
    using namespace std;
+
+   //Init available in ExoDiphotons but do manual initialization here
+  fEventInfo.run = -99999.99;
+  fEventInfo.LS = -99999.99;
+  fEventInfo.evnum = -99999.99;
+
+  //An example of accessing GenParticles from the event. reco::GenParticleCollection is typedef for vector<reco::GenParticle>
+  Handle<reco::GenParticleCollection> genParticles;
+  iEvent.getByLabel("genParticles", genParticles);
+
+  if(!genParticles.isValid()) {
+         cout << "No Gen Particles collection!" << endl;
+         return;
+  }
+
+  fSignalPhoton1.pt = -99999.99;
+  fSignalPhoton1.eta = -99999.99;
+  fSignalPhoton1.phi = -99999.99;
+
+  fSignalPhoton2.pt = -99999.99;
+  fSignalPhoton2.eta = -99999.99;
+  fSignalPhoton2.phi = -99999.99;
+
+  fSignalDiPhoton.Minv = -99999.99;
+  fSignalDiPhoton.qt = -99999.99;
+
+  const reco::GenParticle *signalPhoton1 = NULL;
+  const reco::GenParticle *signalPhoton2 = NULL;
+
+//Loop over genParticle Collection
+
+for (reco::GenParticleCollection::const_iterator genParticle = genParticles->begin(); genParticle != genParticles->end(); ++genParticle){
+  // Identify the status 1 particles (i.e. no further decays) photons
+  // Came from hard scattering photons (status3) 
+
+  if (genParticle->status()==1 && genParticle->pdgId()==22){
+    if(genParticle->numberOfMothers()>0){
+        if(genParticle->mother()->status()==3 && genParticle->mother()->pdgId()==22){
+        // LATER further require that this status 3 photon came from Graviton
+        //Some check
+        cout << "MC particle: Status = " << genParticle->status() 
+             << "; pdg id = " << genParticle->pdgId()
+             << "; pt, eta, phi = " << genParticle->pt() << ", " << genParticle->eta() << ", " << genParticle->phi() << endl;
+
+        if(!signalPhoton1){
+          signalPhoton1 = &(*genParticle);
+        }
+        else {
+          signalPhoton2 = &(*genParticle);
+        }
+       }//end of check for hardscattering origin, mother status 3
+    }//end of check for numberOfMothers>0
+  }//end status 1 check
+}//end gen particle loop
+ 
+  //reorder signalPhotons by pt
+   if(signalPhoton2->pt()>signalPhoton1->pt()) {
+     const reco::GenParticle *tempSignalPhoton = signalPhoton1;
+     signalPhoton1 = signalPhoton2;
+     signalPhoton2 = tempSignalPhoton;
+   }
+
+   //UPDATING STRUCT INFORMATION
   
+   if(signalPhoton1){
+      fSignalPhoton1.pt = signalPhoton1->pt();
+      fSignalPhoton1.eta = signalPhoton1->eta();
+      fSignalPhoton1.phi = signalPhoton1->phi();
+    }
+  
+   
+   if(signalPhoton2){
+      fSignalPhoton2.pt = signalPhoton2->pt();
+      fSignalPhoton2.eta = signalPhoton2->eta();
+      fSignalPhoton2.phi = signalPhoton2->phi();
+    }
+
+   //Fill the tree Branches 
+   fgenTree->Fill();
+   
+
 #ifdef THIS_IS_AN_EVENT_EXAMPLE
    Handle<ExampleData> pIn;
    iEvent.getByLabel("example",pIn);
