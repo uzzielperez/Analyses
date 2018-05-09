@@ -211,9 +211,77 @@ DiPhotonAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetu
             if (pdgIdNum==22) numPhotons++;
             
             //Sorting 
+            if (pt > leadingPhotonPt){
+                subleadingPhotonPt = leadingPhotonPt;
+                subleadingPhotonEta = leadingPhotonEta;
+                subleadingPhotonPhi = leadingPhotonPhi;
+                subleadingPhotonE = leadingPhotonE;
 
-             
+                leadingPhotonPt = pt;
+                leadingPhotonEta = eta;
+                leadingPhotonPhi = phi;
+                leadingPhotonE = energy;
+            }
+
+            else if ( (pt < leadingPhotonPt) && (pt > subleadingPhotonPt) ){
+                subleadingPhotonPt = pt;
+                subleadingPhotonEta = eta;
+                subleadingPhotonPhi = phi;
+                subleadingPhotonE = energy;
+            }
+              
      }//end loop over GenParticleCollection
+
+     hNumPhotons->Fill(numPhotons);
+     bool passedAllCuts = true; // no cuts for now, do offline
+
+      if( passedAllCuts ){
+            numEventsPassingCuts++;
+            //fill histograms
+            hleadingPhoPt->Fill(leadingPhotonPt);
+            hleadingPhoEta->Fill(leadingPhotonEta);
+            hleadingPhoPhi->Fill(leadingPhotonPhi);
+            
+            hsubleadingPhoPt->Fill(subleadingPhotonPt);
+            hsubleadingPhoEta->Fill(subleadingPhotonEta);
+            hsubleadingPhoPhi->Fill(subleadingPhotonPhi);
+            subleadingPt_leadingPt->Fill(leadingPhotonPt,subleadingPhotonPt);
+     
+            //fill a mass plot
+            TLorentzVector leadingPhoton,subleadingPhoton;
+            leadingPhoton.SetPtEtaPhiE(leadingPhotonPt,leadingPhotonEta,leadingPhotonPhi,leadingPhotonE);
+            subleadingPhoton.SetPtEtaPhiE(subleadingPhotonPt,subleadingPhotonEta,subleadingPhotonPhi,subleadingPhotonE);
+            
+            TLorentzVector total = leadingPhoton + subleadingPhoton; // I think this works
+            double ggmass = total.M();
+            hggMass->Fill( ggmass );
+            hggMass_varBinning->Fill( ggmass );   
+            
+            if(makeTree){
+              PhotonPt.push_back(leadingPhotonPt);
+              PhotonPt.push_back(subleadingPhotonPt);
+              PhotonEta.push_back(leadingPhotonEta);
+              PhotonEta.push_back(subleadingPhotonEta);
+              PhotonPhi.push_back(leadingPhotonPhi);
+              PhotonPhi.push_back(subleadingPhotonPhi);
+              PhotonEnergy.push_back(leadingPhotonE);
+              PhotonEnergy.push_back(subleadingPhotonE);
+              massHolder = ggmass;
+
+              tree->Fill();
+
+              PhotonPt.clear();
+              PhotonEta.clear();
+              PhotonPhi.clear();
+              PhotonEnergy.clear();
+              pdgId.clear();
+              GenPt.clear();
+              GenEta.clear();
+              GenPhi.clear();
+              GenEnergy.clear();
+              massHolder = -1.; 
+            }//makeTree
+  }//passedCuts
 #ifdef THIS_IS_AN_EVENT_EXAMPLE
    Handle<ExampleData> pIn;
    iEvent.getByLabel("example",pIn);
@@ -230,12 +298,49 @@ DiPhotonAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetu
 void 
 DiPhotonAnalyzer::beginJob()
 {
+    hNumPhotons = fs->make<TH1D>("hNumPhotons","Photon Multiplicity (|#eta|<1.4442)",11,-0.5,10.5);
+    hggMass = fs->make<TH1D>("hggMass","",199,0,3000.);
+    Double_t bins[7] = {0.,650.,1150.,1800.,2600.,3500.,13000.};
+    hggMass_varBinning = fs->make<TH1D>("hggMass_varBinning","",6,bins);
+    hggDPhi = fs->make<TH1D>("hggDPhi","",300,-3.141593,3.141593);
+    hleadingPhoPt = fs->make<TH1D>("hleadingPhoPt","Leading Photon pT",1800.,0,1800.);
+    hleadingPhoEta = fs->make<TH1D>("hleadingPhoEta","Leading Photon #eta",100,-1.5,1.5);
+    hleadingPhoPhi = fs->make<TH1D>("hleadingPhoPhi","Leading Photon #varphi",100,-3.1416,3.1416);
+    hsubleadingPhoPt = fs->make<TH1D>("hsubleadingPhoPt","Subleading Photon pT",1800.,0,1800.);
+    hsubleadingPhoEta = fs->make<TH1D>("hsubleadingPhoEta","Subleading Photon #eta",100,-1.5,1.5);
+    hsubleadingPhoPhi = fs->make<TH1D>("hsubleadingPhoPhi","Subleading Photon #varphi",100,-3.1416,3.1416);
+    
+    allPhotonPt = fs->make<TH1D>("allPhotonPt","",1800,0,1800.);
+    allPhotonEta = fs->make<TH1D>("allPhotonEta","",100,-6.,6.);
+    allPhotonPhi = fs->make<TH1D>("allPhotonPhi","",100,-3.1416,3.1416);
+    
+    //tree stuff
+    if( makeTree ){
+      tree = fs->make<TTree>("tree","tree");
+      tree->Branch("PhotonPt",&PhotonPt);
+      tree->Branch("PhotonEta",&PhotonEta);
+      tree->Branch("PhotonPhi",&PhotonPhi);
+      tree->Branch("PhotonEnergy",&PhotonEnergy);
+      tree->Branch("pdgId",&pdgId);
+      // tree->Branch("mother1",&mother1);
+      // tree->Branch("mother2",&mother2);
+      tree->Branch("GenPt",&GenPt);
+      tree->Branch("GenEta",&GenEta);
+      tree->Branch("GenPhi",&GenPhi);
+      tree->Branch("GenEnergy",&GenEnergy);
+      tree->Branch("ggMass",&massHolder,"ggMass/D");
+    }
+     
 }
 
 // ------------ method called once each job just after ending the event loop  ------------
 void 
 DiPhotonAnalyzer::endJob() 
 {
+    hggMass->GetXaxis()->SetTitle("M_{#gamma#gamma} (GeV/c^{2})");
+    cout << "Number of Events Passing Cuts: " << numEventsPassingCuts << endl;
+    cout << "Number of Total Events: " << numTotalEvents << endl;
+    
 }
 
 // ------------ method fills 'descriptions' with the allowed parameters for the module  ------------
