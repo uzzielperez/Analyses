@@ -123,7 +123,16 @@ DiPhotonAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetu
    double weight = GenInfoHandle->weight(); 
    cout << "Weight() method, integrated event weight = " << weight << endl;
 
-    // 
+   // Accessing particles in the event record (HepMCProduct)
+   Handle< HepMCProduct > EvtHandle ;
+   e.getByLabel( "generator", EvtHandle ) ; // find initial (unsmeared, unfiltered, ...) HepMCProduct
+   const HepMC::GenEvent* Evt = EvtHandle->GetEvent() ; 
+
+   //Select and Store events with two photons
+   if ( e.id().event() == 22 )
+     cout << "Now let us list all the photons in the events" << endl; 
+        
+
 #ifdef THIS_IS_AN_EVENT_EXAMPLE
    Handle<ExampleData> pIn;
    iEvent.getByLabel("example",pIn);
