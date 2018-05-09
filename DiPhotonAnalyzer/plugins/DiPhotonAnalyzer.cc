@@ -103,7 +103,7 @@ class DiPhotonAnalyzer : public edm::one::EDAnalyzer<edm::one::SharedResources> 
       int numTotalEvents = 0;
       int numEventsPassingCuts = 0;
 
-      string eventSource;      
+      //string eventSource;      
 
       // tree stuff
       TTree* tree;
@@ -150,10 +150,10 @@ DiPhotonAnalyzer::DiPhotonAnalyzer(const edm::ParameterSet& iConfig)
    particles_ = iConfig.getParameter<edm::InputTag>("particles");
    leadingPtCut = iConfig.getParameter<double>("leadingPtCut");
    subleadingPtCut = iConfig.getParameter<double>("subleadingPtCut");   
-   eventSource = iConfig.getParameter<string>("eventSource");
+   //eventSource = iConfig.getParameter<string>("eventSource");
    makeTree = iConfig.getParameter<bool>("makeTree");
    
-   cout<< "eventSource: " << eventSource << endl;
+   //cout<< "eventSource: " << eventSource << endl;
 }
 
 
@@ -181,7 +181,7 @@ DiPhotonAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetu
    
     //Initialize
     double leadingPhotonPt = -99999.99;
-    double leadingPhotonEta = -99999.99.;
+    double leadingPhotonEta = -99999.99;
     double leadingPhotonPhi = -99999.99;
     double leadingPhotonE = -99999.99;
     double subleadingPhotonPt = -99999.99;

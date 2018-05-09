@@ -1,10 +1,38 @@
 import FWCore.ParameterSet.Config as cms
+from FWCore.ParameterSet.VarParsing import VarParsing
+
+options = VarParsing ('python')
+
+
+options.register('leadingPtCut',
+                 60.,
+                 VarParsing.multiplicity.singleton,
+                 VarParsing.varType.float,
+                 "leading photon pt cut"
+)
+
+options.register('subleadingPtCut',
+                 60.,
+                 VarParsing.multiplicity.singleton,
+                 VarParsing.varType.float,
+                 "subleading photon pt cut"
+)
+
+options.register('makeTree',
+                True,
+                VarParsing.multiplicity.singleton,
+                VarParsing.varType.bool,
+                "whether or not to include a tree in the output file")
+
+options.setDefault('maxEvents', -1)
+options.parseArguments()
 
 process = cms.Process("Demo")
 
 process.load("FWCore.MessageService.MessageLogger_cfi")
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(options.maxEvents) )
+
 
 process.source = cms.Source("PoolSource",
     # replace 'myfile.root' with the source file you want to use
@@ -20,6 +48,11 @@ process.TFileService = cms.Service("TFileService",
 
 
 process.demo = cms.EDAnalyzer('DiPhotonAnalyzer'
+          
+  particles = cms.InputTag("genParticles"),
+  leadingPtCut = cms.double(options.leadingPtCut),
+  subleadingPtCut = cms.double(options.subleadingPtCut),
+  makeTree = cms.bool(options.makeTree)
 )
 
 
