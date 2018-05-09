@@ -19,6 +19,9 @@
 
 // system include files
 #include <memory>
+#include <iostream>
+#include <fstream>
+#include <vector>
 
 // user include files
 #include "FWCore/Framework/interface/Frameworkfwd.h"
@@ -31,6 +34,19 @@
 
 // Misc.
 #include "DataFormats/HepMCCandidate/interface/GenParticle.h"
+#include "DataFormats/PatCandidates/interface/Photon.h"
+
+//TFile Service
+#include "TTree.h"
+#include "CommonTools/UtilAlgos/interface/TFileService.h"
+#include "FWCore/ServiceRegistry/interface/Service.h"
+
+//for MC
+#include "SimDataFormats/GeneratorProducts/interface/HepMCProduct.h"
+#include "DataFormats/HepMCCandidate/interface/GenParticle.h"
+
+//Common Classes 
+//To implement later 
 
 
 //
@@ -56,7 +72,11 @@ class DiPhotonAnalyzer : public edm::one::EDAnalyzer<edm::one::SharedResources> 
       virtual void analyze(const edm::Event&, const edm::EventSetup&) override;
       virtual void endJob() override;
 
+      
       // ----------member data ---------------------------
+      TTree *fTree;
+
+
 };
 
 //
@@ -76,6 +96,25 @@ DiPhotonAnalyzer::DiPhotonAnalyzer(const edm::ParameterSet& iConfig)
    //now do what ever initialization is needed
    usesResource("TFileService");
 
+   //Could be in ExoDiPhotons namespace (Common Classes). Implement here fully for the first time
+   struct eventInfo_t {
+      Long64_t run;
+      Long64_t LS;
+      Long64_t evnum;
+     };
+   eventInfo_t fEventInfo; //ExoDiPhotons::eventInfo_t fEventInfo;
+   
+    struct genPhotonInfo_t{
+      double pt; 
+      double eta; 
+      double phi;
+    }; 
+
+    genPhotonInfo_t fSignalPhoton1;
+    genPhotonInfo_t fSignalPhoton2;
+    
+    double fGravitonMass; 
+    
 }
 
 
