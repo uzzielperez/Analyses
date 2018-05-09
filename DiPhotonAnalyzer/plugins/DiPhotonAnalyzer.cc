@@ -28,6 +28,22 @@
 #include "FWCore/Framework/interface/MakerMacros.h"
 
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
+
+#include <iostream>
+
+#include "SimDataFormats/GeneratorProducts/interface/HepMCProduct.h"
+#include "SimDataFormats/GeneratorProducts/interface/GenEventInfoProduct.h"
+#include "SimDataFormats/GeneratorProducts/interface/GenRunInfoProduct.h"
+
+//essentials !!!
+
+#include "DataFormats/Common/interface/Handle.h"
+#include "FWCore/Framework/interface/MakerMacros.h"
+#include "FWCore/ServiceRegistry/interface/Service.h" 
+#include "CommonTools/UtilAlgos/interface/TFileService.h"
+#include "TH1.h"
+
+
 //
 // class declaration
 //
@@ -51,22 +67,19 @@ class DiPhotonAnalyzer : public edm::one::EDAnalyzer<edm::one::SharedResources> 
       virtual void analyze(const edm::Event&, const edm::EventSetup&) override;
       virtual void endJob() override;
 
+      TH1D* fHistggMass; 
+
       // ----------member data ---------------------------
 };
 
-//
 // constants, enums and typedefs
-//
 
-//
 // static data member definitions
-//
 
-//
 // constructors and destructor
-//
-DiPhotonAnalyzer::DiPhotonAnalyzer(const edm::ParameterSet& iConfig)
 
+DiPhotonAnalyzer::DiPhotonAnalyzer(const edm::ParameterSet& iConfig)
+  : fHistggMass(0) 
 {
    //now do what ever initialization is needed
    usesResource("TFileService");
@@ -79,7 +92,7 @@ DiPhotonAnalyzer::~DiPhotonAnalyzer()
  
    // do anything here that needs to be done at desctruction time
    // (e.g. close files, deallocate resources etc.)
-
+  
 }
 
 
@@ -92,9 +105,25 @@ void
 DiPhotonAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 {
    using namespace edm;
+   using namespace std; 
+    
+   // Accessing GenEventInfoProduct
+   Handle< GenEventInfoProduct > GenInfoHandle;
+   e.getByLabel( "generator", GenInfoHandle );
+   double qScale = GenInfoHandle->qScale();
+   double pthat = ( GenInfoHandle->hasBinningValues() ? 
+                  (GenInfoHandle->binningValues())[0] : 0.0);
+   cout << " qScale = " << qScale << " pthat = " << pthat << endl;
 
+   //Access weights
+   double evt_weight1 = GenInfoHandle->weights()[0]; 
+   double evt_weight2 = GenInfoHandle->weights()[1];
+   cout << "evt_weight1  = " << evt_weight1 << endl;
+   cout << "evt_weight2  = " << evt_weight2 << endl;
+   double weight = GenInfoHandle->weight(); 
+   cout << "Weight() method, integrated event weight = " << weight << endl;
 
-
+    // 
 #ifdef THIS_IS_AN_EVENT_EXAMPLE
    Handle<ExampleData> pIn;
    iEvent.getByLabel("example",pIn);
@@ -111,6 +140,11 @@ DiPhotonAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetu
 void 
 DiPhotonAnalyzer::beginJob()
 {
+  Service<TFileService> fs;
+  fHistggMass = fs->make<TH1D>( "HistggMass", "gg inv. mass", 100, 500., 2000.); 
+
+  if 
+  return;
 }
 
 // ------------ method called once each job just after ending the event loop  ------------
