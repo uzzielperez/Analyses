@@ -74,7 +74,8 @@ class DiPhotonAnalyzer : public edm::one::EDAnalyzer<edm::one::SharedResources> 
       virtual void endJob() override;
 
       // ----------member data ---------------------------
-      
+       
+      edm::Service<TFileService> fs;
       // the handle which will be holding the genParticles from the event
       // reco::GenParticleCollection is just a typedef for std::vector<reco::GenParticle>
       edm::Handle< reco::GenParticleCollection > particles;
@@ -99,6 +100,8 @@ class DiPhotonAnalyzer : public edm::one::EDAnalyzer<edm::one::SharedResources> 
       bool makeTree;
       double leadingPtCut;
       double subleadingPtCut;
+
+      TH2D* subleadingPt_leadingPt;
 
       int numTotalEvents = 0;
       int numEventsPassingCuts = 0;
@@ -138,10 +141,9 @@ DiPhotonAnalyzer::DiPhotonAnalyzer(const edm::ParameterSet& iConfig)
 {
    //now do what ever initialization is needed
    usesResource("TFileService");
-   edm::Service<TFileService> fs;
 
    //Tree Name
-   fPythiaGenTree = fs->make<TTree>("fTree","DiPhotonTree");
+   //fPythiaGenTree = fs->make<TTree>("fTree","DiPhotonTree");
 
    // Branches 
      
@@ -189,7 +191,7 @@ DiPhotonAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetu
     double subleadingPhotonPhi = -99999.99;
     double subleadingPhotonE = -99999.99;
     int    numPhotons = 0;
-    int    numFinalState = 0;     
+    //int    numFinalState = 0;     
 
     numTotalEvents++;
 
