@@ -90,6 +90,7 @@ class DiPhotonAnalyzer : public edm::one::EDAnalyzer<edm::one::SharedResources> 
         double pt; 
         double eta; 
         double phi;
+        double E;
        }; 
 
       genPhotonInfo_t fSignalPhoton1;
@@ -123,8 +124,8 @@ DiPhotonAnalyzer::DiPhotonAnalyzer(const edm::ParameterSet& iConfig)
    usesResource("TFileService");
    fgenTree = fs->make<TTree>("fgenTree","GENDiphotonTree");
     
-   fgenTree->Branch("genPhoton1", &fSignalPhoton1, "pt/D:eta:phi");
-   fgenTree->Branch("genPhoton2", &fSignalPhoton2, "pt/D:eta:phi");
+   fgenTree->Branch("genPhoton1", &fSignalPhoton1, "pt/D:eta:phi:E");
+   fgenTree->Branch("genPhoton2", &fSignalPhoton2, "pt/D:eta:phi:E");
    fgenTree->Branch("genDiPhoton", &fSignalDiPhoton, "Minv/D:qt");
    
    genParticlesToken_ = consumes<vector<reco::GenParticle>>(iConfig.getParameter<edm::InputTag>("particles"));
@@ -168,10 +169,12 @@ DiPhotonAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetu
   fSignalPhoton1.pt = -99999.99;
   fSignalPhoton1.eta = -99999.99;
   fSignalPhoton1.phi = -99999.99;
+  fSignalPhoton1.E = -99999.99;
 
   fSignalPhoton2.pt = -99999.99;
   fSignalPhoton2.eta = -99999.99;
   fSignalPhoton2.phi = -99999.99;
+  fSignalPhoton2.E = -99999.99;
 
   fSignalDiPhoton.Minv = -99999.99;
   fSignalDiPhoton.qt = -99999.99;
@@ -185,25 +188,41 @@ DiPhotonAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetu
         double pt = ip->pt();
         double eta = ip->eta();
         double phi = ip->phi();
+        double E = ip->energy();
 
         //Ordering photons
         if (pt > fSignalPhoton1.pt){
             fSignalPhoton2.pt = fSignalPhoton1.pt;
             fSignalPhoton2.eta = fSignalPhoton1.eta;
             fSignalPhoton2.phi = fSignalPhoton1.phi;
-
+            fSignalPhoton2.E = fSignalPhoton1.E;
+            
             fSignalPhoton1.pt = pt;
             fSignalPhoton1.eta = eta;
             fSignalPhoton1.phi = phi;
+            fSignalPhoton1.E = E;
         }      
         if ((pt < fSignalPhoton1.pt) && (pt > fSignalPhoton2.pt)){
             fSignalPhoton2.pt = pt;
             fSignalPhoton2.eta = eta;
             fSignalPhoton2.phi = phi;
+            fSignalPhoton2.E = E;
         }
       }//end photon end state condition
   }//end loop over gen particles 
   cout << "Number of photons in event: " << photoncount << endl;
+  //Apply cuts offline
+   
+  //Fill DiPhoton Information
+  TLorentzVector leadingPhoton, subleadingPhoton;
+  leadingPhoton.SetPtEtaPhiE(fSignalPhoton1.pt, fSignalPhoton1.eta, fSignalPhoton1.phi, fSignalPhoton1.E);
+  subleadingPhoton.SetPtEtaPhiE(fSignalPhoton2.pt, fSignalPhoton2.eta, fSignalPhoton2.phi, fSignalPhoton2.E);
+  
+   TLorentzVector total = leadingPhoton + subleadingPhoton; // I think this works
+   double ggmass = total.M();
+
+   fSignalDiPhoton.Minv = ggmass;
+   fSignalDiPhoton.qt = total.Pt();
 
    //Fill the tree Branches 
    fgenTree->Fill(); 
