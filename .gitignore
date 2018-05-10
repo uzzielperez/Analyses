@@ -1,0 +1,21 @@
+# python compiled
+*.pyc
+__init__.py
+
+# c compiled
+*.d
+*.so
+*.pcm
+
+# misc.
+*.png
+*.pdf
+*.root
+*.swp
+
+# crab
+crab.history
+crab.log
+
+# backup files
+*~
