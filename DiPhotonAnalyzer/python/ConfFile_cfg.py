@@ -19,8 +19,9 @@ process.TFileService = cms.Service("TFileService",
                             )
 
 
-process.demo = cms.EDAnalyzer('DiPhotonAnalyzer'
-)
+process.demo = cms.EDAnalyzer('DiPhotonAnalyzer', 
+    particles = cms.InputTag("genParticles")
+  )
 
 
 process.p = cms.Path(process.demo)
