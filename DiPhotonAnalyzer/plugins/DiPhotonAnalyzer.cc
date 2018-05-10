@@ -176,12 +176,34 @@ DiPhotonAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetu
   fSignalDiPhoton.Minv = -99999.99;
   fSignalDiPhoton.qt = -99999.99;
 
-
+  int photoncount = 0; 
+  
   for(vector<reco::GenParticle>::const_iterator ip = genParticles->begin(); ip != genParticles->end(); ++ip){
       if(ip->status()==1 && ip->pdgId()==22){
-         cout << "Photon end state found" << endl;
+         //cout << "Photon end state found" << endl;
+        photoncount = photoncount + 1;
+        double pt = ip->pt();
+        double eta = ip->eta();
+        double phi = ip->phi();
+
+        //Ordering photons
+        if (pt > fSignalPhoton1.pt){
+            fSignalPhoton2.pt = fSignalPhoton1.pt;
+            fSignalPhoton2.eta = fSignalPhoton1.eta;
+            fSignalPhoton2.phi = fSignalPhoton1.phi;
+
+            fSignalPhoton1.pt = pt;
+            fSignalPhoton1.eta = eta;
+            fSignalPhoton1.phi = phi;
+        }      
+        if ((pt < fSignalPhoton1.pt) && (pt > fSignalPhoton2.pt)){
+            fSignalPhoton2.pt = pt;
+            fSignalPhoton2.eta = eta;
+            fSignalPhoton2.phi = phi;
+        }
       }//end photon end state condition
   }//end loop over gen particles 
+  cout << "Number of photons in event: " << photoncount << endl;
 
    //Fill the tree Branches 
    fgenTree->Fill(); 
