@@ -5,10 +5,10 @@
 // 
 /**\class DiPhotonAnalyzer DiPhotonAnalyzer.cc Analyses/DiPhotonAnalyzer/plugins/DiPhotonAnalyzer.cc
 
- Description: [one line class summary]
-
+ Description: Basic GEN only analyzer
  Implementation:
-     [Notes on implementation]
+      Accesses MC level genParticle information. Outputs kinematic photon information,
+      pt, eta, phi, Diphoton invariant mass, and photon pair momentum. 
 */
 //
 // Original Author:  Cilicia Uzziel Perez
@@ -106,17 +106,11 @@ class DiPhotonAnalyzer : public edm::one::EDAnalyzer<edm::one::SharedResources> 
       int numPhotons = 0;
 };
 
-//
 // constants, enums and typedefs
-//
 
-//
 // static data member definitions
-//
 
-//
 // constructors and destructor
-//
 DiPhotonAnalyzer::DiPhotonAnalyzer(const edm::ParameterSet& iConfig)
 
 {
@@ -157,7 +151,7 @@ DiPhotonAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetu
   fEventInfo.LS = -99999.99;
   fEventInfo.evnum = -99999.99;
 
-  //An example of accessing GenParticles from the event. reco::GenParticleCollection is typedef for vector<reco::GenParticle>
+  //Accessing GenParticles from the event. reco::GenParticleCollection is typedef for vector<reco::GenParticle>
   edm::Handle<vector<reco::GenParticle> > genParticles;
   iEvent.getByToken(genParticlesToken_,genParticles);
   
@@ -218,7 +212,7 @@ DiPhotonAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetu
   leadingPhoton.SetPtEtaPhiE(fSignalPhoton1.pt, fSignalPhoton1.eta, fSignalPhoton1.phi, fSignalPhoton1.E);
   subleadingPhoton.SetPtEtaPhiE(fSignalPhoton2.pt, fSignalPhoton2.eta, fSignalPhoton2.phi, fSignalPhoton2.E);
   
-   TLorentzVector total = leadingPhoton + subleadingPhoton; // I think this works
+   TLorentzVector total = leadingPhoton + subleadingPhoton;
    double ggmass = total.M();
 
    fSignalDiPhoton.Minv = ggmass;
