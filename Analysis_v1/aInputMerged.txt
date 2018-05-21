@@ -1,8 +1,4 @@
-root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Run2016Data-Merged/DoubleEG__Run2016B-03Feb2017_ver2-v2__MINIAOD/out.root
-root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Run2016Data-Merged/DoubleEG__Run2016C-03Feb2017-v1__MINIAOD/out.root
-root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Run2016Data-Merged/DoubleEG__Run2016D-03Feb2017-v1__MINIAOD/out.root
-root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Run2016Data-Merged/DoubleEG__Run2016E-03Feb2017-v1__MINIAOD/out.root
-root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Run2016Data-Merged/DoubleEG__Run2016F-03Feb2017-v1__MINIAOD/out.root
-root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Run2016Data-Merged/DoubleEG__Run2016G-03Feb2017-v1__MINIAOD/out.root
-root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Run2016Data-Merged/DoubleEG__Run2016H-03Feb2017_ver2-v1__MINIAOD/out.root
-root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Run2016Data-Merged/DoubleEG__Run2016H-03Feb2017_ver3-v1__MINIAOD/out.root
+root://cmsxrootd.fnal.gov//store/user/cuperez/ADDGravToGG/ADDGravToGG_MS-4000_NED-4_KK-1_M-200-4000/ADDGravToGG_MS-4000_NED-4_KK-1_M-1000To2000_13TeV-sherpaout.root
+root://cmsxrootd.fnal.gov//store/user/cuperez/ADDGravToGG/ADDGravToGG_MS-4000_NED-4_KK-1_M-200-4000/ADDGravToGG_MS-4000_NED-4_KK-1_M-2000To4000_13TeV-sherpaout.root
+root://cmsxrootd.fnal.gov//store/user/cuperez/ADDGravToGG/ADDGravToGG_MS-4000_NED-4_KK-1_M-200-4000/ADDGravToGG_MS-4000_NED-4_KK-1_M-200To500_13TeV-sherpaout.root
+root://cmsxrootd.fnal.gov//store/user/cuperez/ADDGravToGG/ADDGravToGG_MS-4000_NED-4_KK-1_M-200-4000/ADDGravToGG_MS-4000_NED-4_KK-1_M-500To1000_13TeV-sherpaout.root

@@ -21,7 +21,8 @@ sw.Start()
 #study = "GGJets"
 #study = "DiPhoton"
 #study = "GGJetsAdj1"
-study = "DoubleEGData"
+#study = "DoubleEGData"
+study = "ADDGravToGGSherpa"
 
 classname = "Class%s" %(study)
 
