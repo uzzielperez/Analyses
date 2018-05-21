@@ -4,28 +4,33 @@
 # Main
 eosdir='/store/user/cuperez'
 
-## EDIT HERE sub
-project='/DiPhotonAnalysis'
-#project='/TriPhotonAnalysis'
-######################################
 #------ECHO SETTINGS
-#-- Quickcheck
-quickcheck=true
+quickcheck=false
+crabntuplesDEEP=false       # To search deep for ALL the unmerged CRAB ntuples 
+crabntuples=false           # true to get full path, uncomment appropriate sub
+merged=false             # true to get full path, uncomment appropriate sub
+crabADD=true
+crabADDfiles=true
 
-#-- CRAB NTUPLES
-crabntuplesDEEP=true #To search deep for ALL the unmerged CRAB ntuples 
-crabntuples=true    # true to get full path, uncomment appropriate sub
+## EDIT HERE sub
+#project='/DiPhotonAnalysis'
+project='/ADDGravToGGSherpa'
+#project='/TriPhotonAnalysis'
+
 #sub2='/Summer16GGJets'
 #sub2='/Summer16GGJetsResubmit'
-sub2='/Run2016Data'
+#sub2='/Run2016Data'
+
 #-- MERGED FILES 
-merged=true           # true to get full path, uncomment appropriate sub
 #sub='/Summer16_GGJets_Merged'
-sub='/Run2016Data-Merged'
-#sub='/
-#######
+#sub='/Run2016Data-Merged'
+#sub=''
+
+
+#-----------------------------
 DIR=$eosdir$project$sub
 DIR2=$eosdir$project$sub2
+
 ####### eos aliases 
 eosls='eos root://cmseos.fnal.gov ls'
 eosmkdir='eos root://cmseos.fnal.gov mkdir'
@@ -50,6 +55,42 @@ while $quickcheck; do
  done
 break
 done
+
+#--------/store/user/cuperez/projectname
+while $crabADD; do
+ echo 'Printing out subdirectories of' $eosdir$project:
+ for i in `$eosls $eosdir$project`
+ do
+   #echo $i
+   newg=$eosdir$project/$i
+   for j in `$eosls $newg`
+   do
+     newg2=$newg/$j
+     #echo $newg2
+     for k in `$eosls $newg2`
+     do
+	newg3=$newg2/$k
+	#echo $newg3
+	while $crabADDfiles; 
+	do
+	 for p in `$eosls $newg3`
+	 do
+	  newg4=$newg3/$p
+          #echo $newg4
+	  for q in `$eosls $newg4`
+          do
+	     newg5=$newg4/$q
+	     echo $newg5
+	  done
+	 done
+	break
+	done
+     done
+   done
+ done
+break
+done
+
 
 #-------/store/user/cuperez/projectname/sub ------>  MERGED
 while $merged; do
@@ -83,6 +124,7 @@ break
 done
 
 #------DiPhotonAnalysis Full
+redirector='root://cmsxrootd.fnal.gov/'
 while $crabntuplesDEEP; do
  echo 'CRAB unmerged ntuples:' 
  for i in `$eosls $DIR2`
@@ -108,7 +150,7 @@ while $crabntuplesDEEP; do
        echo $new6
        # echo $m # filename only
        #echo $new6 >> ${k}fi.txt
-       echo $new6 >> ${j}fi.txt
+       echo $redirector$new6 >> ${j}fi.txt
       done
      done
     done

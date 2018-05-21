@@ -20,7 +20,9 @@ sw.Start()
 #chain.Print()
 #study = "GGJets"
 #study = "DiPhoton"
-study = "GGJetsAdj1"
+#study = "GGJetsAdj1"
+#study = "DoubleEGData"
+study = "ADDGravToGGSherpa"
 
 classname = "Class%s" %(study)
 
