@@ -1,8 +1,4 @@
-root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16_GGJets_Merged/GGJets_M-1000To2000_Pt-50_13TeV-sherpa.root
-root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16_GGJets_Merged/GGJets_M-2000To4000_Pt-50_13TeV-sherpa.root
-root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16_GGJets_Merged/GGJets_M-200To500_Pt-50_13TeV-sherpa.root
-root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16_GGJets_Merged/GGJets_M-4000To6000_Pt-50_13TeV-sherpa.root
-root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16_GGJets_Merged/GGJets_M-500To1000_Pt-50_13TeV-sherpa.root
-root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16_GGJets_Merged/GGJets_M-6000To8000_Pt-50_13TeV-sherpa.root
-root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16_GGJets_Merged/GGJets_M-60To200_Pt-50_13TeV-sherpa.root
-root://cmsxrootd.fnal.gov//store/user/cuperez/DiPhotonAnalysis/Summer16_GGJets_Merged/GGJets_M-8000To13000_Pt-50_13TeV-sherpa.root
+root://cmsxrootd.fnal.gov//store/user/cuperez/ADDGravToGG/ADDGravToGG_MS-4000_NED-4_KK-1_M-200-4000/ADDGravToGG_MS-4000_NED-4_KK-1_M-1000To2000_13TeV-sherpaout.root
+root://cmsxrootd.fnal.gov//store/user/cuperez/ADDGravToGG/ADDGravToGG_MS-4000_NED-4_KK-1_M-200-4000/ADDGravToGG_MS-4000_NED-4_KK-1_M-2000To4000_13TeV-sherpaout.root
+root://cmsxrootd.fnal.gov//store/user/cuperez/ADDGravToGG/ADDGravToGG_MS-4000_NED-4_KK-1_M-200-4000/ADDGravToGG_MS-4000_NED-4_KK-1_M-200To500_13TeV-sherpaout.root
+root://cmsxrootd.fnal.gov//store/user/cuperez/ADDGravToGG/ADDGravToGG_MS-4000_NED-4_KK-1_M-200-4000/ADDGravToGG_MS-4000_NED-4_KK-1_M-500To1000_13TeV-sherpaout.root

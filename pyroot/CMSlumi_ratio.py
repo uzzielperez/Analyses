@@ -17,17 +17,17 @@ extraTextFont = 52;  # default is helvetica-italics
  
 # text sizes and text offsets with respect to the top frame 
 # in unit of the top margin size 
-lumiTextSize     = 0.45 
-lumiTextOffset   = 0.2 
+lumiTextSize     = 0.35 # 0.45 default 
+lumiTextOffset   = 0.3 # 0.2 default 
  
 cmsTextSize     = 0.75; 
 cmsTextSize = 0.45; 
 cmsTextOffset = 0.1;  # only used in outOfFrame version 
  
-relPosX = 0.04 #0.045 default 
-relPosY = 0.035 
+relPosX = 0.045 #0.045 default 
+relPosY = 0.02 #0.03 default 
 relExtraDY = 1 
-relExtraDX = 1.5 #2.2 default
+relExtraDX = 2.2 #2.2 default
  
 extraOverCmsTextSize  = 0.76 	
 lumi_sqrtS = "" 

@@ -110,7 +110,8 @@ void ClassGGJets::Loop()
       // if (Cut(ientry) < 0) continue;
       Ntotal++; 
 	//float weight = 0;
-	float weight = Event_weightAll;
+	double weight = Event_weightAll;
+//	
 //	float newLumi = 0;
 //
 //        vector<float> wts;
@@ -187,7 +188,7 @@ void ClassGGJets::Loop()
   cout << "  and in EBEE or EEEB     : " << nEBEEorEEEB << endl;
   cout << endl;
 
-  TFile file_out("GGJets_histograms3.root","RECREATE");
+  TFile file_out("GGJets_histograms.root","RECREATE");
 
 	diphotonMinv->Write();
 	photon1Pt->Write();

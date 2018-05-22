@@ -15,8 +15,8 @@ from CMSlumi_ratio import CMS_lumi
 #--------------------------------------------------------------------------------
 MCpath = '/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/Analysis_v1/GGJetsStudy'
 DATApath = '/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/Analysis_v1/DoubleEGDataStudy'
-mcfile = 'GGJets_histograms2.root' 
-datafile = 'DoubleEG_histograms2.root'
+mcfile = 'GGJets_histograms.root' 
+datafile = 'DoubleEG_histograms.root'
 #--------------------------------------------------------------------------------
 # Timer 
 sw = ROOT.TStopwatch()
@@ -147,23 +147,23 @@ while i<len(objMC):
 	# Create Histograms
 	#hMC = createHist(f_mc, kBlue+1, objMC[i])
 	#hDATA = createHist(f_data, kBlack, objData[i])
- 	hRatio = createRatio(hDATA[i], hMC[i])
 	c, pad1, pad2 = createCanvasPads()
 #	c = ROOT.TCanvas()
+	scale = 35.92 # already reweighted to 35.92
 	#--------------- String Finder	
 	if objMC[i].find("Minv") != -1:
 		xtitle =   r"m_{#gamma#gamma}#scale[0.8]{(GeV)}" # r"#scale[0.8]{m_{#gamma#gamma}(GeV)}"
 		xmin = 500
 		xmax = 1000
-		scale = 35.9 
+		#scale = 35.9 
 	        c.SetLogy()			
 		xpos1, ypos1, xpos2, ypos2 = .72, 0.75, 1.0, .85
 		#xpos1, ypos1, xpos2, ypos2 = .60, 0.65, 1.0, .85
 	elif objMC[i].find("Pt") != -1:
 		xtitle = "#scale[0.8]{p_{T}(GeV)}"
-		xmin = 500
+		xmin = 75
 		xmax = 1000
-		scale = 35.9
+		#scale = 35.9
 		c.SetLogy()	
 		xpos1, ypos1, xpos2, ypos2 = .72, 0.75, 1.0, .85
 		#xpos1, ypos1, xpos2, ypos2 = .60, 0.65, 1.0, .85 
@@ -175,7 +175,7 @@ while i<len(objMC):
 			xtitle = r"#scale[0.7]{det} " + xtitle
 		xmin = -3.0
 		xmax = 3.0
-		scale = 35.9		
+		#scale = 35.9		
 		xpos1, ypos1, xpos2, ypos2 = .72, 0.75, 1.0, .85
 		#xpos1, ypos1, xpos2, ypos2 = .60, 0.65, 1.0, .85
 		#xpos1, ypos1, xpos2, ypos2 = .45, 0.20, .85, .38
@@ -187,7 +187,7 @@ while i<len(objMC):
 			xtitle = r"#scale[0.7]{det} " + xtitle
 		xmin = -3.5
 		xmax = 3.5
-		scale = 35.9	
+		#scale = 35.9	
 		xpos1, ypos1, xpos2, ypos2 = .72, 0.75, 1.0, .85
 		#xpos1, ypos1, xpos2, ypos2 = .60, 0.65, 1.0, .85
 		#xpos1, ypos1, xpos2, ypos2 = .45, 0.20, .85, .38
@@ -225,8 +225,9 @@ while i<len(objMC):
 	hDATA[i].GetXaxis().SetRangeUser(xmin, xmax)	
 	hDATA[i].GetYaxis().SetTitle("Events") 
 	hDATA[i].SetMarkerStyle(20)
-	hDATA[i].Draw("esamex0")
+	hDATA[i].Draw("esamex0")  # Draw this to set max y to scale with hDATA
 	hMC[i].Draw("hist same")
+	hDATA[i].Draw("esamex0") # To draw over filled MC
 	#to avoid clipping the bottom zero, redraw a small axis
 	#hM.GetYaxis().SetLabelSize(0.0)
 	#axis = TGaxis(-5, 20, -5, 220, 20, 220, 510, "")
@@ -245,6 +246,7 @@ while i<len(objMC):
 	leg.AddEntry(hDATA[i], "DATA", "l")
 	leg.Draw()
 
+ 	hRatio = createRatio(hDATA[i], hMC[i])
         # RATIO  
 	pad2.cd()
 	hMC[i].GetYaxis().SetTitle("ratio %s/%s" %("MC", "DATA"))
@@ -259,18 +261,6 @@ while i<len(objMC):
 	y.SetTitleSize(20)
 	y.SetTitleFont(43)
 	hRatio.Draw("ep")
-
-	#Legend
-	#leg = TLegend(xpos1, ypos1, xpos2, ypos2)
-	#leg.SetBorderSize(0)
-	#leg.SetFillColor(0)
-	#leg.SetFillStyle(0)
-	#leg.SetTextFont(42)
-	#leg.SetTextSize(0.035)
-	#leg.AddEntry(hMC, "MC", "lpf")
-	#leg.AddEntry(hDATA, "DATA", "lpf")
-	#leg.Draw()
-
 	      
 	#place_legend(c[i], None, None, None, None, header="", option="LP")
 	CMS_lumi(c, 4, 11, False) 

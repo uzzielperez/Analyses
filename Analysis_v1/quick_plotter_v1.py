@@ -13,14 +13,19 @@ sys.path.append(CMSlumiPath)
 from CMSlumi import CMS_lumi
 
 #--------------------------------------------------------------------------------
-path = '/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/Analysis_v1/GGJetsStudy'
-filename = 'GGJets_histograms.root' 
+#path = '/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/Analysis_v1/GGJetsStudy'
+#path = '/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/Analysis_v1/DoubleEGDataStudy'
+path = '/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/Analysis_v1/ADDGravToGGSherpaStudy'
+#filename = 'GGJets_histograms.root' 
+#filename = 'DoubleEG_histograms.root'
+filename = 'ADDGravToGGSherpa_histo_M-200-4000.root' 
 #--------------------------------------------------------------------------------
 
 # Draw Options 
 h = True      # Draw histograms as "hist"
-overlay = True 
-fit = True
+overlay =False 
+fit = False
+SetLogy = True 
 
 #--------------------------------------------------------------------------------
 # Timer 
@@ -34,7 +39,7 @@ gStyle.SetOptStat(0)
 #CMS_lumi( TPad* pad, int iPeriod=3, int iPosX=10 )
 ##########################################
 
-f = ROOT.TFile(filename, "READ")
+f = ROOT.TFile(path+"/"+filename, "READ")
 #f.ls()
 
 #----------------------------------------
@@ -111,14 +116,16 @@ while i<len(histos):
 	if obj[i].find("Minv") != -1:
 		xtitle = r"m_{#gamma#gamma} #scale[0.8]{(GeV)}"
 		xmin = 200
-		xmax = 1600 
-	        c.SetLogy()	
+		xmax = 4000 #1600 
+		if SetLogy:
+	        	c.SetLogy()	
 		xpos1, ypos1, xpos2, ypos2 = .60, 0.65, 1.0, .85
 	elif obj[i].find("Pt") != -1:
 		xtitle = "p_{T} (GeV)"
 		xmin = 200
-		xmax = 1600
-		c.SetLogy()	
+		xmax = 4000 #1600
+		if SetLogy:
+			c.SetLogy()	
 		xpos1, ypos1, xpos2, ypos2 = .60, 0.65, 1.0, .85 
 	elif obj[i].find("Eta") != -1:
 		xtitle = r"#eta" 
@@ -185,7 +192,8 @@ while i<len(histos):
 					legpT.SetTextFont(42)
 					legpT.SetTextSize(0.035)
 				samePt.cd()
-				samePt.SetLogy()
+				if SetLogy:
+					samePt.SetLogy()
 				if h:
 					histos[i].Draw("hist same")
 				else:
