@@ -2,8 +2,18 @@ import ROOT
 import time
 import subprocess
 import os
+import argparse
 
-inputfile = 'aInputMerged.txt'
+# Command line options
+parser = argparse.ArgumentParser(description="Run-Chain-Class")
+parser.add_argument("-i", "--inputfiles", dest="inputfiles", default="aInputMerged.txt", help="List of input files")
+parser.add_argument("-s", "--study", dest="study", default="SomeStudy", help="Study Name")
+parser.add_argument("-t", "--ttree", dest="ttree", default="diphoton/fTree", help="TTree Name")
+args = parser.parse_args()
+
+
+#inputfile = 'aInputMerged.txt'
+inputfile = args.inputfiles
 f = open(inputfile)
 lines = f.read().split('\n') #list containing each line
 lines = lines[:-1] #to exclude last slot in lines which is white space
@@ -22,7 +32,8 @@ sw.Start()
 #study = "DiPhoton"
 #study = "GGJetsAdj1"
 #study = "DoubleEGData"
-study = "ADDGravToGGSherpa"
+#study = "ADDGravToGGSherpa"
+study = args.study
 
 classname = "Class%s" %(study)
 
@@ -36,8 +47,9 @@ print "Moving to %sStudy/" %(study)
 
 #-----------------------------------------
 
-tree = "diphoton/fTree"
+#tree = "diphoton/fTree"
 #tree = "diphoton/fGenTrees" 
+tree = args.ttree
 
 #-----------------------------------------
 
