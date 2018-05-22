@@ -39,6 +39,15 @@ python runChainClass.py
 This will create a new <Classname>.C, <Classname>.h, analyze<Classname>.C. To start a new analysis with different cuts make new directory and do your analysis there. Otherwise
 you risk overwriting your main analysis codes. RunChainClass.py actually makes the directory for you and you can start working there. 
 
+As of 5/22/18, this step now has command line options to include custom files. To see options:
+
+```bash
+ 
+python runChainClass.py -h
+
+``` 
+
+
 3.) Configure class for selection and execute analyze.C to loop over events. One can do, <br />
 ```bash
 
