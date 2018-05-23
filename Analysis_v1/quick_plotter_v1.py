@@ -11,14 +11,17 @@ import sys
 CMSlumiPath = '/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/pyroot'
 sys.path.append(CMSlumiPath)  
 from CMSlumi import CMS_lumi
+import argparse
 
 #--------------------------------------------------------------------------------
 #path = '/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/Analysis_v1/GGJetsStudy'
 #path = '/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/Analysis_v1/DoubleEGDataStudy'
-path = '/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/Analysis_v1/ADDGravToGGSherpaStudy'
+#path = '/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/Analysis_v1/ADDGravToGGSherpaStudy'
+path = '/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/Analysis_v1/ADDGravToGGPythiaStudy'
 #filename = 'GGJets_histograms.root' 
 #filename = 'DoubleEG_histograms.root'
-filename = 'ADDGravToGGSherpa_histo_M-200-4000.root' 
+#filename = 'ADDGravToGGSherpa_histo_M-200-4000.root' 
+filename = 'ADDGravToGGPythia_histo_M-200-4000.root'
 #--------------------------------------------------------------------------------
 
 # Draw Options 
