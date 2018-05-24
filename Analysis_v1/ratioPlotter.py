@@ -16,12 +16,20 @@ from CMSlumi_ratio import CMS_lumi
 path1 = "/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/Analysis_v1/ADDGravToGGSherpaStudy"
 path2 = '/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/Analysis_v1/ADDGravToGGPythiaStudy'
 File1 = "ADDGravToGGSherpa_histo_M-200-4000.root"
+#File2 = "wADDGravToGGPythia_histo_M-200-4000.root" #This is a test file on weights
 #File2 = "ADDGravToGGPythia_histo_M-200-4000.root"
-File2 = "wADDGravToGGPythia_histo_M-200-4000.root" #This is a test file on weights
+File2 =  "CADDGravToGGPythia_histo_M-200-4000-etaCut.root"
 
 fileDescription1 = "Sherpa"
 fileDescription2 = "Pythia"
 #--------------------------------------------------------------------------------
+# Draw style option (mc) 
+#s2 = "esamex0"
+s2 = "same"
+s1 = "hist same"
+#-----------------------
+
+
 # Timer 
 sw = ROOT.TStopwatch()
 sw.Start()
@@ -230,9 +238,14 @@ while i<len(obj_f1):
 	hf2[i].GetXaxis().SetRangeUser(xmin, xmax)	
 	hf2[i].GetYaxis().SetTitle("Events") 
 	hf2[i].SetMarkerStyle(20)
-	hf2[i].Draw("esamex0")  # Draw this to set max y
-	hf1[i].Draw("hist same")
-	hf2[i].Draw("esamex0") # To draw over filled MC
+	
+	hf2[i].Draw(s2)  # Draw this to set max y
+	hf1[i].Draw(s1)
+	hf2[i].Draw(s2) # To draw over filled MC
+
+#	hf2[i].Draw("esamex0")  # Draw this to set max y
+#	hf1[i].Draw("hist same")
+#	hf2[i].Draw("esamex0") # To draw over filled MC
 	#to avoid clipping the bottom zero, redraw a small axis
 	#hM.GetYaxis().SetLabelSize(0.0)
 	#axis = TGaxis(-5, 20, -5, 220, 20, 220, 510, "")
@@ -279,7 +292,7 @@ while i<len(obj_f1):
 	#from ROOT import gROOT 
 	#gROOT.GetListOfCanvases().Draw() 		 
 	#gROOT.GetListOfCanvases().Print("ratioplots/ratio%s/png" %(obj_f1[i]))		
-	c.Print("%s/REratio_%s.png" %("ratioplots",obj_f1[i]))
+	c.Print("%s/ratio_%s.png" %("ratioplots",obj_f1[i]))
 
 	# move to next object in root file
 	i = i + 1
