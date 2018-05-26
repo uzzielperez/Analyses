@@ -12,16 +12,18 @@ CMSlumiPath = '/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/pyroot'
 sys.path.append(CMSlumiPath)  
 from CMSlumi_ratio import CMS_lumi
 
+study = "Pythia-Sherpa-NED-4_Ms_4000"
 #--------------------------------------------------------------------------------
 path1 = "/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/Analysis_v1/ADDGravToGGSherpaStudy"
 path2 = '/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/Analysis_v1/ADDGravToGGPythiaStudy'
 File1 = "ADDGravToGGSherpa_histo_M-200-4000.root"
-#File2 = "wADDGravToGGPythia_histo_M-200-4000.root" #This is a test file on weights
+File2 = "wADDGravToGGPythia_histo_M-200-4000.root" #This is a test file on weights
 #File2 = "ADDGravToGGPythia_histo_M-200-4000.root"
-File2 =  "CADDGravToGGPythia_histo_M-200-4000-etaCut.root"
+#File2 =  "CADDGravToGGPythia_histo_M-200-4000-etaCut.root"
 
-fileDescription1 = "Sherpa"
-fileDescription2 = "Pythia"
+fileDescription1 = "Sherpa-Ms-4000-4ED-GRW"
+#fileDescription2 = "Pythia-Ms-4000-4ED-GRW-EtaCut"
+fileDescription2 = "Pythia-Ms-4000-4ED-GRW"
 #--------------------------------------------------------------------------------
 # Draw style option (mc) 
 #s2 = "esamex0"
@@ -169,8 +171,9 @@ while i<len(obj_f1):
 		xmin = 500
 		xmax = 4000
 		#scale = 35.9 
-	        c.SetLogy()			
-		xpos1, ypos1, xpos2, ypos2 = .72, 0.75, 1.0, .85
+	        c.SetLogy()				
+		xpos1, ypos1, xpos2, ypos2 = .40, 0.75, 1.0, .85
+		#xpos1, ypos1, xpos2, ypos2 = .72, 0.75, 1.0, .85
 		#xpos1, ypos1, xpos2, ypos2 = .60, 0.65, 1.0, .85
 	elif obj_f1[i].find("Pt") != -1:
 		xtitle = "#scale[0.8]{p_{T}(GeV)}"
@@ -178,7 +181,7 @@ while i<len(obj_f1):
 		xmax = 4000
 		#scale = 35.9
 		c.SetLogy()	
-		xpos1, ypos1, xpos2, ypos2 = .72, 0.75, 1.0, .85
+		xpos1, ypos1, xpos2, ypos2 = .40, 0.75, 1.0, .85
 		#xpos1, ypos1, xpos2, ypos2 = .60, 0.65, 1.0, .85 
 	elif obj_f1[i].find("Eta") != -1:
 		xtitle = r"#eta"
@@ -189,7 +192,7 @@ while i<len(obj_f1):
 		xmin = -3.0
 		xmax = 3.0
 		#scale = 35.9		
-		xpos1, ypos1, xpos2, ypos2 = .72, 0.75, 1.0, .85
+		xpos1, ypos1, xpos2, ypos2 = .40, 0.75, 1.0, .85
 		#xpos1, ypos1, xpos2, ypos2 = .60, 0.65, 1.0, .85
 		#xpos1, ypos1, xpos2, ypos2 = .45, 0.20, .85, .38
 	elif obj_f1[i].find("Phi") != -1:
@@ -201,7 +204,7 @@ while i<len(obj_f1):
 		xmin = -3.5
 		xmax = 3.5
 		#scale = 35.9	
-		xpos1, ypos1, xpos2, ypos2 = .72, 0.75, 1.0, .85
+		xpos1, ypos1, xpos2, ypos2 = .40, 0.75, 1.0, .85
 		#xpos1, ypos1, xpos2, ypos2 = .60, 0.65, 1.0, .85
 		#xpos1, ypos1, xpos2, ypos2 = .45, 0.20, .85, .38
 	else:
@@ -292,7 +295,7 @@ while i<len(obj_f1):
 	#from ROOT import gROOT 
 	#gROOT.GetListOfCanvases().Draw() 		 
 	#gROOT.GetListOfCanvases().Print("ratioplots/ratio%s/png" %(obj_f1[i]))		
-	c.Print("%s/ratio_%s.png" %("ratioplots",obj_f1[i]))
+	c.Print("%s/%sratio_%s.png" %("ratioplots",study, obj_f1[i]))
 
 	# move to next object in root file
 	i = i + 1
