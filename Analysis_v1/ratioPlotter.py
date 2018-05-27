@@ -11,6 +11,15 @@ import sys
 CMSlumiPath = '/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/pyroot'
 sys.path.append(CMSlumiPath)  
 from CMSlumi_ratio import CMS_lumi
+import argparse
+
+# Command line options
+parser = argparse.ArgumentParser(description="ratioPlotter")
+parser.add_argument("-i", "--inputfiles", dest="inputfiles", default="aInputMerged.txt", help="List of input files")
+parser.add_argument("-s", "--study", dest="study", default="SomeStudy", help="Study Name")
+parser.add_argument("-t", "--ttree", dest="ttree", default="diphoton/fTree", help="TTree Name")
+args = parser.parse_args()
+
 
 study = "Pythia-Sherpa-NED-4_Ms_4000"
 #--------------------------------------------------------------------------------
