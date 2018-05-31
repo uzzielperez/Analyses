@@ -102,7 +102,29 @@ ClassADDGravToGGPythia::ClassADDGravToGGPythia(TTree *tree) : fChain(0)
       // The following code should be used if you want this class to access a chain
       // of trees.
       TChain * chain = new TChain("demo/fgenTree","");
-      chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/Analysis_v1/rootFiles/TestADDPythia.root/demo/fgenTree");
+      
+      // Pythia vs Pythia Study 
+      // noMD 
+	 //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/TestADDGravToGG_NED-4_LambdaT-4000_M-500-13TeV-pythia8_cff_py_GEN.root/demo/fgenTree");
+	 //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/TestADDGravToGG_NED-4_LambdaT-5000_M-500-13TeV-pythia8_cff_py_GEN.root/demo/fgenTree");
+	 //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/TestADDGravToGG_NED-4_LambdaT-7000_M-500-13TeV-pythia8_cff_py_GEN.root/demo/fgenTree");
+	 chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/TestADDGravToGG_NED-4_LambdaT-10000_M-500-13TeV-pythia8_cff_py_GEN.root/demo/fgenTree");
+
+      // w/MD
+	//chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/TestADDGravToGG_NED-4_MD-1128_LambdaT-4000_M-500-13TeV-pythia8_cff_py_GEN.root/demo/fgenTree");
+	//chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/TestADDGravToGG_NED-4_MD-1410_LambdaT-4000_M-500-13TeV-pythia8_cff_py_GEN.root/demo/fgenTree");
+	//chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/TestADDGravToGG_NED-4_MD-1974_LambdaT-4000_M-500-13TeV-pythia8_cff_py_GEN.root/demo/fgenTree");
+	//chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/TestADDGravToGG_NED-4_MD-2820_LambdaT-4000_M-500-13TeV-pythia8_cff_py_GEN.root/demo/fgenTree");
+
+      // File with 10,000 events 
+      //chain->Add("/uscms/home/cuperez/nobackup/CMSSW_9_3_8/src/multiphoton-analysis/ADDPythia10K.root/demo/fgenTree");
+      //chain->Add("/uscms/home/cuperez/nobackup/CMSSW_8_0_25/src/multiphoton-analysis/TestADDGravToGG_NED-4_LambdaT-4000_13TeV-pythia8_cff_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms/home/cuperez/nobackup/CMSSW_8_0_25/src/multiphoton-analysis/TestADDGravToGG_NED-4_MD-LambdaT-4000_13TeV-pythia8_cff_py_GEN.root");
+      
+      // File with 1000 events  
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/Analysis_v1/rootFiles/TestADDPythia.root/demo/fgenTree");
+      //chain->Add("/uscms/home/cuperez/nobackup/CMSSW_8_0_25/src/multiphoton-analysis/TestADDGravToGG_NED-4_LambdaT-4000_13TeV-pythia8_cff_py_GEN.root/demo/fgenTree");
+
       tree = chain;
 #endif // SINGLE_TREE
 
