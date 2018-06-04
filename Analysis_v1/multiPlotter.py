@@ -46,15 +46,15 @@ if isMD:
 	
 	outName = 'MD'
 else:
-	File1 = 'TestADDG2gg_LambdaT-10000_M-500-pythia8.root'
-	File2 = 'TestADDG2gg_LambdaT-4000_M-500-pythia8.root'
-	File3 = 'TestADDG2gg_LambdaT-5000_M-500-pythia8.root'
-	File4 = 'TestADDG2gg_LambdaT-7000_M-500-pythia8.root'
+	File4 = 'TestADDG2gg_LambdaT-10000_M-500-pythia8.root'
+	File1 = 'TestADDG2gg_LambdaT-4000_M-500-pythia8.root'
+	File2 = 'TestADDG2gg_LambdaT-5000_M-500-pythia8.root'
+	File3 = 'TestADDG2gg_LambdaT-7000_M-500-pythia8.root'
 
-	fileDesc1 = 'LambdaT-10000'
-	fileDesc2 = 'LambdaT-4000'
-	fileDesc3 = 'LambdaT-5000'
-	fileDesc4 = 'LambdaT-7000'
+	fileDesc4 = 'LambdaT-10000'
+	fileDesc1 = 'LambdaT-4000'
+	fileDesc2 = 'LambdaT-5000'
+	fileDesc3 = 'LambdaT-7000'
 	
 	outName   = 'noMD'
 FileList = [File1, File2, File3, File4]

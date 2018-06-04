@@ -110,29 +110,26 @@ def LoopObjKeys(fileAssign, obj_i, canvas_i, hist_i, index):
 
 def LoopOverHistogramsPerFile(study, obj_f1, h, listofFiles, canv, outName, isMD):
     i = 0
+    #colorList = [kBlue-9, kYellow-9, kMagenta-9, kGreen-7, kRed-7, kAzure+9, kGray]
+    #use a color list if necessary
     while i<len(obj_f1):
     	ytitle = "Events"
         canv[i] = ROOT.TCanvas()
     	#c, pad1, pad2 = createCanvasPads()
     	scale = 1.00
-	countMinv = 0
-	countpt = 0
-	countEta = 0
-	countPhi = 0  
 	#c.cd()
     	#--------------- String Finder
     	if obj_f1[i].find("Minv") != -1:
-    		xtitle =   r"m_{#gamma#gamma}#scale[0.8]{(GeV)}" # r"#scale[0.8]{m_{#gamma#gamma}(GeV)}"
+    		xtitle =   r"m_{#gamma#gamma}#scale[1.0]{(GeV)}" # r"#scale[0.8]{m_{#gamma#gamma}(GeV)}"
            	xmin = 0
            	xmax = 11000
     		#scale = 35.9
                 SetLogy = True
     	    	#c.SetLogy()
-    		xpos1, ypos1, xpos2, ypos2 = .40, 0.75, 1.0, .85
-		countMinv = countMinv +1 
+    		xpos1, ypos1, xpos2, ypos2 = .60, 0.70, 1.0, .85
 	#if obj[i].find("photon1") or obj[i].find("photon2") !=1:   
  	elif obj_f1[i].find("Pt") != -1:
-    		xtitle = "#scale[0.8]{p_{T}(GeV)}"
+    		xtitle = "#scale[1.0]{p_{T}(GeV)}"
     		xmin = 75
     		xmax = 4000
     		#scale = 35.9
@@ -151,7 +148,9 @@ def LoopOverHistogramsPerFile(study, obj_f1, h, listofFiles, canv, outName, isMD
     		xmax = 3.0
     		#scale = 35.9
                 SetLogy = False
-    		xpos1, ypos1, xpos2, ypos2 = .40, 0.75, 1.0, .85
+    	
+		xpos1, ypos1, xpos2, ypos2 = .45, 0.20, .85, .38
+		#xpos1, ypos1, xpos2, ypos2 = .40, 0.75, 1.0, .85
 		#countEta = countEta+1
     	elif obj_f1[i].find("Phi") != -1:
     		xtitle = r"#phi"
@@ -164,7 +163,8 @@ def LoopOverHistogramsPerFile(study, obj_f1, h, listofFiles, canv, outName, isMD
     		#scale = 35.9
                 SetLogy = False
 		#countPhi = countPhi + 1 
-    		xpos1, ypos1, xpos2, ypos2 = .40, 0.75, 1.0, .85
+    		#xpos1, ypos1, xpos2, ypos2 = .40, 0.75, 1.0, .85
+		xpos1, ypos1, xpos2, ypos2 = .45, 0.20, .85, .38
     	else:
     		continue
 
@@ -185,29 +185,35 @@ def LoopOverHistogramsPerFile(study, obj_f1, h, listofFiles, canv, outName, isMD
     		xtitle = xtitle + r" #scale[0.45]{(EBEB)}"
     	# Photon1 or Photon2
     	if obj_f1[i].find("photon1") != -1:
-    		xtitle = r"#scale[0.80]{#gamma_{1}: }" + xtitle
+    		xtitle = r"#scale[1.0]{#gamma_{1}: }" + xtitle
     	if obj_f1[i].find("photon2") != -1:
-    		xtitle = r"#scale[0.80]{#gamma_{2}: }" + xtitle
+    		xtitle = r"#scale[1.0]{#gamma_{2}: }" + xtitle
 
          # Draw All the Histograms in the List of Files
         FileNum = 0
         #h[FileNum][i].Scale(scale)
         h[FileNum][i].SetTitle(obj_f1[i])
-        h[FileNum][i].GetYaxis().SetTitle("Weighted Events")
-        h[FileNum][i].GetYaxis().SetTitleOffset(1.1)
+        h[FileNum][i].GetYaxis().SetTitle("Events")
+        h[FileNum][i].GetXaxis().SetTitle(xtitle)
+	h[FileNum][i].GetYaxis().SetTitleOffset(0.7)
+	h[FileNum][i].GetXaxis().SetTitleOffset(1.1)
         h[FileNum][i].GetXaxis().SetRangeUser(xmin, xmax)
 	leg = TLegend(xpos1, ypos1, xpos2, ypos2)
 	leg.SetBorderSize(0)
 	leg.SetFillStyle(0)
 	leg.SetTextFont(42)
 	leg.SetTextSize(0.035)	
-        
+       	#leg.SetEntrySeparation(3)
+	#leg.SetEntrySeparation(0.3) 
 	while FileNum < len(listofFiles):
 		canv[i].cd()
 		if SetLogy:
 			canv[i].SetLogy()		
-		h[FileNum][i].SetLineColor(FileNum+2)
-		h[FileNum][i].Draw("hist same")
+		h[FileNum][i].SetLineColor(FileNum+1)
+		#h[FileNum][i].SetLineColor(colorList[FileNum])
+		h[FileNum][i].SetFillColor(FileNum+1)
+		h[FileNum][i].SetLineStyle(1)
+		h[FileNum][i].Draw("same")
         	if isMD:
 			pattern = r'MD/(.*)'	
 			match = re.findall(pattern, listofFiles[FileNum])
@@ -215,16 +221,18 @@ def LoopOverHistogramsPerFile(study, obj_f1, h, listofFiles, canv, outName, isMD
 		else:
 			pattern = r'LambdaT-([^(]*)\_M-500'		
 			match = re.findall(pattern, listofFiles[FileNum])
+			#l for line
+			#f for 
         		leg.AddEntry(h[FileNum][i], "LambdaT-%s" %(match[0]), "l")	
 		#hf2[i].SetMarkerStyle(20)
 		leg.Draw()
-		leg.SetEntrySeparation(0.3)
+		leg.SetEntrySeparation(1.3)
 		canv[i].Update()
           
 	        FileNum = FileNum + 1
 		print "filenum: ", FileNum	
 	#CMS_lumi(c, 4, 11, False)
-	leg.SetEntrySeparation(0.3)
+	#leg.SetEntrySeparation(0.6)
 	#leg.Draw() 
    	canv[i].Print("%s/%s%sratio_%s.png" %("ratioplots",outName, study, obj_f1[i]))
 
