@@ -63,13 +63,16 @@ python quick_plotter_v1.py
 
 ```
 This will generate .png or .pdf files that you need for presentation or quick view. Program needs refinement. 
-For comparison plots one can use the ratio plotter. Update file manually for histograms you want to compare.  
+For comparison plots one can use the ratio plotter or the multiPlotter. Update file manually for histograms you want to compare. MultiPlotter takes a list of files and loops over the files and overlays the similar objects (must be created by the same MakeClass script). 
 
 ```bash
 
 python ratioPlotter.py
+# or
+python multiPlotter.py 
 
 ```
+
 
 ## Initial SM Diphoton 2016 Pipeline
 1.) Run ExoDiPhotonAnalyzer on GGJets Sherpa from summer using ./submit_crab_cfg.py <br />
