@@ -1,5 +1,5 @@
 import ROOT
-from ROOT import TClass,TKey, TIter,TCanvas, TPad, TFile, TPaveText, TColor, TGaxis, TH1F, TPad, TH1D, TLegend
+from ROOT import TMath, TClass,TKey, TIter,TCanvas, TPad, TFile, TPaveText, TColor, TGaxis, TH1F, TPad, TH1D, TLegend
 from ROOT import kBlack, kBlue, kRed
 from ROOT import gBenchmark, gStyle, gROOT, gDirectory
 import re
@@ -191,6 +191,7 @@ def LoopOverHistogramsPerFile(study, obj_f1, h, listofFiles, canv, outName, isMD
 
          # Draw All the Histograms in the List of Files
         FileNum = 0
+	hi = h[FileNum][i]
         #h[FileNum][i].Scale(scale)
         h[FileNum][i].SetTitle(obj_f1[i])
         h[FileNum][i].GetYaxis().SetTitle("Events")
@@ -208,13 +209,21 @@ def LoopOverHistogramsPerFile(study, obj_f1, h, listofFiles, canv, outName, isMD
 	while FileNum < len(listofFiles):
 		canv[i].cd()
 		if SetLogy:
-			canv[i].SetLogy()		
+			canv[i].SetLogy()
+		
+		####### DRAW 
+		hi.Draw("same")
+		hi.GetXaxis().SetLimits(xmin, xmax)		
+		#ymin = hi.GetMinimum()
+		#ymax = hi.GetMaximum()
+		#print ymax, ymin
+		#hi.GetYaxis().SetLimits(ymin, ymax)
 		h[FileNum][i].SetLineColor(FileNum+1)
-		#h[FileNum][i].SetLineColor(colorList[FileNum])
 		h[FileNum][i].SetFillColor(FileNum+1)
-		h[FileNum][i].SetLineStyle(1)
+		h[FileNum][i].SetLineStyle(FileNum+1)
 		h[FileNum][i].Draw("same")
-        	if isMD:
+        	
+		if isMD:
 			pattern = r'MD/(.*)'	
 			match = re.findall(pattern, listofFiles[FileNum])
         		leg.AddEntry(h[FileNum][i], "LambdaT-%s" %(match[0]), "l")
