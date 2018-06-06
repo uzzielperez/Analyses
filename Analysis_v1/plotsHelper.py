@@ -107,6 +107,52 @@ def LoopObjKeys(fileAssign, obj_i, canvas_i, hist_i, index):
 #     #print regex, WholeExpression
 
 #def diphotonAnalysisStringFinder(objEL):
+def objSettings(obj):
+        if obj.find("Minv") != -1:
+                xtitle =   r"m_{#gamma#gamma}#scale[1.0]{(GeV)}" # r"#scale[0.8]{m_{#gamma#gamma}(GeV)}"
+                xmin = 0
+                xmax = 11000
+                SetLogy = True
+                xpos1, ypos1, xpos2, ypos2 = .60, 0.70, 1.0, .85
+        elif obj.find("Pt") != -1:
+                xtitle = "#scale[1.0]{p_{T}(GeV)}"
+                xmin = 75
+                xmax = 4000
+                SetLogy = True
+                xpos1, ypos1, xpos2, ypos2 = .60, 0.70, 1.0, .85
+		#xpos1, ypos1, xpos2, ypos2 = .40, 0.75, 1.0, .85
+        elif obj.find("Eta") != -1:
+                xtitle = r"#eta"
+                if obj.find("sc") != -1:
+                        xtitle = r"#scale[0.7]{sc} " + xtitle
+                if obj.find("det") != -1:
+                        xtitle = r"#scale[0.7]{det} " + xtitle
+                xmin = -3.0
+                xmax = 3.0
+                SetLogy = False
+        
+                xpos1, ypos1, xpos2, ypos2 = .32, 0.20, .85, .38
+        elif obj.find("Phi") != -1:
+                xtitle = r"#phi"
+                if obj.find("sc") != -1:
+                        xtitle = r"#scale[0.7]{sc} " + xtitle
+                if obj.find("det") != -1:
+                        xtitle = r"#scale[0.7]{det} " + xtitle
+                xmin = -3.5
+                xmax = 3.5
+                SetLogy = False
+                xpos1, ypos1, xpos2, ypos2 = .32, 0.20, .85, .38
+        else:
+		xtitle, xmin, xmax, SetLogy, xpos1, ypos1, xpos2, ypos2
+
+        return xtitle, xmin, xmax, SetLogy, xpos1, ypos1, xpos2, ypos2
+
+
+def histDrawSettings(h, i, drawstyle):
+	     	h.SetLineColor(i)
+                h.SetFillColor(i)
+                h.SetLineStyle(i)
+                h.Draw(drawstyle)
 
 def LoopOverHistogramsPerFile(study, obj_f1, h, listofFiles, canv, outName, isMD):
     i = 0
@@ -118,56 +164,9 @@ def LoopOverHistogramsPerFile(study, obj_f1, h, listofFiles, canv, outName, isMD
     	#c, pad1, pad2 = createCanvasPads()
     	scale = 1.00
 	#c.cd()
-    	#--------------- String Finder
-    	if obj_f1[i].find("Minv") != -1:
-    		xtitle =   r"m_{#gamma#gamma}#scale[1.0]{(GeV)}" # r"#scale[0.8]{m_{#gamma#gamma}(GeV)}"
-           	xmin = 0
-           	xmax = 11000
-    		#scale = 35.9
-                SetLogy = True
-    	    	#c.SetLogy()
-    		xpos1, ypos1, xpos2, ypos2 = .60, 0.70, 1.0, .85
-	#if obj[i].find("photon1") or obj[i].find("photon2") !=1:   
- 	elif obj_f1[i].find("Pt") != -1:
-    		xtitle = "#scale[1.0]{p_{T}(GeV)}"
-    		xmin = 75
-    		xmax = 4000
-    		#scale = 35.9
-                SetLogy = True
-    		#c.SetLogy()
-		#countpt = countpt +1
-    		xpos1, ypos1, xpos2, ypos2 = .40, 0.75, 1.0, .85
-    		#xpos1, ypos1, xpos2, ypos2 = .60, 0.65, 1.0, .85
-    	elif obj_f1[i].find("Eta") != -1:
-    		xtitle = r"#eta"
-    		if obj_f1[i].find("sc") != -1:
-    			xtitle = r"#scale[0.7]{sc} " + xtitle
-    		if obj_f1[i].find("det") != -1:
-    			xtitle = r"#scale[0.7]{det} " + xtitle
-    		xmin = -3.0
-    		xmax = 3.0
-    		#scale = 35.9
-                SetLogy = False
-    	
-		xpos1, ypos1, xpos2, ypos2 = .45, 0.20, .85, .38
-		#xpos1, ypos1, xpos2, ypos2 = .40, 0.75, 1.0, .85
-		#countEta = countEta+1
-    	elif obj_f1[i].find("Phi") != -1:
-    		xtitle = r"#phi"
-    		if obj_f1[i].find("sc") != -1:
-    			xtitle = r"#scale[0.7]{sc} " + xtitle
-    		if obj_f1[i].find("det") != -1:
-    			xtitle = r"#scale[0.7]{det} " + xtitle
-    		xmin = -3.5
-    		xmax = 3.5
-    		#scale = 35.9
-                SetLogy = False
-		#countPhi = countPhi + 1 
-    		#xpos1, ypos1, xpos2, ypos2 = .40, 0.75, 1.0, .85
-		xpos1, ypos1, xpos2, ypos2 = .45, 0.20, .85, .38
-    	else:
-    		continue
-
+	o = obj_f1[i]
+	xtitle, xmin, xmax, SetLogy, xpos1, ypos1, xpos2, ypos2 = objSettings(o)
+  	print xmin, xmax 
     	if obj_f1[i].find("diphoton") != -1:
 		#ocount = ocount + 1
     		legentry = r"SM #gamma#gamma"
@@ -198,7 +197,8 @@ def LoopOverHistogramsPerFile(study, obj_f1, h, listofFiles, canv, outName, isMD
         h[FileNum][i].GetXaxis().SetTitle(xtitle)
 	h[FileNum][i].GetYaxis().SetTitleOffset(0.7)
 	h[FileNum][i].GetXaxis().SetTitleOffset(1.1)
-        h[FileNum][i].GetXaxis().SetRangeUser(xmin, xmax)
+        #h[FileNum][i].GetXaxis().SetRangeUser(xmin, xmax)
+	#h[FileNum][i].GetXaxis().SetLimits(xmin, xmax)
 	leg = TLegend(xpos1, ypos1, xpos2, ypos2)
 	leg.SetBorderSize(0)
 	leg.SetFillStyle(0)
@@ -212,17 +212,27 @@ def LoopOverHistogramsPerFile(study, obj_f1, h, listofFiles, canv, outName, isMD
 			canv[i].SetLogy()
 		
 		####### DRAW 
-		hi.Draw("same")
-		hi.GetXaxis().SetLimits(xmin, xmax)		
+		#hi.Draw("same")
+		#hi.GetXaxis().SetLimits(xmin, xmax)		
+		
+
+		lower_lim = hi.GetBinCenter(hi.FindFirstBinAbove(0,1))
+                upper_lim = hi.GetBinCenter(hi.FindLastBinAbove(0,1))
+               # hi.GetXaxis().SetLimits(xmin, xmax)
+                #hi.GetXaxis().SetRangeUser(xmin, xmax)
+		#print lower_lim, upper_lim
+		
 		#ymin = hi.GetMinimum()
 		#ymax = hi.GetMaximum()
 		#print ymax, ymin
-		#hi.GetYaxis().SetLimits(ymin, ymax)
-		h[FileNum][i].SetLineColor(FileNum+1)
-		h[FileNum][i].SetFillColor(FileNum+1)
-		h[FileNum][i].SetLineStyle(FileNum+1)
-		h[FileNum][i].Draw("same")
-        	
+		if "Minv" in o:
+			ymin = 10**-3 
+			ymax = 60
+			hi.GetYaxis().SetRangeUser(ymin, ymax)
+			#hi.GetYaxis().SetLimits(ymin, ymax)
+		h[FileNum][i].GetXaxis().SetLimits(xmin, xmax)
+		#h[FileNum][i].GetXaxis().SetRangeUser(xmin, xmax)
+		histDrawSettings(h[FileNum][i], FileNum+1, "same") 			
 		if isMD:
 			pattern = r'MD/(.*)'	
 			match = re.findall(pattern, listofFiles[FileNum])
@@ -240,6 +250,7 @@ def LoopOverHistogramsPerFile(study, obj_f1, h, listofFiles, canv, outName, isMD
           
 	        FileNum = FileNum + 1
 		print "filenum: ", FileNum	
+		
 	#CMS_lumi(c, 4, 11, False)
 	#leg.SetEntrySeparation(0.6)
 	#leg.Draw() 
