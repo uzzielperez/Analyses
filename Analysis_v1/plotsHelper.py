@@ -3,6 +3,13 @@ from ROOT import TMath, TClass,TKey, TIter,TCanvas, TPad, TFile, TPaveText, TCol
 from ROOT import kBlack, kBlue, kRed
 from ROOT import gBenchmark, gStyle, gROOT, gDirectory
 import re
+
+import sys  
+CMSlumiPath = '/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/pyroot'
+sys.path.append(CMSlumiPath)  
+from CMSlumi import CMS_lumi
+import argparse
+
 def createRatio(h1, h2):
     h3 = h1.Clone("h3")
     h3.SetLineColor(kBlack)
@@ -251,7 +258,7 @@ def LoopOverHistogramsPerFile(study, obj_f1, h, listofFiles, canv, outName, isMD
 	        FileNum = FileNum + 1
 		print "filenum: ", FileNum	
 		
-	#CMS_lumi(c, 4, 11, False)
+	CMS_lumi(canv[i], 4, 11, False)
 	#leg.SetEntrySeparation(0.6)
 	#leg.Draw() 
    	canv[i].Print("%s/%s%sratio_%s.png" %("ratioplots",outName, study, obj_f1[i]))
