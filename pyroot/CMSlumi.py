@@ -12,7 +12,8 @@ cmsTextFont = 61
  
 #writeExtraText = False
 writeExtraText = True
-extraText   = "Preliminary" 
+#extraText   = "Preliminary" 
+extraText = "Work-in-progress"
 extraTextFont = 52;  # default is helvetica-italics 
  
 # text sizes and text offsets with respect to the top frame 
@@ -38,7 +39,7 @@ lumi_8TeV  = "19.7 fb^{-1}"
 lumi_7TeV  = "5.1 fb^{-1}"       
         
 
-def CMS_lumi(pad, iPeriod, iPosX, MC):
+def CMS_lumi(pad, iPeriod, iPosX, isMC):
         #pad = TPad('pad1','This is pad1',0.02,0.52,0.48,0.98,21)
         outOfFrame    = False
         if (iPosX/10==0):
@@ -67,11 +68,11 @@ def CMS_lumi(pad, iPeriod, iPosX, MC):
         b = pad.GetBottomMargin()
         
         pad.cd()
-	if MC == True:
+	if isMC:
 	    lumi_7TeV = "1 fb^{-1}"
 	    lumi_8TeV = "1 fb^{-1}"
 	    lumi_13TeV = "1 fb^{-1}" 
-	if MC == False:
+	else:
 	    lumi_13TeV = "35.9 fb^{-1}" # previously 20.1 
             lumi_8TeV  = "19.7 fb^{-1}" 
 	    lumi_7TeV  = "5.1 fb^{-1}"       
