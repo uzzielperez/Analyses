@@ -12,24 +12,24 @@ cmsTextFont = 61
  
 #writeExtraText = False
 writeExtraText = True
-extraText   = "Preliminary" 
+extraText   = "Work-in-progress" #"Preliminary" 
 extraTextFont = 52;  # default is helvetica-italics 
  
 # text sizes and text offsets with respect to the top frame 
 # in unit of the top margin size 
-lumiTextSize     = 0.35 # 0.45 default 
-lumiTextOffset   = 0.3 # 0.2 default 
+lumiTextSize     = 0.32 # 0.45 default 
+lumiTextOffset   = 0.35 # 0.2 default 
  
-cmsTextSize     = 0.75; 
-cmsTextSize = 0.45; 
-cmsTextOffset = 0.1;  # only used in outOfFrame version 
+cmsTextSize     = 0.65; 
+cmsTextSize = 0.40; 
+cmsTextOffset = 0.35;  # only used in outOfFrame version 
  
-relPosX = 0.045 #0.045 default 
-relPosY = 0.02 #0.03 default 
+relPosX = 0.045 #0.045 default #0.035 inframe #0.1 for outframe
+relPosY = 0.001 #0.03 default 
 relExtraDY = 1 
 relExtraDX = 2.2 #2.2 default
  
-extraOverCmsTextSize  = 0.76 	
+extraOverCmsTextSize  = 0.65 	
 lumi_sqrtS = "" 
 drawLogo      = False
 
@@ -127,7 +127,14 @@ def CMS_lumi(pad, iPeriod, iPosX, MC):
             latex.SetTextAlign(11)
             latex.SetTextSize(cmsTextSize*t) 
             latex.DrawLatex(l,1-t+lumiTextOffset*t,cmsText)
-        
+
+	    if (writeExtraText):	
+      		posX_= l +  relPosX #*(1-l-r)
+	        posY_= 1-t+lumiTextOffset*t
+	        latex.SetTextFont(extraTextFont);
+	        latex.SetTextSize(extraTextSize*t);
+                latex.SetTextAlign(align_);
+                latex.DrawLatex(posX_, posY_, extraText);
         pad.cd()
         
         posX_=0
