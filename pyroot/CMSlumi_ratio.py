@@ -19,14 +19,15 @@ extraTextFont = 52;  # default is helvetica-italics
 # in unit of the top margin size 
 lumiTextSize     = 0.32 # 0.45 default 
 lumiTextOffset   = 0.35 # 0.2 default 
- 
+extraTextOutframe = 0.5 
 cmsTextSize     = 0.65; 
-cmsTextSize = 0.40; 
+cmsTextSize = 0.35; 
 cmsTextOffset = 0.35;  # only used in outOfFrame version 
  
-relPosX = 0.045 #0.045 default #0.035 inframe #0.1 for outframe
-relPosY = 0.001 #0.03 default 
-relExtraDY = 1 
+#relPosX = 0.045 #0.045 default #0.035 inframe #0.1 for outframe
+relPosX = 0.07
+relPosY = -0.5 #0.03 default 
+relExtraDY = 2 
 relExtraDX = 2.2 #2.2 default
  
 extraOverCmsTextSize  = 0.65 	
@@ -40,7 +41,7 @@ lumi_7TeV  = "5.1 fb^{-1}"
 
 def CMS_lumi(pad, iPeriod, iPosX, MC):
         #pad = TPad('pad1','This is pad1',0.02,0.52,0.48,0.98,21)
-        outOfFrame    = False
+        outOfFrame    = True
         if (iPosX/10==0):
             outOfFrame = True
         
@@ -130,7 +131,7 @@ def CMS_lumi(pad, iPeriod, iPosX, MC):
 
 	    if (writeExtraText):	
       		posX_= l +  relPosX #*(1-l-r)
-	        posY_= 1-t+lumiTextOffset*t
+	        posY_= 1-t+extraTextOutframe*t
 	        latex.SetTextFont(extraTextFont);
 	        latex.SetTextSize(extraTextSize*t);
                 latex.SetTextAlign(align_);
