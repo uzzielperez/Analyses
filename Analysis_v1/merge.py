@@ -23,55 +23,11 @@ rootext = '.root'
 cmsxrootd = 'root://cmsxrootd.fnal.gov/'
 ################### Input Directory
 # Main
-#INPUTDIR = '/store/user/cuperez/DiPhotonAnalysis/Summer16GGJets/'
-#INPUTDIR = '/store/user/cuperez/DiPhotonAnalysis/....'
-#INPUTDIR = '/store/user/cuperez/DiPhotonAnalysis/Run2016Data/DoubleEG/'
-INPUTDIR = '/store/user/cuperez/ADDGravToGGSherpa/'
-
-# For Resubmissions
-#INPATH = '/store/user/cuperez/DiPhotonAnalysis/Summer16GGJetsResubmit/GGJets_M-500To1000_Pt-50_13TeV-sherpa/crab_GGJets_M-500To1000_Pt-50_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/180216_200831/0000/'
+INPUTDIR = '/store/user/ciperez/DiPhotonAnalysis/ADDGravToGG/SherpaTest'
 
 ################# OUTPUT 
-# Main Output Dir
-#outputdir = '/store/user/cuperez/DiPhotonAnalysis/Summer16_GGJets_Merged/'
-#outputdir = '/store/user/cuperez/DiPhotonAnalysis/Summer16-GGJets-Merge/'
-#outputdir = '/store/user/cuperez/DiPhotonAnalysis/Run2016Data-Merged/'
-outputdir = '/store/user/cuperez/ADDGravToGG/ADDGravToGG_MS-4000_NED-4_KK-1_M-200-4000/'
-
-#ref
-
-# FinalState and Mass bin
-fstate = 'ADDGravToGG_MS-4000_NED-4_KK-1_M-'
-#fstate = 'DoubleEG__'
-#fstate = 'GGJets_M-'
-
-# MassBin/Cat
-#runormassbin = ['2000To4000', '500To1000']
-runormassbin = ['1000To2000', '2000To4000', '200To500', '500To1000']
-#runormassbin = ["1000To2000", "2000To4000","200To500","4000To6000","500To1000","6000To8000","60To200","8000To13000"]  
-#runormassbin = ['Run2016B-03Feb2017_ver2-v2__MINIAOD/', 'Run2016C-03Feb2017-v1__MINIAOD/', 'Run2016D-03Feb2017-v1__MINIAOD/', 'Run2016E-03Feb2017-v1__MINIAOD/', 'Run2016F-03Feb2017-v1__MINIAOD/', 'Run2016G-03Feb2017-v1__MINIAOD/', 'Run2016H-03Feb2017_ver2-v1__MINIAOD/', 'Run2016H-03Feb2017_ver3-v1__MINIAOD/']
-
-# Trailing Characters
-#ptcut = '_Pt-50' #no ptcut with ADDGravToGGSherp
-energy ='_13TeV'
-gen = '-sherpa'
-
-# Reference
-#/store/user/cuperez/ADDGravToGGSherpa/ADDGravToGG_MS-4000_NED-4_KK-1_M-200To500_13TeV-sherpa/crab_ADDGravToGG_MS-4000_NED-4_KK-1_M-200To500_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/180517_193448
-#/store/user/cuperez/ADDGravToGGSherpa/ADDGravToGG_MS-4000_NED-4_KK-1_M-500To1000_13TeV-sherpa/crab_ADDGravToGG_MS-4000_NED-4_KK-1_M-500To1000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/180517_193500
-
-
-# Version
-INPUTV = '__80XMiniAODv2__MINIAODSIM'
-#INPUTV = 'ver2-v2__MINIAOD/'
-
-# Subdirectories
-#INPUTSUB = ["/180202_203147/0000","/180202_203156/0000","/180202_203125/0000",
-#"/180202_203212/0000","/180202_203137/0000","/180202_203224/0000",
-#"/180202_203112/0000","/180202_203237/0000"]
-#INPUTSUB = ['180307_213615/0000','180307_213641/0000', '180307_213658/0000', '180307_213717/0000','180307_213733/0000','180307_213750/0000','180307_213819/0000','180307_213845/0000']
-INPUTSUB = ['/180517_193429/0000','/180517_193438/0000', '/180517_193448/0000', '/180517_193500/0000']
-
+#outputdir = '/store/user/cuperez/ADDGravToGG/ADDGravToGG_MS-10000_NED-4_KK-1_M-500-11000/'
+outputdir = '/store/user/cuperez/DiPhotonAnalysis/ADDGravToGG/SherpaTestMerged'
 
 # Timer
 sw = ROOT.TStopwatch()
@@ -105,7 +61,7 @@ def merge(inf, outf, mergeFile, chainFile):
 	chainFile.write('\n')
 	return;
 
-def mergeone(inf,outf, mergeFile, chainFile):
+def mergeone(inf,outf, mergeFile, chainFile):	
 	bashcmd = "hadd -f %s `%s`" %(outf, inf)  
 	print (bashcmd)
 	print (" ")
@@ -116,33 +72,41 @@ def mergeone(inf,outf, mergeFile, chainFile):
 	return;
 
 
+#Put Files Path here (from eoshelper) 
+paths = ['/store/user/cuperez/DiPhotonAnalysis/ADDGravToGG/SherpaTest/ADDGravToGG_MS-4000_NED-4_KK-1_M-1000To2000_13TeV-sherpa/crab_ADDGravToGG_MS-4000_NED-4_KK-1_M-1000To2000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/180618_033354/0000',
+"/store/user/cuperez/DiPhotonAnalysis/ADDGravToGG/SherpaTest/ADDGravToGG_MS-4000_NED-4_KK-1_M-2000To4000_13TeV-sherpa/crab_ADDGravToGG_MS-4000_NED-4_KK-1_M-2000To4000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/180618_033407/0000",
+"/store/user/cuperez/DiPhotonAnalysis/ADDGravToGG/SherpaTest/ADDGravToGG_MS-4000_NED-4_KK-1_M-200To500_13TeV-sherpa/crab_ADDGravToGG_MS-4000_NED-4_KK-1_M-200To500_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/180618_033420/0000",
+"/store/user/cuperez/DiPhotonAnalysis/ADDGravToGG/SherpaTest/ADDGravToGG_MS-4000_NED-4_KK-1_M-500To1000_13TeV-sherpa/crab_ADDGravToGG_MS-4000_NED-4_KK-1_M-500To1000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/180618_033432/0000"]
+
+for e in paths:
+	#pattern = r'Ms-([^(]*)\_M'	
+	pattern = r'SherpaTest/([^(]*)\/crab'
+        match = re.findall(pattern, e) # will serve as root FileName 
+	print match
+	inf_  = rootxrd + e + greproot
+	outf_ = rootpreeos + outputdir + match[0] + 'out' + rootext
+	print "Output at %s" %(outf_)
+	merge(inf_, outf_, floop, f2chain)
+
 #if mergeloop:	
 # Name stitching
-for i in range(len(runormassbin)):
-	if data:
-		FSTATEBIN = fstate + runormassbin[i]
-		inputf = INPUTDIR + crab + FSTATEBIN  + INPUTSUB[i]
-	else:
-		if signal:
-			FSTATEBIN = fstate +runormassbin[i] + energy + gen
-		else:
-			FSTATEBIN = fstate + runormassbin[i] + ptcut + energy + gen
-		inputf = INPUTDIR + FSTATEBIN + crab + FSTATEBIN + INPUTV + INPUTSUB[i]
-	inf_ = rootxrd + inputf + greproot
-	outf_ = rootpreeos + outputdir + FSTATEBIN + 'out' + rootext  
-	#print "Merging files: %s" %(inf_)
-	#print " "
-	print ("Output at %s" %(outf_))
-	#print " "
-	merge(inf_, outf_,floop, f2chain)
-
-	
-#else:
-#inputf2 = INPATH
-#inf_2 = rootxrd + inputf2 + greproot
-#outf_2 = rootpreeos + outputdir + fstate + runormassbin[4]+ ptcut + energy + gen + rootext
-#print ("outf_2", outf_2)
-#mergeone(inf_2,outf_2, fsingle, f2chain)
+ #for i in range(len(runormassbin)):
+ #	if data:
+ #		FSTATEBIN = fstate + runormassbin[i]
+ #		inputf = INPUTDIR + crab + FSTATEBIN  + INPUTSUB[i]
+ #	else:
+ #		if signal:
+ #			FSTATEBIN = fstate +runormassbin[i] + energy + gen
+ #		else:
+ #			FSTATEBIN = fstate + runormassbin[i] + ptcut + energy + gen
+ #		inputf = INPUTDIR + FSTATEBIN + crab + FSTATEBIN + INPUTV + INPUTSUB[i]
+ #	inf_ = rootxrd + inputf + greproot
+ #	outf_ = rootpreeos + outputdir + FSTATEBIN + 'out' + rootext  
+ #	#print "Merging files: %s" %(inf_)
+ #	#print " "
+ #	print ("Output at %s" %(outf_))
+ #	#print " "
+ #	merge(inf_, outf_,floop, f2chain)
 
 floop.close()
 fsingle.close()
