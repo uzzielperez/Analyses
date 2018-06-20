@@ -62,8 +62,8 @@ This will write a root file which you can make plots from.
 python quick_plotter_v1.py
 
 ```
-This will generate .png or .pdf files that you need for presentation or quick view. Program needs refinement. 
-For comparison plots one can use the ratio plotter or the multiPlotter. Update file manually for histograms you want to compare. MultiPlotter takes a list of files and loops over the files and overlays the similar objects (must be created by the same MakeClass script). 
+This will generate .png or .pdf files that you need for presentation or quick view. Program needs refinement.
+For comparison plots one can use the ratio plotter or the multiPlotter. Update file manually for histograms you want to compare. MultiPlotter takes a list of files and loops over the files and overlays the similar objects (must be created by the same MakeClass script). Variants of these basic plotters are in a directory. 
 
 ```bash
 
