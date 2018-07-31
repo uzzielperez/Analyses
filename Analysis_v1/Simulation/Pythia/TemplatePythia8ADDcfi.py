@@ -19,6 +19,7 @@ generator = cms.EDFilter("Pythia8GeneratorFilter",
 	    'ExtraDimensionsLED:n = ${ned}', 
 	    'ExtraDimensionsLED:LambdaT = ${lambdaT}',
             'ExtraDimensionsLED:CutoffMode = 2',
+	    'ExtraDimenstionsLED:NegInt = 1',
 	    'PhaseSpace:pTHatMin = ${pTcut}',
 	    'PhaseSpace:mHatMin = ${massMax}',
 	    'PhaseSpace:mHatMax = ${massMin}'
