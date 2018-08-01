@@ -31,7 +31,7 @@ pTcut           = args.ptcut
 COM             = args.com/1000 # in TeV
 RunCardTemplate = args.template 
 
-RunCard_outName = 'ADDGravToGG_NED-%d_LambdaT-%d_M-%dTo%d_Pt%d_%dTeV-pythia8.py' %(ned, int(lambdaT), massMin, massMax, pTcut, COM)
+RunCard_outName = 'ADDGravToGG_NED-%d_LambdaT-%d_M-%dTo%d_TuneCUEP8M1_%dTeV-pythia8_cfi.py' %(ned, int(lambdaT), massMin, massMax, COM)
 outfile         = open(RunCard_outName, "w+")
 
 # Dictionary
