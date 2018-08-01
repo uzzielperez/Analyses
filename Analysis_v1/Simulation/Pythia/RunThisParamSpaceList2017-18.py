@@ -3,8 +3,8 @@ import os
 import subprocess as sp 
 import math
 
-GRW = True 
-HLZ = False
+GRW = False 
+HLZ = True
 
 if GRW:
 	ned         = 4 
@@ -34,19 +34,17 @@ for value in LambdaT_lst:
 		maxMass = maxMasslist[rangeIndex]
 		rangeIndex = rangeIndex + 1
 		
-		#print "Writing generator fragment with the following parameters: "
-		#print "NED: ",ned, "; LambdaT: ",lambdaT, "; MinMass: ",minMass, "; MaxMass: ",maxMass, "; pTcut: ",pTcut
+		print "Writing generator fragment with the following parameters: "
+		print "NED: ",ned, "; LambdaT: ",lambdaT, "; MinMass: ",minMass, "; MaxMass: ",maxMass, "; pTcut: ",pTcut
+	       	command       = 'python runCardGenADD.py -n %d -l %d -min %d -max %d -p %d' %(ned, lambdaT, minMass, maxMass, pTcut) 
+		process       = sp.Popen(command.split(), stdout=sp.PIPE)
+                output, error = process.communicate()
+
+	        dataset       = 'ADDGravToGG_NED-%d_LambdaT-%d_M-%dTo%d_TuneCUEP8M1_%dTeV-pythia8' %(ned, int(lambdaT), minMass, maxMass, COM)
+                genfragname   =  'ADDGravToGG_NED-%d_LambdaT-%d_M-%dTo%d_TuneCUEP8M1_%dTeV-pythia8_cfi.py' %(ned, int(lambdaT), minMass, maxMass, COM)
 		
-	        dataset = 'ADDGravToGG_NED-%d_LambdaT-%d_M-%dTo%d_TuneCUEP8M1_%dTeV-pythia8' %(ned, int(lambdaT), minMass, maxMass, int(pTcut), COM)
-                genfragname =  'ADDGravToGG_NED-%d_LambdaT-%d_M-%dTo%d_TuneCUEP8M1_%dTeV-pythia8_cfi.py' %(ned, int(lambdaT), minMass, maxMass, int(pTcut), COM)
- 
-		command = 'python runCardGenADD.py -n %d -l %d -min %d -max %d -p %d' %(ned, lambdaT, minMass, maxMass, pTcut) 
-		#process = sp.Popen(command.split(), stdout=sp.PIPE)
-                #output, error = process.communicate()
-	        #print 'Generated ', dataset, '\n'
-		
+	        print 'Generated ', dataset, '\n'
 		f = open("datasetlist2017-18.txt", "a")
 		f.write('%s\n'%(dataset))
-		
 		fi = open("generatorFragmentList2017-18.txt", "a")
 		fi.write('%s\n'%(genfragname))
