@@ -4,7 +4,7 @@ import subprocess as sp
 import math
 
 GRW = True 
-
+HLZ = False
 
 if GRW:
 	ned         = 4 
