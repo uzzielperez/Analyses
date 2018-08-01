@@ -11,7 +11,7 @@ parser.add_argument('-t', '--template', help='Choose Run Card template.', type=s
 			default='TemplatePythia8ADDcfi.py')
 parser.add_argument('-n', '--NED', type=int, default=4,
  		    help='Number of extra dimensions.')
-parser.add_argument('-l', '--LambdaT', type=int, default=4000,
+parser.add_argument('-l', '--LambdaT', type=float, default=4000,
  		    help='cutoff scale')
 parser.add_argument('-min', '--massminimum', type=float, default=500.,
  		    help='minimum in mass bin')
@@ -31,7 +31,7 @@ pTcut           = args.ptcut
 COM             = args.com/1000 # in TeV
 RunCardTemplate = args.template 
 
-RunCard_outName = 'ADDGravToGG_NED-%d_LambdaT-%d_M-%dTo%d_Pt%d_%dTeV-pythia8.py' %(ned, lambdaT, massMin, massMax, pTcut, COM)
+RunCard_outName = 'ADDGravToGG_NED-%d_LambdaT-%d_M-%dTo%d_Pt%d_%dTeV-pythia8.py' %(ned, int(lambdaT), massMin, massMax, pTcut, COM)
 outfile         = open(RunCard_outName, "w+")
 
 # Dictionary
