@@ -3,8 +3,8 @@ import os
 import subprocess as sp 
 import math
 
-GRW = False 
-HLZ = True
+GRW = True 
+HLZ = False
 
 if GRW:
 	ned         = 4 
@@ -38,7 +38,7 @@ for value in LambdaT_lst:
 		
 		print "Writing generator fragment with the following parameters: "
 		print "NED: ",ned, "; LambdaT: ",lambdaT, "; MinMass: ",minMass, "; MaxMass: ",maxMass, "; pTcut: ",pTcut
-	       	command       = 'python runCardGenADD.py -n %d -l %d -min %d -max %d -p %d' %(ned, lambdaT, minMass, maxMass, pTcut) 
+	       	command       = 'python runCardGenADD.py -n %d -l %d -min %d -max %d -p %d -i %d' %(ned, lambdaT, minMass, maxMass, pTcut, negInt) 
 		process       = sp.Popen(command.split(), stdout=sp.PIPE)
                 output, error = process.communicate()
 
@@ -47,7 +47,7 @@ for value in LambdaT_lst:
 	        genfragname = 'ADDGravToGG_NegInt-%d_LambdaT-%d_M-%dTo%d_TuneCUEP8M1_%dTeV-pythia8_cfi.py' %(negInt, int(lambdaT), maxMass, maxMass, COM)
 	        #genfragname = 'ADDGravToGG_NegInt-%d_NED-%d_LambdaT-%d_M-%dTo%d_TuneCUEP8M1_%dTeV-pythia8_cfi.py' %(negInt, ned, int(lambdaT), maxMass, maxMass, COM)
 	        
-		print 'Generated ', dataset, '\n'
+		print 'Generated ', genfragname, '\n'
 		f = open("datasetlist2017-18.txt", "a")
 		f.write('%s\n'%(dataset))
 		fi = open("generatorFragmentList2017-18.txt", "a")
