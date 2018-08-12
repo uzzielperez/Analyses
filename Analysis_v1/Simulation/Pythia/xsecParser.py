@@ -6,8 +6,7 @@ import ROOT
 from multiprocessing import Pool
 
 parser = argparse.ArgumentParser(description='Cross Section File')
-parser.add_argument('-i', '--inputfile', help='Choose inputfile.', type=str,
-			default='outCO-2.txt')
+parser.add_argument('-i', '--inputfile', help='Choose inputfile.', type=str, default='datasetlist2017-18.txt')
 args = parser.parse_args()
 
 filename = args.inputfile
@@ -43,23 +42,23 @@ def xsecParse(filetoparse):
 	xsecListFile.write('%s\n'%(xsec_info))
 
 
-def ParsePythiaOutputFiles(file_list):
+def CWDParsePythiaOutputFiles(file_list):
 	for outFile in file_list:
 		if "ADDGravToGG_NegInt" in outFile and outFile.endswith(".txt"):
 			print "Parsing ", outFile
 			xsecParse(outFile)
 
-def multiproc(file_list, func):
-	chunks = [file_list[i::5] for i in range(5)]
-	pool = Pool(processes=5)
-	result = pool.map(func, chunks)
-	#return sum(result) 
+def ParseFileList(file_list):
+	with open(file_list, 'r') as f: 
+   		files = f.readlines() 
+ 
+	for outfile in files:
+		text_to_parse = ".".join((outfile[:-1], "txt"))
+		print text_to_parse
+		xsecParse(text_to_parse)
 
-
-#cmsRun_GenCard(os.listdir('.'))
-#multiproc(os.listdir('.'), cmsRun_GenCard) 	
-#xsecParse(filename)
-ParsePythiaOutputFiles(os.listdir('.'))
+#CWDParsePythiaOutputFiles(os.listdir('.'))
+ParseFileList(filename)
 
 sw.Stop()
 print ("Processing Time:")
