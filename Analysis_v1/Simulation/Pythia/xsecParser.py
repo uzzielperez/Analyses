@@ -4,6 +4,7 @@ import os
 import subprocess as sp
 import ROOT 
 from multiprocessing import Pool
+from decimal import *
 
 parser = argparse.ArgumentParser(description='Cross Section File')
 parser.add_argument('-i', '--inputfile', help='Choose inputfile.', type=str, default='datasetlist2017-18.txt')
@@ -34,12 +35,16 @@ def xsecParse(filetoparse):
 			xsec = matchstring[-4]
 
 	xsec_info = xsec + " +- " +  error
-	print xsec_info
+	xsec_pb, error_pb = Decimal(xsec)*(10**9), Decimal(error)*(10**9)
+	xsec_info_pb = str('{:.3e}'.format(float(xsec_pb))) + "+-" + str('{:.3e}'.format(float(error_pb)))
+       	#xsec_info_pb = str(xsec_pb.normalize()) + "+-" + str(error_pb)
 
-	f = open("FileInfoxsec.txt", "a")
-	f.write('%s: %s\n'%(filetoparse, xsec_info))
-	xsecListFile = open("xsecInfo.txt", "a") 
-	xsecListFile.write('%s\n'%(xsec_info))
+	print xsec_info, " mb; ", xsec_info_pb, " pb"
+
+	f = open("pbFilexsec.txt", "a")
+	f.write('%s: %s\n'%(filetoparse, xsec_info_pb))
+	xsecListFile = open("pbxsecInfo.txt", "a") 
+	xsecListFile.write('%s\n'%(xsec_info_pb))
 
 
 def CWDParsePythiaOutputFiles(file_list):
