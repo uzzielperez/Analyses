@@ -9,13 +9,14 @@ quickcheck=false
 crabntuplesDEEP=false       # To search deep for ALL the unmerged CRAB ntuples 
 crabntuples=false           # true to get full path, uncomment appropriate sub
 merged=false             # true to get full path, uncomment appropriate sub
-crabADD=true
-crabADDfiles=true
-
+crabADD=false
+crabADDfiles=false
+midsearch=true
 ## EDIT HERE sub
 #project='/DiPhotonAnalysis'
-project='/ADDGravToGGSherpa'
+#project='/ADDGravToGGSherpa'
 #project='/TriPhotonAnalysis'
+project='/DiPhotonAnalysis/EGammaData/EGamma'
 
 #sub2='/Summer16GGJets'
 #sub2='/Summer16GGJetsResubmit'
@@ -26,6 +27,9 @@ project='/ADDGravToGGSherpa'
 #sub='/Run2016Data-Merged'
 #sub=''
 
+
+# Including data files 
+#/store/user/ciperez/DiPhotonAnalysis/EGammaData/EGamma/
 
 #-----------------------------
 DIR=$eosdir$project$sub
@@ -122,8 +126,27 @@ while $crabntuples; do
  done
 break
 done
+#------MidSearch Full
+redirector='root://cmsxrootd.fnal.gov/'
+while $midsearch; do
+ for i in `$eosls $DIR2`
+ do
+  newdir2=$DIR2/$i
+  for j in `$eosls $newdir2`
+  do
+   new2=$newdir2/$j
+   #echo $new2
+   for k in `$eosls $new2`
+   do
+    new3=$new2/$k
+    echo $new3
+   done 
+  done
+ done
+break
+done
 
-#------DiPhotonAnalysis Full
+#------DEEP Full
 redirector='root://cmsxrootd.fnal.gov/'
 while $crabntuplesDEEP; do
  echo 'CRAB unmerged ntuples:' 
