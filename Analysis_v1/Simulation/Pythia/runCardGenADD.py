@@ -19,6 +19,8 @@ parser.add_argument('-max', '--massmaximum', type=float , default=1000.,
  		    help='maximum in mass bin')
 parser.add_argument('-p', '--ptcut', type=float, default=70.,
  		    help='ptcut')
+parser.add_argument('-i', '--negint', type=int, default=1,
+		    help='Positive Interference: 1 (contrary to documentation), and Negative Interference: 0')
 parser.add_argument('-c', '--com', type=int, default=13000,
  		    help='Center of Mass Energy. At LHC (2018) currently at 13000 TeV')
 args = parser.parse_args()
@@ -28,14 +30,17 @@ lambdaT         = args.LambdaT
 massMin         = args.massminimum
 massMax         = args.massmaximum
 pTcut           = args.ptcut
+negInt          = args.negint
 COM             = args.com/1000 # in TeV
 RunCardTemplate = args.template 
 
-RunCard_outName = 'ADDGravToGG_NED-%d_LambdaT-%d_M-%dTo%d_TuneCUEP8M1_%dTeV-pythia8_cfi.py' %(ned, int(lambdaT), massMin, massMax, COM)
+RunCard_outName = 'ADDGravToGG_NegInt-%d_LambdaT-%d_M-%dTo%d_TuneCUEP8M1_%dTeV-pythia8_cfi.py' %(negInt, int(lambdaT), massMin, massMax, COM)
+#RunCard_outName = 'ADDGravToGG_NegInt-%d_NED-%d_LambdaT-%d_M-%dTo%d_TuneCUEP8M1_%dTeV-pythia8_cfi.py' %(negInt, ned, int(lambdaT), massMin, massMax, COM)
 outfile         = open(RunCard_outName, "w+")
 
 # Dictionary
-d={'ned':ned,
+d={'negInt': negInt,
+   'ned':ned,
    'lambdaT':lambdaT,
    'massMin':massMin, 
    'massMax':massMax,
