@@ -5,16 +5,20 @@
 eosdir='/store/user/cuperez'
 
 #------ECHO SETTINGS
-quickcheck=false
-crabntuplesDEEP=false       # To search deep for ALL the unmerged CRAB ntuples 
-crabntuples=false           # true to get full path, uncomment appropriate sub
+quickcheck=true
+crabntuplesDEEP=true     # To search deep for ALL the unmerged CRAB ntuples 
+crabntuples=      # true to get full path, uncomment appropriate sub
 merged=false             # true to get full path, uncomment appropriate sub
-crabADD=true
+crabADD=false
 crabADDfiles=true
 
 ## EDIT HERE sub
 #project='/DiPhotonAnalysis'
-project='/ADDGravToGGSherpa'
+#project='/DiPhotonAnalysis/ADDSherpaMerged'
+project='/DiPhotonAnalysis/ADDGravToGGSherpaTest'
+#project='/DiPhotonAnalysis/Run2016Data'
+#project='/DiPhotonAnalysis/ADDGravToGG'
+#project='/ADDGravToGGSherpa'
 #project='/TriPhotonAnalysis'
 
 #sub2='/Summer16GGJets'
