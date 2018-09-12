@@ -19,7 +19,7 @@ TString reformat(TString input);
 
 
 class sample {
-  
+
 public:
   sample(std::string name, std::string label, std::string extraWeight, std::string extraCut);
   sample();
@@ -69,6 +69,7 @@ class plot {
 
 public:
   plot(std::vector<sample> samples, std::string variable, std::string cut, int nbins, double xmin, double xmax);
+  std::vector<TH1D*>  hist();
   void output(const std::string& outputDirectory, const std::string& extraString);
   std::string variable() { return m_variable; }
   std::string cut() {return m_cut; }
@@ -76,6 +77,8 @@ public:
 private:
   bool is2016Data();
   bool is2017Data();
+  bool is2018Data();
+  bool is2018Data_newjson();
 
   std::vector<sample> m_samples;
   std::string m_variable;
@@ -93,10 +96,12 @@ plot::plot(std::vector<sample> samples, std::string variable, std::string cut, i
   m_nbins(nbins),
   m_xmin(xmin),
   m_xmax(xmax)
-{ 
+{
 
   if(is2016Data()) luminosity = luminosity2016;
   if(is2017Data()) luminosity = luminosity2017;
+  if(is2018Data()) luminosity = luminosity2018;
+  if(is2018Data_newjson()) luminosity = luminosity2018_newjson;
 }
 
 // set luminosity to 2016 luminosity if one of the samples in the plot contains 2016 data
@@ -119,6 +124,48 @@ bool plot::is2017Data()
   return false;
 }
 
+// set luminosity to 2018 luminosity if one of the samples in the plot contains 2018 data
+bool plot::is2018Data()
+{
+  for(auto isample : m_samples) {
+    if(isample.name().find("2018") != std::string::npos) return true;
+  }
+
+  return false;
+}
+
+// set luminosity to 2018 luminosity if one of the samples in the plot contains 2018 data
+bool plot::is2018Data_newjson()
+{
+  for(auto isample : m_samples) {
+    if(isample.name().find("2018_newjson") != std::string::npos) return true;
+  }
+
+  return false;
+}
+
+std::vector<TH1D*> plot::hist()
+{
+  //gStyle->SetErrorX(0.5);
+  std::vector<TH1D*> hists;
+  TH1D *sum = new TH1D("sum", "sum", m_nbins, m_xmin, m_xmax);
+  TString dataHistName;
+
+  for(auto isample : m_samples) {
+    TString newCut(m_cut.c_str());
+    if(isample.isData) newCut = Form("(%s)*((%s)*(%s))",
+				     isample.extraWeight().c_str(), m_cut.c_str(), isample.extraCut().c_str());
+    else newCut = Form("weightAll*%6.6e*(%s)*((%s)*(%s))",
+				     luminosity, isample.extraWeight().c_str(), m_cut.c_str(), isample.extraCut().c_str());
+    if(isample.isData || isample.drawAsData) dataHistName = isample.name();
+    TString histName = m_variable+"_"+isample.name();
+    //hists.push_back(new TH1D(isample.name().c_str(),isample.name().c_str(), m_nbins, m_xmin, m_xmax));
+    hists.push_back(new TH1D(histName, histName, m_nbins, m_xmin, m_xmax));
+    std::cout << "Creating histogram " << isample.name() << " for variable " << m_variable << std::endl;
+  }//end loop over samples
+  return hists;
+}
+
 void plot::output(const std::string& outputDirectory, const std::string& extraString)
 {
   gStyle->SetErrorX(0.5);
@@ -128,16 +175,20 @@ void plot::output(const std::string& outputDirectory, const std::string& extraSt
 
   THStack *hs = new THStack("hs", "hs");
   TH1D *sum = new TH1D("sum", "sum", m_nbins, m_xmin, m_xmax);
-  TString dataHistName;
+  TString tName;
   for(auto isample : m_samples) {
     TString newCut(m_cut.c_str());
     if(isample.isData) newCut = Form("(%s)*((%s)*(%s))",
 				     isample.extraWeight().c_str(), m_cut.c_str(), isample.extraCut().c_str());
     else newCut = Form("weightAll*%6.6e*(%s)*((%s)*(%s))",
 				     luminosity, isample.extraWeight().c_str(), m_cut.c_str(), isample.extraCut().c_str());
-    if(isample.isData || isample.drawAsData) dataHistName = isample.name();
+    if(isample.isData || isample.drawAsData) tName = isample.name();
     hists.push_back(new TH1D(isample.name().c_str(), isample.name().c_str(), m_nbins, m_xmin, m_xmax));
+
     std::cout << "Creating histogram " << isample.name() << " for variable " << m_variable << std::endl;
+
+    //Chris's chaining already done in MakeClass
+
     isample.chain()->Project(isample.name().c_str(), m_variable.c_str(), newCut.Data());
     if(!isample.isData) {
       sum->Add(hists.back());
@@ -145,6 +196,8 @@ void plot::output(const std::string& outputDirectory, const std::string& extraSt
     }
     std::cout << "Integral (" << isample.name() << "): " << hists.back()->Integral() << std::endl;
     std::cout << "Sum: " << sum->Integral() << std::endl;
+
+    //Plotting Part
     hists.back()->SetLineStyle(isample.lineStyle());
     hists.back()->SetLineColor(isample.lineColor());
     hists.back()->SetFillStyle(isample.fillStyle());
@@ -183,7 +236,7 @@ void plot::output(const std::string& outputDirectory, const std::string& extraSt
     ihist->GetYaxis()->SetTitle(reformat(yTitle));
     ihist->GetYaxis()->SetTitleOffset(1.35);
 
-    if(name.EqualTo(dataHistName)) {
+    if(name.EqualTo(tName)) {
       ihist->Draw("e");
       leg->AddEntry(ihist, prettyName[ihist->GetName()].c_str(), "EP");
     }
@@ -204,7 +257,7 @@ void plot::output(const std::string& outputDirectory, const std::string& extraSt
     TString name(ihist->GetName());
     if(name.Contains("data")) ihist->Draw("e,same");
   }
-  
+
   leg->Draw();
 
   c->RedrawAxis();
@@ -219,6 +272,7 @@ void plot::output(const std::string& outputDirectory, const std::string& extraSt
   c->Print(Form("%s/%s_%s.root", outputDirectory.c_str(), variable().c_str(), extraString.c_str()));
   c->SetLogy();
   c->Print(Form("%s/%s_%s_log.pdf", outputDirectory.c_str(), variable().c_str(), extraString.c_str()));
+
 }
 
 TString reformat(TString input)
