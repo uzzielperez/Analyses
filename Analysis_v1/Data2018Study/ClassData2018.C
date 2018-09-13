@@ -103,9 +103,34 @@ double xmax=2000; // GeV
    vhists.push_back(p12.hist());
    //vhists.push_back(p13.hist());
 
-   //Special histograms
+   //Special histograms for HEM (Transfer this later)
+   TH1D* photon1Eta_B4HEM      = new TH1D("photon1Eta_B4HEM", "", nbins/2, -5, 5);
+	 TH1D* photon2Eta_B4HEM      = new TH1D("photon2Eta_B4HEM", "", nbins/2, -5, 5);
+   TH1D* photon1Phi_B4HEM      = new TH1D("photon1Phi_B4HEM", "", nbins/2, -TMath::Pi(), TMath::Pi());
+   TH1D* photon2Phi_B4HEM      = new TH1D("photon2Phi_B4HEM", "", nbins/2, -TMath::Pi(), TMath::Pi());
+   TH1D* photon1Eta_AfterHEM   = new TH1D("photon1Eta_AfterHEM", "", nbins/2, -5, 5);
+   TH1D* photon2Eta_AfterHEM   = new TH1D("photon2Eta_AfterHEM", "", nbins/2, -5, 5);
+   TH1D* photon1Phi_AfterHEM   = new TH1D("photon1Phi_AfterHEM", "", nbins/2, -TMath::Pi(), TMath::Pi());
+   TH1D* photon2Phi_AfterHEM   = new TH1D("photon2Phi_AfterHEM", "", nbins/2, -TMath::Pi(), TMath::Pi());
 
+   TH1D* photonsEta_B4HEM      = new TH1D("photonsEta_B4HEM", "", nbins/2, -5,5);
+   TH1D* photonsEta_AfterHEM   = new TH1D("photonsEta_AfterHEM", "", nbins/2, -5,5);
+   TH1D* photonsPhi_B4HEM      = new TH1D("photonsPhi_B4HEM", "", nbins/2, -TMath::Pi(), TMath::Pi());
+   TH1D* photonsPhi_AfterHEM   = new TH1D("photonsPhi_AfterHEM", "", nbins/2, -TMath::Pi(), TMath::Pi());
 
+   photon1Eta_B4HEM->Sumw2();
+   photon2Eta_B4HEM->Sumw2();
+   photon1Phi_B4HEM->Sumw2();
+   photon2Phi_B4HEM->Sumw2();
+   photon1Eta_AfterHEM->Sumw2();
+   photon2Eta_AfterHEM->Sumw2();
+   photon1Phi_AfterHEM->Sumw2();
+   photon2Phi_AfterHEM->Sumw2();
+
+   photonsEta_B4HEM->Sumw2();
+   photonsEta_AfterHEM->Sumw2();
+   photonsPhi_B4HEM->Sumw2();
+   photonsPhi_AfterHEM->Sumw2();
 
    for(auto ivarhist : vhists){
      //for(unsigned i = 0; i < ivarhist.size(); ++i){
@@ -113,8 +138,6 @@ double xmax=2000; // GeV
       cout << "Variable for sample: " << isamplehist->GetName() << endl;
     }//end loop over vector of vector
   }//loop over vector of vector of hists samples for each variable
-
-
 
    ////-------Loop Over Events
    Long64_t nbytes = 0, nb = 0;
@@ -127,10 +150,57 @@ double xmax=2000; // GeV
       if(jentry%10000 == 0) cout << "Number of processed events: " << jentry << endl;
       //Loop over all hists variables and the samples
       //Focus only on Endcap
-      // int HEMminStartRun = 319077;
-      // if(Event_run < 319077) << "Fill HEM-B4"
-      // if(Photon1_isEE) cout << "Fill Photon1 here." << endl;
-      // if(Photon2_isEE) cout << "Fill Photon2 here." << endl;
+      int HEMminStartRun = 319077;
+      if(Photon1_pt>125&&Photon2_pt>125 && Diphoton_Minv > 500 && Diphoton_Minv < 1000 && isGood){
+        if(Photon1_isEE){
+          //cout << "Fill Photon1 here." << endl;
+          if(Event_run < 319077){
+            //Put here HEM- Condition
+                photon1Eta_B4HEM->Fill(Photon1_eta);
+                photon1Phi_B4HEM->Fill(Photon1_phi);
+                photonsEta_B4HEM->Fill(Photon1_eta);
+                photonsPhi_B4HEM->Fill(Photon1_phi);
 
+            //cout << "Fill HEM-B4" << endl;
+          }
+          else{
+                photon1Eta_AfterHEM->Fill(Photon1_eta);
+                photon1Phi_AfterHEM->Fill(Photon1_phi);
+                photonsEta_AfterHEM->Fill(Photon1_eta);
+                photonsPhi_AfterHEM->Fill(Photon1_phi);
+          }
+        }
+
+        if(Photon2_isEE){
+          //cout << "Fill Photon2 here." << endl;
+          if(Event_run < 319077){
+            //Put here HEM- Condition
+         	      photon2Eta_B4HEM->Fill(Photon2_eta);
+                photon2Phi_B4HEM->Fill(Photon2_phi);
+                photonsEta_B4HEM->Fill(Photon1_eta);
+                photonsPhi_B4HEM->Fill(Photon1_phi);
+
+          }
+          else{
+            //Put here HEM- Condition
+                photon2Eta_AfterHEM->Fill(Photon2_eta);
+                photon2Phi_AfterHEM->Fill(Photon2_phi);
+                photonsEta_AfterHEM->Fill(Photon1_eta);
+                photonsPhi_AfterHEM->Fill(Photon1_phi);
+          }
+        }
+      }
+      //kinematic conditions
    }//end loop over events
+
+   TFile file_out("HEM15-16_data.root", "RECREATE");
+   photon1Eta_B4HEM->Write();
+   photon2Eta_B4HEM->Write();
+   photon1Phi_B4HEM->Write();
+   photon2Phi_B4HEM->Write();
+   photon1Eta_AfterHEM->Write();
+   photon2Eta_AfterHEM->Write();
+   photon1Phi_AfterHEM->Write();
+   photon2Phi_AfterHEM->Write();
+
 }//end ClassData2018::Loop()
