@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 import ROOT
-from ROOT import TClass,TKey, TIter,TCanvas, TPad, TFile, TPaveText, TColor, TGaxis, TH1F, TPad, TH1D, TLegend
+from ROOT import TClass,TKey, TIter,TCanvas, TPad, TFile, TPaveText, TColor, TGaxis, TH1F, TPad, TH1D, TLegend, TLine
 from ROOT import kBlack, kBlue, kRed
 from ROOT import gBenchmark, gStyle, gROOT, gDirectory
 
@@ -12,7 +12,8 @@ sys.path.append(CMSlumiPath)
 from CMSlumi import CMS_lumi, set_CMS_lumi
 import argparse
 
-filename = 'HEM15-16.root'
+#filename = 'HEM15-16.root'
+filename = 'HEM15-16_data.root'
 
 # Draw Options 
 DrawAsHist = False 
@@ -71,6 +72,12 @@ while i<len(histos):
 		elif "B4" in obj[i]:
 			legentry = "PreHEM-Eta"
 			lumival = 20.315
+#		etamax_line = TLine(-1.392,0,-1.392, 20)
+#		etamax_line.SetLineColor(kRed)
+#		etamax_line.Draw()
+#		etamin_line = TLine(-3,0,-3,20)
+#		etamin_line.SetLineColor(kRed)
+#		etamin_line.Draw()
 	elif obj[i].find("Phi") != -1:
 		xtitle = r"#phi"
 		xmin = -3.5
