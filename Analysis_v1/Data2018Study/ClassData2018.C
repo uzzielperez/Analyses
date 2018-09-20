@@ -131,6 +131,19 @@ double xmax=2000; // GeV
    TH1D* photonsPhi_B4HEP      = new TH1D("photonsPhi_B4HEP", "", nbins/2, -TMath::Pi(), TMath::Pi());
    TH1D* photonsPhi_AfterHEP   = new TH1D("photonsPhi_AfterHEP", "", nbins/2, -TMath::Pi(), TMath::Pi());
 
+//SuperCluseter
+   TH1D* photon1_scPhi_B4HEM      = new TH1D("photon1_scPhi_B4HEM", "", nbins/2, -TMath::Pi(), TMath::Pi());
+   TH1D* photon2_scPhi_B4HEM      = new TH1D("photon2_scPhi_B4HEM", "", nbins/2, -TMath::Pi(), TMath::Pi());
+   TH1D* photon1_scPhi_AfterHEM   = new TH1D("photon1_scPhi_AfterHEM", "", nbins/2, -TMath::Pi(), TMath::Pi());
+   TH1D* photon2_scPhi_AfterHEM   = new TH1D("photon2_scPhi_AfterHEM", "", nbins/2, -TMath::Pi(), TMath::Pi());
+   TH1D* photons_scPhi_B4HEM      = new TH1D("photons_scPhi_B4HEM", "", nbins/2, -TMath::Pi(), TMath::Pi());
+   TH1D* photons_scPhi_AfterHEM   = new TH1D("photons_scPhi_AfterHEM", "", nbins/2, -TMath::Pi(), TMath::Pi());
+   TH1D* photon1_scPhi_B4HEP      = new TH1D("photon1_scPhi_B4HEP", "", nbins/2, -TMath::Pi(), TMath::Pi());
+   TH1D* photon2_scPhi_B4HEP      = new TH1D("photon2_scPhi_B4HEP", "", nbins/2, -TMath::Pi(), TMath::Pi());
+   TH1D* photon1_scPhi_AfterHEP   = new TH1D("photon1_scPhi_AfterHEP", "", nbins/2, -TMath::Pi(), TMath::Pi());
+   TH1D* photon2_scPhi_AfterHEP   = new TH1D("photon2_scPhi_AfterHEP", "", nbins/2, -TMath::Pi(), TMath::Pi());
+   TH1D* photons_scPhi_B4HEP      = new TH1D("photons_scPhi_B4HEP", "", nbins/2, -TMath::Pi(), TMath::Pi());
+   TH1D* photons_scPhi_AfterHEP   = new TH1D("photons_scPhi_AfterHEP", "", nbins/2, -TMath::Pi(), TMath::Pi());
 
    photon1Eta_B4HEM->Sumw2();
    photon2Eta_B4HEM->Sumw2();
@@ -158,6 +171,21 @@ double xmax=2000; // GeV
   // photonsEta_AfterHEP->Sumw2();
    photonsPhi_B4HEP->Sumw2();
    photonsPhi_AfterHEP->Sumw2();
+
+
+//SuperCluster
+   photon1_scPhi_B4HEM->Sumw2();
+   photon1_scPhi_B4HEP->Sumw2();
+   photon1_scPhi_AfterHEM->Sumw2();
+   photon1_scPhi_AfterHEP->Sumw2();
+   photon2_scPhi_B4HEM->Sumw2();
+   photon2_scPhi_B4HEP->Sumw2();
+   photon2_scPhi_AfterHEM->Sumw2();
+   photon2_scPhi_AfterHEP->Sumw2();
+   photons_scPhi_B4HEM->Sumw2();
+   photons_scPhi_B4HEP->Sumw2();
+   photons_scPhi_AfterHEM->Sumw2();
+   photons_scPhi_AfterHEP->Sumw2();
 
 //   for(auto ivarhist : vhists){
 //     //for(unsigned i = 0; i < ivarhist.size(); ++i){
@@ -189,32 +217,49 @@ double xmax=2000; // GeV
             //Put here HEM- Condition
                 photon1Eta_B4HEM->Fill(Photon1_eta, weight);
                 photonsEta_B4HEM->Fill(Photon1_eta, weight);
+
               //  photon1Eta_B4HEP->Fill(Photon1_eta);
               //  photonsEta_B4HEP->Fill(Photon1_eta);
                 if(Photon1_eta > -3.0 && Photon1_eta < -1.392)// HEM
                 {
                   photon1Phi_B4HEM->Fill(Photon1_phi, weight);
                   photonsPhi_B4HEM->Fill(Photon1_phi, weight);
+
+                  photon1_scPhi_B4HEM->Fill(Photon1_scPhi, weight);
+                  photons_scPhi_B4HEM->Fill(Photon1_scPhi, weight);
                 }
                 else if(Photon1_eta > 1.392 && Photon1_eta < 3.0)//HEP
                 {
                   photon1Phi_B4HEP->Fill(Photon1_phi, weight);
                   photonsPhi_B4HEP->Fill(Photon1_phi, weight);
+
+                  photon1_scPhi_B4HEP->Fill(Photon1_scPhi, weight);
+                  photons_scPhi_B4HEP->Fill(Photon1_scPhi, weight);
+
                 }
             //cout << "Fill HEM-B4" << endl;
           }
-          else{
+          else{//
                 photon1Eta_AfterHEM->Fill(Photon1_eta, weight);
                 photonsEta_AfterHEM->Fill(Photon1_eta, weight);
-                if(Photon1_eta > -3.0 && Photon1_eta < -1.392){
+
+                if(Photon1_eta > -3.0 && Photon1_eta < -1.392){//HEM
+
                   photon1Phi_AfterHEM->Fill(Photon1_phi, weight);
                   photonsPhi_AfterHEM->Fill(Photon1_phi, weight);
+
+                  photon1_scPhi_AfterHEM->Fill(Photon1_scPhi, weight);
+                  photons_scPhi_AfterHEM->Fill(Photon1_scPhi, weight);
+
                 }
-                  else if(Photon1_eta > 1.392 && Photon1_eta < 3.0){
+                  else if(Photon1_eta > 1.392 && Photon1_eta < 3.0){//HEP
                     //photon1Eta_AfterHEP->Fill(Photon1_eta);
                     photon1Phi_AfterHEP->Fill(Photon1_phi, weight);
                     //photonsEta_AfterHEP->Fill(Photon1_eta);
                     photonsPhi_AfterHEP->Fill(Photon1_phi, weight);
+
+                    photon1_scPhi_AfterHEP->Fill(Photon1_scPhi, weight);
+                    photons_scPhi_AfterHEP->Fill(Photon1_scPhi, weight);
                   }
 
           }
@@ -229,12 +274,19 @@ double xmax=2000; // GeV
               if(Photon2_eta > -3.0 && Photon2_eta > -1.392){
                 photon2Phi_B4HEM->Fill(Photon2_phi, weight);
                 photonsPhi_B4HEM->Fill(Photon2_phi, weight);
+
+                photon2_scPhi_B4HEM->Fill(Photon2_scPhi, weight);
+                photons_scPhi_B4HEM->Fill(Photon2_scPhi, weight);
+
               }
                 else if(Photon2_eta > 1.392 && Photon2_eta < 3.0){
                   //photon2Eta_B4HEP->Fill(Photon2_eta);
                   photon2Phi_B4HEP->Fill(Photon2_phi, weight);
                   //photonsEta_B4HEP->Fill(Photon1_eta);
                   photonsPhi_B4HEP->Fill(Photon2_phi, weight);
+
+                  photon2_scPhi_B4HEP->Fill(Photon2_scPhi, weight);
+                  photons_scPhi_B4HEP->Fill(Photon2_scPhi, weight);
                 }
           }
           else{
@@ -244,12 +296,19 @@ double xmax=2000; // GeV
               if(Photon2_eta > -3.0 && Photon2_eta > -1.392){
                 photon2Phi_AfterHEM->Fill(Photon2_phi, weight);
                 photonsPhi_AfterHEM->Fill(Photon2_phi, weight);
+
+                photon2_scPhi_AfterHEM->Fill(Photon2_scPhi, weight);
+                photons_scPhi_AfterHEM->Fill(Photon2_scPhi, weight);
               }
               else if(Photon2_eta > 1.392 && Photon2_eta < 3.0){
                 //photon2Eta_AfterHEP->Fill(Photon2_eta);
                 photon2Phi_AfterHEP->Fill(Photon2_phi, weight);
                 //photonsEta_AfterHEP->Fill(Photon1_eta);
                 photonsPhi_AfterHEP->Fill(Photon2_phi, weight);
+
+                photon2_scPhi_AfterHEP->Fill(Photon2_scPhi, weight);
+                photons_scPhi_AfterHEP->Fill(Photon2_scPhi, weight);
+
               }
           }
         }
@@ -283,5 +342,19 @@ double xmax=2000; // GeV
    //photonsEta_AfterHEP->Write();
    photonsPhi_B4HEP->Write();
    photonsPhi_AfterHEP->Write();
+
+   //SuperCluster
+   photon1_scPhi_B4HEM->Write();
+   photon1_scPhi_B4HEP->Write();
+   photon1_scPhi_AfterHEM->Write();
+   photon1_scPhi_AfterHEP->Write();
+   photon2_scPhi_B4HEM->Write();
+   photon2_scPhi_B4HEP->Write();
+   photon2_scPhi_AfterHEM->Write();
+   photon2_scPhi_AfterHEP->Write();
+   photons_scPhi_B4HEM->Write();
+   photons_scPhi_B4HEP->Write();
+   photons_scPhi_AfterHEM->Write();
+   photons_scPhi_AfterHEP->Write();
 
 }//end ClassData2018::Loop()
