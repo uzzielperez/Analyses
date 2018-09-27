@@ -14,7 +14,8 @@ import argparse
 
 #filename = 'HEM15-16.root'
 #filename = 'HEM15-16_data.root'
-filename = 'Chris_HEM15-16_data.root'
+#filename = 'Chris_HEM15-16_data.root'
+filename = 'ChrisRenorm_HEM15-16_data.root'
 # Draw Options
 DrawAsHist = False
 gStyle.SetOptStat(0)
@@ -34,7 +35,7 @@ def getall(d, basepath="/"):
     "Generator function to recurse into a ROOT file/dir and yield (path, obj) pairs"
     for key in d.GetListOfKeys():
         kname = key.GetName()
-        if key.IsFolder():
+       	if key.IsFolder():
             for i in getall(d.Get(kname), basepath+kname+"/"):
                 yield i
         else:
@@ -137,12 +138,14 @@ def compare_hist(f, obj1, obj2, angle):
 	h1 = f.Get(obj1)
 	h2 = f.Get(obj2)
         xtitle, minx, maxx, SetLogy, xpos1, ypos1, xpos2, ypos2 =  objSettings(obj1)
-
+	canvas.SetBottomMargin(0.15)
 	if "Eta" in angle:
 		xmin, xmax = -4, 4
 	elif "Phi" in angle:
 		xmin, xmax = -3.5, 3.5
-        h1.GetYaxis().SetTitle("Events")
+	ytitle = r"#scale[0.8]{weighted events}"
+        h1.GetYaxis().SetTitle(ytitle)
+	h1.GetYaxis().SetTitleOffset(0.7)
         h1.GetXaxis().SetTitle(xtitle)
 	h1.SetAxisRange(xmin, xmax)
 	h1.SetLineColor(kBlue)
@@ -163,26 +166,26 @@ def compare_hist(f, obj1, obj2, angle):
 	leg.SetFillStyle(0)
 	leg.SetTextFont(42)
 	leg.SetTextSize(0.035)
-	leg.AddEntry(h1, obj1 ,"l")
-	leg.AddEntry(h2, obj2, "l")
+	leg.AddEntry(h1, obj1 ,"F")
+	leg.AddEntry(h2, obj2, "F")
 	leg.Draw()
 
-	set_CMS_lumi(canvas, 4, 11, "1")
+	set_CMS_lumi(canvas, 4, 11, "Pre(Post):20.3(23.4)")
 	canvas.Update()
 	canvas.Draw()
-	canvas.Print("HEM15-16_%s.png" %(angle))
+	canvas.Print("HEM15-16_%s.pdf" %(angle))
 
 compare_hist(f, "photonsEta_PreHEM", "photonsEta_PostHEM", "Eta_PrevsPost")
-#compare_hist(f, "photon1Eta_PreHEM", "photon1Eta_PostHEM", "Eta1_PrevsPost")
-#compare_hist(f, "photon2Eta_PreHEM", "photon2Eta_PostHEM", "Eta2_PrevsPost")
+compare_hist(f, "photon1Eta_PreHEM", "photon1Eta_PostHEM", "Eta1_PrevsPost")
+compare_hist(f, "photon2Eta_PreHEM", "photon2Eta_PostHEM", "Eta2_PrevsPost")
 
-#compare_hist(f, "photon1Phi_PreHEM", "photon1Phi_PostHEM", "Phi1_PrevsPost")
-#compare_hist(f, "photon2Phi_PreHEM", "photon2Phi_PostHEM", "Phi2_PrevsPost")
+compare_hist(f, "photon1Phi_PreHEM", "photon1Phi_PostHEM", "Phi1_PrevsPost")
+compare_hist(f, "photon2Phi_PreHEM", "photon2Phi_PostHEM", "Phi2_PrevsPost")
 compare_hist(f, "photonsPhi_PreHEM", "photonsPhi_PostHEM", "Phi_PrevsPost")
 
 
-#compare_hist(f, "photon1Phi_PostHEM", "photon1Phi_PostHEP", "Phi1_HEMvsHEP")
-#compare_hist(f, "photon2Phi_PostHEM", "photon2Phi_PostHEP", "Phi2_HEMvsHEP")
+compare_hist(f, "photon1Phi_PostHEM", "photon1Phi_PostHEP", "Phi1_HEMvsHEP")
+compare_hist(f, "photon2Phi_PostHEM", "photon2Phi_PostHEP", "Phi2_HEMvsHEP")
 compare_hist(f, "photonsPhi_PostHEM", "photonsPhi_PostHEP", "Phi_HEMvsHEP")
 
 compare_hist(f, "photons_scPhi_PreHEM", "photons_scPhi_PostHEM", "scPhi_PrevsPost")
