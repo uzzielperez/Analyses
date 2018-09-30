@@ -5,35 +5,11 @@
 #include <TCanvas.h>
 #include "interface/easyplot.hh"
 #include "interface/utilities.hh"
-
+#include<iostream>
 using namespace std;
 
 void ClassData2018::Loop()
 {
-//   In a ROOT session, you can do:
-//      root> .L ClassData2018.C
-//      root> ClassData2018 t
-//      root> t.GetEntry(12); // Fill t data members with entry number 12
-//      root> t.Show();       // Show values of entry 12
-//      root> t.Show(16);     // Read and show values of entry 16
-//      root> t.Loop();       // Loop on all entries
-//
-
-//     This is the loop skeleton where:
-//    jentry is the global entry number in the chain
-//    ientry is the entry number in the current Tree
-//  Note that the argument to GetEntry must be:
-//    jentry for TChain::GetEntry
-//    ientry for TTree::GetEntry and TBranch::GetEntry
-//
-//       To read only selected branches, Insert statements like:
-// METHOD1:
-//    fChain->SetBranchStatus("*",0);  // disable all branches
-//    fChain->SetBranchStatus("branchname",1);  // activate branchname
-// METHOD2: replace line
-//    fChain->GetEntry(jentry);       //read all branches
-//by  b_branchname->GetEntry(ientry); //read only this branch
-// std::string data_year("");
 std::string region;
 bool endcap = (region=="endcap");
 
@@ -53,6 +29,16 @@ double xmax=2000; // GeV
    if (fChain == 0) return;
    init();
    Long64_t nentries = fChain->GetEntriesFast();
+
+   int nphoton1isEE_Pre = 0;
+   int nphoton2isEE_Pre = 0;
+   int nphoton1isEB_Pre = 0;
+   int nphoton2isEB_Pre = 0;
+   int nphoton1isEE_Post = 0;
+   int nphoton2isEE_Post = 0;
+   int nphoton1isEB_Post = 0;
+   int nphoton2isEB_Post = 0;
+
    //Define Samples
    // sample data("data_" + data_year, "Data");
    // sample gg("gg", "#gamma#gamma", kfactor);
@@ -117,7 +103,6 @@ double xmax=2000; // GeV
    TH1D* photonsPhi_PreHEM      = new TH1D("photonsPhi_PreHEM", "", nbins/2, -TMath::Pi(), TMath::Pi());
    TH1D* photonsPhi_PostHEM   = new TH1D("photonsPhi_PostHEM", "", nbins/2, -TMath::Pi(), TMath::Pi());
 
-
    TH1D* photon1Eta_PreHEP      = new TH1D("photon1Eta_PreHEP", "", nbins/2, -5, 5);
 	 TH1D* photon2Eta_PreHEP      = new TH1D("photon2Eta_PreHEP", "", nbins/2, -5, 5);
    TH1D* photon1Phi_PreHEP      = new TH1D("photon1Phi_PreHEP", "", nbins/2, -TMath::Pi(), TMath::Pi());
@@ -158,7 +143,6 @@ double xmax=2000; // GeV
    photonsPhi_PreHEM->Sumw2();
    photonsPhi_PostHEM->Sumw2();
 
-
    photon1Eta_PreHEP->Sumw2();
    photon2Eta_PreHEP->Sumw2();
    photon1Phi_PreHEP->Sumw2();
@@ -171,7 +155,6 @@ double xmax=2000; // GeV
    photonsEta_PostHEP->Sumw2();
    photonsPhi_PreHEP->Sumw2();
    photonsPhi_PostHEP->Sumw2();
-
 
 //SuperCluster
    photon1_scPhi_PreHEM->Sumw2();
@@ -212,15 +195,6 @@ double xmax=2000; // GeV
       //Focus only on Endcap
       int HEMminStartRun = 319077;
       double weight;
-
-      int nphoton1isEE_Pre = 0;
-      int nphoton2isEE_Pre = 0;
-      int nphoton1isEB_Pre = 0;
-      int nphoton2isEB_Pre = 0;
-      int nphoton1isEE_Post = 0;
-      int nphoton2isEE_Post = 0;
-      int nphoton1isEB_Post = 0;
-      int nphoton2isEB_Post = 0;
 
       // if(Event_run<319077) weight = 1/20.315;
       // else weight = 1/(6.612+12.8+3.969);
@@ -333,9 +307,18 @@ double xmax=2000; // GeV
             }
           //}Photon2isEE
         }
-      }
-    }//kinematic conditions
+      }//kinematics
    }//end loop over events
+
+   std::cout << std::endl;
+   std::cout << "nphoton1isEE_Pre : " << nphoton1isEE_Pre  << std::endl;
+   std::cout << "nphoton2isEE_Pre : " << nphoton2isEE_Pre  << std::endl;
+   std::cout << "nphoton1isEB_Pre : " << nphoton1isEB_Pre  << std::endl;
+   std::cout << "nphoton2isEB_Pre : " << nphoton2isEB_Pre  << std::endl;
+   std::cout << "nphoton1isEE_Post: " << nphoton1isEE_Post << std::endl;
+   std::cout << "nphoton2isEE_Post: " << nphoton2isEE_Post << std::endl;
+   std::cout << "nphoton1isEB_Post: " << nphoton1isEB_Post << std::endl;
+   std::cout << "nphoton2isEB_Post: " << nphoton2isEB_Post << std::endl;
 
    TFile file_out("HEM15-16_data_pT125_M300-1000_w1.root", "RECREATE");
 
