@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 import ROOT
-from ROOT import TClass,TKey, TIter,TCanvas, TPad, TFile, TPaveText, TColor, TGaxis, TH1F, TPad, TH1D, TLegend, TLine
+from ROOT import TClass,TKey, TIter,TCanvas, TPad, TFile, TPaveText, TColor, TGaxis, TH1F, TPad, TH1D,TH2D, TLegend, TLine
 from ROOT import kBlack, kBlue, kRed
 from ROOT import gBenchmark, gStyle, gROOT, gDirectory
 from plotsHelper import *
@@ -15,7 +15,10 @@ import argparse
 #filename = 'HEM15-16.root'
 #filename = 'HEM15-16_data.root'
 #filename = 'Chris_HEM15-16_data.root'
-filename = 'ChrisRenorm_HEM15-16_data.root'
+#filename = 'ChrisRenorm_HEM15-16_data.root'
+#filename = 'ChrisRenormPhiCut_HEM15-16_data.root'
+filename = 'HEM15-16_data_pT125_M300-1000_w1.root'
+
 # Draw Options
 DrawAsHist = False
 gStyle.SetOptStat(0)
@@ -139,24 +142,53 @@ def compare_hist(f, obj1, obj2, angle):
 	h2 = f.Get(obj2)
         xtitle, minx, maxx, SetLogy, xpos1, ypos1, xpos2, ypos2 =  objSettings(obj1)
 	canvas.SetBottomMargin(0.15)
+	canvas.SetLeftMargin(0.15)
 	if "Eta" in angle:
 		xmin, xmax = -4, 4
 	elif "Phi" in angle:
 		xmin, xmax = -3.5, 3.5
 	ytitle = r"#scale[0.8]{weighted events}"
         h1.GetYaxis().SetTitle(ytitle)
-	h1.GetYaxis().SetTitleOffset(0.7)
+	h1.GetYaxis().SetTitleOffset(1.0)
         h1.GetXaxis().SetTitle(xtitle)
 	h1.SetAxisRange(xmin, xmax)
 	h1.SetLineColor(kBlue)
 	#h2.SetLineColor(kRed)
-	h1.SetMarkerStyle(3)
+	h1.SetMarkerStyle(5)
 	h2.SetMarkerStyle(2)
 	h1.SetFillColor(7)
 	h2.SetFillColor(42)
 	h2.SetFillStyle(3013)
+
+	#norm = 1
+        #scale = norm/(h2.Integral())
+
+	#norm = h2.GetEntries()
+	#scale = 1/norm
+
+	print "Integral: ", h2.Integral()
+#
+#	scale = 1/(h2.Integral())
+#	h1.Scale(23.4*scale)
+#	h2.Scale(23.4*scale)
+
+	#prescale  = 20.3*(23.4/20.3)
+	#postscale = 23.4*(1)
+
+	#prescale = 23.4
+	#postscale = 23.4
+	
+	prescale = 23.4/20.3
+	postscale = 1.00
+
+	h1.Scale(prescale)
+	h2.Scale(postscale)
+
 	h1.Draw("hist, e")
     	h2.Draw("hist, e, same")
+
+	h1.Draw("e, same")
+	h2.Draw("e, same")
 
 	#xpos1, ypos1, xpos2, ypos2 = .30, 0.20, .70, .38
 
@@ -179,18 +211,30 @@ compare_hist(f, "photonsEta_PreHEM", "photonsEta_PostHEM", "Eta_PrevsPost")
 compare_hist(f, "photon1Eta_PreHEM", "photon1Eta_PostHEM", "Eta1_PrevsPost")
 compare_hist(f, "photon2Eta_PreHEM", "photon2Eta_PostHEM", "Eta2_PrevsPost")
 
-compare_hist(f, "photon1Phi_PreHEM", "photon1Phi_PostHEM", "Phi1_PrevsPost")
-compare_hist(f, "photon2Phi_PreHEM", "photon2Phi_PostHEM", "Phi2_PrevsPost")
+#compare_hist(f, "photon1Phi_PreHEM", "photon1Phi_PostHEM", "Phi1_PrevsPost")
+#compare_hist(f, "photon2Phi_PreHEM", "photon2Phi_PostHEM", "Phi2_PrevsPost")
 compare_hist(f, "photonsPhi_PreHEM", "photonsPhi_PostHEM", "Phi_PrevsPost")
 
 
-compare_hist(f, "photon1Phi_PostHEM", "photon1Phi_PostHEP", "Phi1_HEMvsHEP")
-compare_hist(f, "photon2Phi_PostHEM", "photon2Phi_PostHEP", "Phi2_HEMvsHEP")
+#compare_hist(f, "photon1Phi_PostHEM", "photon1Phi_PostHEP", "Phi1_HEMvsHEP")
+#compare_hist(f, "photon2Phi_PostHEM", "photon2Phi_PostHEP", "Phi2_HEMvsHEP")
 compare_hist(f, "photonsPhi_PostHEM", "photonsPhi_PostHEP", "Phi_HEMvsHEP")
 
 compare_hist(f, "photons_scPhi_PreHEM", "photons_scPhi_PostHEM", "scPhi_PrevsPost")
-compare_hist(f, "photons_scPhi_PostHEM", "photons_scPhi_PostHEP", "scPhi_HEMvsHEP")
+#compare_hist(f, "photons_scPhi_PostHEM", "photons_scPhi_PostHEP", "scPhi_HEMvsHEP")
 
+def colormap_builder(obj):
+	canvas = ROOT.TCanvas()
+	h2D = f.Get(obj)
+	h2D.Draw('colz')
+	canvas.Update()
+	canvas.Draw()
+	canvas.Print("HEM15-16colz_%s.pdf" %(obj))
+
+colormap_builder("hPre_PhiEta")
+colormap_builder("hPre_scPhiscEta")
+colormap_builder("hPost_PhiEta")
+colormap_builder("hPost_scPhiscEta")
 
 sw.Stop()
 print "Processing Time:"
