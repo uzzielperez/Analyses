@@ -226,7 +226,25 @@ compare_hist(f, "photons_scPhi_PreHEM", "photons_scPhi_PostHEM", "scPhi_PrevsPos
 def colormap_builder(obj):
 	canvas = ROOT.TCanvas()
 	h2D = f.Get(obj)
+	#canvas.SetBottomMargin(0.15)
+        #canvas.SetLeftMargin(0.15)
+	gStyle.SetOptTitle(0)
+	ytitle = r"#phi"
+	xtitle = r"#eta"
+	if "sc" in obj:
+		xtitle = r"#scale[0.7]{sc} " + xtitle
+		ytitle = r"#scale[0.7]{sc} " + ytitle
+	if "Pre" in obj:
+		lumi = "PreHEM: 20"
+	if "Post" in obj:
+		lumi = "PostHEM: 23.4"
+	h2D.GetYaxis().SetTitle(ytitle)
+        h2D.GetYaxis().SetTitleOffset(0.7)
+        h2D.GetXaxis().SetTitle(xtitle)
+	h2D.GetXaxis().SetTitleOffset(0.7)
+        h2D.SetAxisRange(-2.5, 2.5)
 	h2D.Draw('colz')
+	set_CMS_lumi(canvas, 4, 11, lumi)
 	canvas.Update()
 	canvas.Draw()
 	canvas.Print("HEM15-16colz_%s.pdf" %(obj))
