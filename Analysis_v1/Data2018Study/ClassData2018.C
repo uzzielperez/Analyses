@@ -212,6 +212,16 @@ double xmax=2000; // GeV
       //Focus only on Endcap
       int HEMminStartRun = 319077;
       double weight;
+
+      int nphoton1isEE_Pre = 0;
+      int nphoton2isEE_Pre = 0;
+      int nphoton1isEB_Pre = 0;
+      int nphoton2isEB_Pre = 0;
+      int nphoton1isEE_Post = 0;
+      int nphoton2isEE_Post = 0;
+      int nphoton1isEB_Post = 0;
+      int nphoton2isEB_Post = 0;
+
       // if(Event_run<319077) weight = 1/20.315;
       // else weight = 1/(6.612+12.8+3.969);
       //weight = 1/(6.612+12.8+3.969);
@@ -225,7 +235,10 @@ double xmax=2000; // GeV
       if(Event_run < 319077){
         hPre_PhiEta ->Fill(Photon1_eta, Photon1_phi);
         hPre_scPhiscEta->Fill(Photon1_eta, Photon1_phi);
+        hPre_PhiEta ->Fill(Photon2_eta, Photon2_phi);
+        hPre_scPhiscEta->Fill(Photon2_eta, Photon2_phi);
         //if(Photon1_isEE){
+
           if(Photon1_eta > -3.0 && Photon1_eta < -1.392){// HEM{
             photon1Eta_PreHEM->Fill(Photon1_eta, weight);
             photonsEta_PreHEM->Fill(Photon1_eta, weight);
@@ -233,8 +246,13 @@ double xmax=2000; // GeV
             photonsPhi_PreHEM->Fill(Photon1_phi, weight);
             photon1_scPhi_PreHEM->Fill(Photon1_scPhi, weight);
             photons_scPhi_PreHEM->Fill(Photon1_scPhi, weight);
+
+            if (Photon1_isEE) nphoton1isEE_Pre++;
+            if (Photon1_isEB) nphoton1isEB_Pre++;
           }
           else if(Photon1_eta > 1.392 && Photon1_eta < 3.0){//HEP
+            photon1Eta_PreHEP->Fill(Photon1_eta, weight);
+            photonsEta_PreHEP->Fill(Photon1_eta, weight);
             photon1Phi_PreHEP->Fill(Photon1_phi, weight);
             photonsPhi_PreHEP->Fill(Photon1_phi, weight);
             photon1_scPhi_PreHEP->Fill(Photon1_scPhi, weight);
@@ -245,18 +263,21 @@ double xmax=2000; // GeV
           //Put here HEM- Condition
           // if(Photon1_phi > -1.57 && Photon1_eta < -0.87){
          //}
-         if(Photon2_eta > -3.0 && Photon2_eta > -1.392){
+       if(Photon2_eta > -3.0 && Photon2_eta > -1.392){
            photon2Eta_PreHEM->Fill(Photon2_eta, weight);
            photonsEta_PreHEM->Fill(Photon2_eta, weight);
            photon2Phi_PreHEM->Fill(Photon2_phi, weight);
            photonsPhi_PreHEM->Fill(Photon2_phi, weight);
            photon2_scPhi_PreHEM->Fill(Photon2_scPhi, weight);
            photons_scPhi_PreHEM->Fill(Photon2_scPhi, weight);
+
+          if (Photon2_isEE) nphoton2isEE_Pre++;
+          if (Photon2_isEB) nphoton2isEB_Pre++;
          }
          else if(Photon2_eta > 1.392 && Photon2_eta < 3.0){
-             //photon2Eta_PreHEP->Fill(Photon2_eta);
+             photon2Eta_PreHEP->Fill(Photon2_eta);
              photon2Phi_PreHEP->Fill(Photon2_phi, weight);
-             //photonsEta_PreHEP->Fill(Photon1_eta);
+             photonsEta_PreHEP->Fill(Photon2_eta);
              photonsPhi_PreHEP->Fill(Photon2_phi, weight);
              photon2_scPhi_PreHEP->Fill(Photon2_scPhi, weight);
              photons_scPhi_PreHEP->Fill(Photon2_scPhi, weight);
@@ -266,41 +287,51 @@ double xmax=2000; // GeV
       else if (Event_run > 319077){
         hPost_PhiEta->Fill(Photon1_eta, Photon1_phi);
         hPost_scPhiscEta->Fill(Photon1_eta, Photon1_phi);
-        if(Photon1_isEE){
-          photon1Eta_PostHEM->Fill(Photon1_eta, weight);
-          photonsEta_PostHEM->Fill(Photon1_eta, weight);
+        hPost_PhiEta->Fill(Photon2_eta, Photon1_phi);
+        hPost_scPhiscEta->Fill(Photon2_eta, Photon1_phi);
+        //if(Photon1_isEE){
           if(Photon1_eta > -3.0 && Photon1_eta < -1.392){//HEM
+            photon1Eta_PostHEM->Fill(Photon1_eta, weight);
+            photonsEta_PostHEM->Fill(Photon1_eta, weight);
             photon1Phi_PostHEM->Fill(Photon1_phi, weight);
             photonsPhi_PostHEM->Fill(Photon1_phi, weight);
             photon1_scPhi_PostHEM->Fill(Photon1_scPhi, weight);
             photons_scPhi_PostHEM->Fill(Photon1_scPhi, weight);
+
+            if (Photon1_isEE) nphoton1isEE_Post++;
+            if (Photon1_isEB) nphoton1isEB_Post++;
           }
           else if(Photon1_eta > 1.392 && Photon1_eta < 3.0){//HEP
-            //photon1Eta_PostHEP->Fill(Photon1_eta);
+            photon1Eta_PostHEP->Fill(Photon1_eta);
             photon1Phi_PostHEP->Fill(Photon1_phi, weight);
-            //photonsEta_PostHEP->Fill(Photon1_eta);
+            photonsEta_PostHEP->Fill(Photon1_eta);
             photonsPhi_PostHEP->Fill(Photon1_phi, weight);
             photon1_scPhi_PostHEP->Fill(Photon1_scPhi, weight);
             photons_scPhi_PostHEP->Fill(Photon1_scPhi, weight);
           }
-          if(Photon2_isEE){
-            photon2Eta_PostHEM->Fill(Photon2_eta, weight);
-            photonsEta_PostHEM->Fill(Photon2_eta, weight);
+        //}//Photon1isEE
+          //if(Photon2_isEE){
             if(Photon2_eta > -3.0 && Photon2_eta > -1.392){
+              photon2Eta_PostHEM->Fill(Photon2_eta, weight);
+              photonsEta_PostHEM->Fill(Photon2_eta, weight);
               photon2Phi_PostHEM->Fill(Photon2_phi, weight);
               photonsPhi_PostHEM->Fill(Photon2_phi, weight);
               photon2_scPhi_PostHEM->Fill(Photon2_scPhi, weight);
               photons_scPhi_PostHEM->Fill(Photon2_scPhi, weight);
+
+              if (Photon2_isEE) nphoton2isEE_Post++;
+              if (Photon2_isEB) nphoton2isEB_Post++;
             }
             else if(Photon2_eta > 1.392 && Photon2_eta < 3.0){
-              //photon2Eta_PostHEP->Fill(Photon2_eta);
+              photon2Eta_PostHEP->Fill(Photon2_eta);
+              photonsEta_PostHEM->Fill(Photon2_eta, weight);
               photon2Phi_PostHEP->Fill(Photon2_phi, weight);
-              //photonsEta_PostHEP->Fill(Photon1_eta);
+              photonsEta_PostHEP->Fill(Photon2_eta);
               photonsPhi_PostHEP->Fill(Photon2_phi, weight);
               photon2_scPhi_PostHEP->Fill(Photon2_scPhi, weight);
               photons_scPhi_PostHEP->Fill(Photon2_scPhi, weight);
             }
-          }
+          //}Photon2isEE
         }
       }
     }//kinematic conditions
@@ -321,16 +352,16 @@ double xmax=2000; // GeV
    photonsPhi_PreHEM->Write();
    photonsPhi_PostHEM->Write();
 
-   //photon1Eta_PreHEP->Write();
-   //photon2Eta_PreHEP->Write();
+   photon1Eta_PreHEP->Write();
+   photon2Eta_PreHEP->Write();
    photon1Phi_PreHEP->Write();
    photon2Phi_PreHEP->Write();
-   //photon1Eta_PostHEP->Write();
-   //photon2Eta_PostHEP->Write();
+   photon1Eta_PostHEP->Write();
+   photon2Eta_PostHEP->Write();
    photon1Phi_PostHEP->Write();
    photon2Phi_PostHEP->Write();
-   //photonsEta_PreHEP->Write();
-   //photonsEta_PostHEP->Write();
+   photonsEta_PreHEP->Write();
+   photonsEta_PostHEP->Write();
    photonsPhi_PreHEP->Write();
    photonsPhi_PostHEP->Write();
 
