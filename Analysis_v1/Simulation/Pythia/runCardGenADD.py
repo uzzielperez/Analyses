@@ -34,7 +34,7 @@ negInt          = args.negint
 COM             = args.com/1000 # in TeV
 RunCardTemplate = args.template 
 
-RunCard_outName = 'ADDGravToGG_NegInt-%d_LambdaT-%d_M-%dTo%d_TuneCUEP8M1_%dTeV-pythia8_cfi.py' %(negInt, int(lambdaT), massMin, massMax, COM)
+RunCard_outName = 'ADDGravToGG_NegInt-%d_LambdaT-%d_M-%dTo%d_%dTeV-pythia8_MASTER_cff.py' %(negInt, int(lambdaT), massMin, massMax, COM)
 #RunCard_outName = 'ADDGravToGG_NegInt-%d_NED-%d_LambdaT-%d_M-%dTo%d_TuneCUEP8M1_%dTeV-pythia8_cfi.py' %(negInt, ned, int(lambdaT), massMin, massMax, COM)
 outfile         = open(RunCard_outName, "w+")
 
