@@ -19,6 +19,7 @@ import argparse
 #filename = 'ChrisRenormPhiCut_HEM15-16_data.root'
 filename = 'HEM15-16_data_pT125_M300-1000_w1.root'
 
+postlumi = 26.3
 # Draw Options
 DrawAsHist = False
 gStyle.SetOptStat(0)
@@ -177,8 +178,9 @@ def compare_hist(f, obj1, obj2, angle):
 
 	#prescale = 23.4
 	#postscale = 23.4
-	
-	prescale = 23.4/20.3
+
+	#postlumi = 26.3	
+	prescale = postlumi/20.3
 	postscale = 1.00
 
 	h1.Scale(prescale)
@@ -202,7 +204,7 @@ def compare_hist(f, obj1, obj2, angle):
 	leg.AddEntry(h2, obj2, "F")
 	leg.Draw()
 
-	set_CMS_lumi(canvas, 4, 11, "Pre(Post):20.3(23.4)")
+	set_CMS_lumi(canvas, 4, 11, "Pre(Post):20.3(%s)" %(str(postlumi)))
 	canvas.Update()
 	canvas.Draw()
 	canvas.Print("HEM15-16_%s.pdf" %(angle))
@@ -237,7 +239,7 @@ def colormap_builder(obj):
 	if "Pre" in obj:
 		lumi = "PreHEM: 20"
 	if "Post" in obj:
-		lumi = "PostHEM: 23.4"
+		lumi = "PostHEM: %s" %(str(postlumi))
 	h2D.GetYaxis().SetTitle(ytitle)
         h2D.GetYaxis().SetTitleOffset(0.7)
         h2D.GetXaxis().SetTitle(xtitle)
