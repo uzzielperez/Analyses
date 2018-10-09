@@ -1,8 +1,7 @@
 import FWCore.ParameterSet.Config as cms 
 
 from Configuration.Generator.Pythia8CommonSettings_cfi import *
-from Configuration.Generator.MCTunes2017.PythiaCP5Settings_cfi import *
-from Configuration.Generator.Pythia8aMCatNLOSettings_cfi import *
+from Configuration.Generator.Pythia8CUEP8M1Settings_cfi import *
 
 generator = cms.EDFilter("Pythia8GeneratorFilter",
     maxEventsToPrint = cms.untracked.int32(1),
@@ -12,8 +11,7 @@ generator = cms.EDFilter("Pythia8GeneratorFilter",
     comEnergy = cms.double(13000.),
     PythiaParameters = cms.PSet(
         pythia8CommonSettingsBlock,
-        pythia8CP5SettingsBlock,
-        pythia8aMCatNLOSettingsBlock,
+        pythia8CUEP8M1SettingsBlock,
         processParameters = cms.vstring(
             'ExtraDimensionsLED:LambdaT = ${lambdaT}',
             'ExtraDimensionsLED:n = ${ned}',
@@ -22,15 +20,16 @@ generator = cms.EDFilter("Pythia8GeneratorFilter",
             'ExtraDimensionsLED:CutOffmode = 2', 
             'ExtraDimensionsLED:NegInt= ${negInt}',
             'PhaseSpace:pTHatMin = ${pTcut}',
-	    'PhaseSpace:mHatMin = ${massMax}',	    
-	    'PhaseSpace:mHatMax = ${massMin}', 
-            ),  
-        parameterSets = cms.vstring('pythia8CommonSettings',
-                                    'pythia8CP5Settings', 
-                                    'pythia8aMCatNLOSettings',
-				    'processParameters',
-                                    )   
-        )   
-)
+	    'PhaseSpace:mHatMin = ${massMax}',
+	    'PhaseSpace:mHatMax = ${massMin}'
+      
 
+
+  ),  
+        parameterSets = cms.vstring('pythia8CommonSettings',
+                                    'pythia8CUEP8M1Settings',
+                                    'processParameters',
+                                    )   
+    )   
+)
 
