@@ -22,6 +22,8 @@ void ClassRSG::Loop()
   	TH1D* genphoton2Eta   = new TH1D("genphoton2Eta", "", 80, -3.0, 3.0);
   	TH1D* genphoton1Phi   = new TH1D("genphoton1Phi", "", 80, -3.5, 3.5);
   	TH1D* genphoton2Phi   = new TH1D("genphoton2Phi", "", 80, -3.5, 3.5);
+    TH1D* gendiphotoncosthetastar = new TH1D("gendiphotoncosthetastar", "", 100, -1.0, 1.0);
+
     gendiphotonMinv->Sumw2();
   	genphoton1Pt->Sumw2();
   	genphoton2Pt->Sumw2();
@@ -29,6 +31,8 @@ void ClassRSG::Loop()
   	genphoton2Eta->Sumw2();
   	genphoton1Phi->Sumw2();
   	genphoton2Phi->Sumw2();
+    gendiphotoncosthetastar->Sumw2();
+
    Long64_t nbytes = 0, nb = 0;
    for (Long64_t jentry=0; jentry<nentries;jentry++) {
       Long64_t ientry = LoadTree(jentry);
@@ -49,6 +53,7 @@ void ClassRSG::Loop()
     			genphoton2Eta->Fill(GenPhoton2_eta, weight);
     			genphoton1Phi->Fill(GenPhoton1_phi, weight);
     			genphoton2Phi->Fill(GenPhoton2_phi, weight);
+          gendiphotoncosthetastar->Fill(GenDiPhoton_cosThetaStar, weight);
     //		}//pT cut
 //      }//end minv
    }//end for loop over events
@@ -68,4 +73,5 @@ void ClassRSG::Loop()
    genphoton2Eta->Write();
    genphoton1Phi->Write();
    genphoton2Phi->Write();
+   gendiphotoncosthetastar->Write();
 }
