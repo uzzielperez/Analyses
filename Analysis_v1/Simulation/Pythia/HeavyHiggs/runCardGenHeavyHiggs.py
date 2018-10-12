@@ -27,7 +27,7 @@ RunCardTemplate = args.template
 #coupling        = coupling.replace('.', '')  
 
 #GluGluSpin0ToGammaGamma_W_5p6_M_750_TuneCP5_13TeV_pythia8_cfi.py 
-RunCard_outName = 'GluGluSpin0ToGammaGamma_W_%s_M_%d_TuneCP5_%d_pythia8_cfi.py' %(width, m0, COM) 
+RunCard_outName = 'GluGluSpin0ToGammaGamma_W_%s_M_%d_TuneCP5_%dTeV_pythia8_cfi.py' %(width, m0, COM) 
 
 filein = open(RunCardTemplate)
 
