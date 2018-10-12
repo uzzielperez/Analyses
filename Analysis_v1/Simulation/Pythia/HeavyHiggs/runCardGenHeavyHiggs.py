@@ -11,7 +11,7 @@ parser = argparse.ArgumentParser(description='Run Card Settings')
 parser.add_argument('-t', '--template', help='Choose Run Card template.', type=str,
 			default='TemplateHeavyHiggs_TuneCP5_13TeV_pythia8_cfi.py')
 parser.add_argument('-w', '--width', type=str, default='5p6',
- 		    help='coupling options: 0p014, 1p4, 5p6')
+ 		    help='width options: 0p014, 1p4, 5p6')
 parser.add_argument('-m', '--mass', type=float, default=750,
  		    help='mass of first excited state of RSG')
 parser.add_argument('-c', '--com', type=int, default=13000,
