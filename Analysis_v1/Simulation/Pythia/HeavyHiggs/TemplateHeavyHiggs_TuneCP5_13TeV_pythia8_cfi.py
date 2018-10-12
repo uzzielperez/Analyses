@@ -13,7 +13,8 @@ generator = cms.EDFilter("Pythia8GeneratorFilter",
         pythiaPylistVerbosity = cms.untracked.int32(1),
         PythiaParameters = cms.PSet(
         pythia8CommonSettingsBlock,
-        pythia8CUEP8M1SettingsBlock,
+	pythia8CP5SettingsBlock,
+        pythia8aMCatNLOSettingsBlock,
         processParameters = cms.vstring(
             'HiggsSM:gg2H = on',
             '25:m0 = ${m0}',
