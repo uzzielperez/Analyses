@@ -19,12 +19,13 @@ parser.add_argument('-c', '--com', type=int, default=13000,
 args = parser.parse_args()
 
 width 		= args.width
-mWidth={'0p014': 0.175, '1p4': 10.5 , '5p6':42.0} 
+mWidth={'0p014': 1.4*(10**(-4)), '1p4': 1.4*(10**(-2)) , '5p6': 5.6*(10**(-2))} 
 m0              = args.mass
 COM             = args.com/1000 # in TeV
 RunCardTemplate = args.template 
 #coupling  	= str(args.coupling)
 #coupling        = coupling.replace('.', '')  
+gamma_x 	= mWidth[width]*m0
 
 #GluGluSpin0ToGammaGamma_W_5p6_M_750_TuneCP5_13TeV_pythia8_cfi.py 
 RunCard_outName = 'GluGluSpin0ToGammaGamma_W_%s_M_%d_TuneCP5_%dTeV_pythia8_cfi.py' %(width, m0, COM) 
@@ -32,7 +33,7 @@ RunCard_outName = 'GluGluSpin0ToGammaGamma_W_%s_M_%d_TuneCP5_%dTeV_pythia8_cfi.p
 filein = open(RunCardTemplate)
 
 # Dictionary
-d={'mWidth': mWidth[width]
+d={'mWidth': gamma_x
    ,'m0':m0}
 os.chdir('HeavyHiggsfragments')
 outfile  = open(RunCard_outName, "w+")
@@ -40,5 +41,7 @@ src    = Template(filein.read())
 sub    = src.substitute(d) 
 outfile.write(sub)
 filein.close()
-print "Generated %s" %(RunCard_outName)
+
+
+print "Generated %s, Gamma/m: %f"  %(RunCard_outName, gamma_x/m0)
 
