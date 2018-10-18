@@ -18,6 +18,7 @@ sw.Start()
 
 def xsecParse(filetoparse):
 	pattern = (r'sum\s+(.*)')
+	unit   = (r'Accepted\s+(.*)')
 	new_file = []
 
 	# Make sure file gets closed after being iterated
@@ -26,6 +27,7 @@ def xsecParse(filetoparse):
 
 	for line in lines:
 		match = re.findall(pattern, line)
+		unitstring = re.findall(unit, line)
 		if match:
 			match[0].split(" ")
 			matchstring = str(match[0])
@@ -39,10 +41,10 @@ def xsecParse(filetoparse):
 	xsec_info_pb = str('{:.3e}'.format(float(xsec_pb))) + "+-" + str('{:.3e}'.format(float(error_pb)))
        	#xsec_info_pb = str(xsec_pb.normalize()) + "+-" + str(error_pb)
 
-	print xsec_info, " mb; ", xsec_info_pb, " pb"
-
+	print xsec_info, " mb; ", xsec_info_pb, " pb", unitstring
+	
 	f = open("pbFilexsec.txt", "a")
-	f.write('%s: %s\n'%(filetoparse, xsec_info_pb))
+	f.write('%s, %s\n'%(filetoparse, xsec_info_pb))
 	xsecListFile = open("pbxsecInfo.txt", "a") 
 	xsecListFile.write('%s\n'%(xsec_info_pb))
 
@@ -57,8 +59,9 @@ def ParseFileList(file_list):
 	with open(file_list, 'r') as f: 
    		files = f.readlines() 
  
-	for outfile in files:
-		text_to_parse = ".".join((outfile[:-1], "txt"))
+	for outfile in files:	
+		#text_to_parse = "_".join((outfile[:-1], "MASTER.txt"))
+		text_to_parse = ".".join((outfile[:-8], "txt"))
 		print text_to_parse
 		xsecParse(text_to_parse)
 
