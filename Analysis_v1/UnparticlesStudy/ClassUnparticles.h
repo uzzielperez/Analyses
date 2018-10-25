@@ -136,10 +136,80 @@ ClassUnparticles::ClassUnparticles(TTree *tree) : fChain(0)
       // The following code should be used if you want this class to access a chain
       // of trees.
       TChain * chain = new TChain("demo/fgenTree","");
+
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestTestSM_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestTest1p5Unp1000_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestTest1p5Unp800_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestTest1p5Unp2000_py_GEN.root/demo/fgenTree");
+
+      //1p5
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestTest100Unparticles_py_GEN.root/demo/fgenTree");
+
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestTest1p5Unp500_py_GEN.root");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestTest1p5Unp5000_py_GEN.root");
+
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestTest1p5Unp10000_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestTest1p5Unp1000_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestTest1p5Unp_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestTestSM_py_GEN.root/demo/fgenTree");
+
+      //Iter4
+      //chain->Add("TestUnparticles_du1p04_LambdaU-15000p0_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+      //chain->Add("TestUnparticles_du1p04_LambdaU-1p0_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+
+
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestUnparticles_du2p0_LambdaU-1p0_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestUnparticles_du2p2_LambdaU-1p0_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestUnparticles_du2p0_LambdaU-15000p0_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestUnparticles_du2p2_LambdaU-15000p0_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+
+      //Iter2
+      //chain->Add("TestUnparticles_du0p5_LambdaU-10p0_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+      //chain->Add("TestUnparticles_du0p5_LambdaU-1p0_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+      //chain->Add("TestUnparticles_du1p02_LambdaU-10p0_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+      // chain->Add("TestUnparticles_du1p02_LambdaU-1p0_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+       //chain->Add("TestUnparticles_du1p04_LambdaU-10p0_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+      //chain->Add("TestUnparticles_du1p04_LambdaU-1p0_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+       //chain->Add("TestUnparticles_du1p06_LambdaU-10p0_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+      //chain->Add("TestUnparticles_du1p06_LambdaU-1p0_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+      // chain->Add("TestUnparticles_du1p0_LambdaU-10p0_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+      //chain->Add("TestUnparticles_du1p0_LambdaU-1p0_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+
+
+
+      //chain->Add("TestUnparticles_du2p0_LambdaU-10p0_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+      //chain->Add("TestUnparticles_du2p0_LambdaU-1p0_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+
+      //Conor
+     //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestUnparticles_du2p0_LambdaU-10p0_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+     //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestUnparticles_du1p4_LambdaU-10p0_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+     //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestUnparticles_du2p0_LambdaU-1p0_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+     //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestUnparticles_du1p4_LambdaU-1p0_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+
       //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestUnparticles_du106_TuneCUEP8M1_15TeV_pythia8_py_GEN.root/demo/fgenTree");
       //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestUnparticles_du109_TuneCUEP8M1_15TeV_pythia8_py_GEN.root/demo/fgenTree");
-      chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestUnparticles_du2x1_TuneCUEP8M1_15TeV_pythia8_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestUnparticles_du2x1_TuneCUEP8M1_15TeV_pythia8_py_GEN.root/demo/fgenTree");
 
+      //------------------------
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestUnparticles_du1p06_LambdaU-0p4_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestUnparticles_du1p06_LambdaU-1p0_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestUnparticles_du1p06_LambdaU-4p0_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestUnparticles_du1p06_LambdaU-15000p0_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestUnparticles_du1p06_LambdaU-100000p0_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestUnparticles_du1p09_LambdaU-0p4_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestUnparticles_du1p09_LambdaU-1p0_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestUnparticles_du1p09_LambdaU-4p0_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestUnparticles_du1p09_LambdaU-15000p0_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestUnparticles_du1p09_LambdaU-100000p0_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestUnparticles_du2p1_LambdaU-0p4_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestUnparticles_du2p1_LambdaU-1p0_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestUnparticles_du2p1_LambdaU-4p0_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestUnparticles_du2p1_LambdaU-15000p0_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestUnparticles_du2p1_LambdaU-100000p0_TuneCUEP8M1_13TeV_pythia8_py_GEN.root/demo/fgenTree");
+
+      //-----------------------
       //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestUnparticles_du106_LambdaU-1000_TuneCUEP8M1_15TeV_pythia8_py_GEN.root/demo/fgenTree");
       //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestUnparticles_du109_LambdaU-1000_TuneCUEP8M1_15TeV_pythia8_py_GEN.root/demo/fgenTree");
       //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestUnparticles_du2x1_LambdaU-1000_TuneCUEP8M1_15TeV_pythia8_py_GEN.root/demo/fgenTree");
