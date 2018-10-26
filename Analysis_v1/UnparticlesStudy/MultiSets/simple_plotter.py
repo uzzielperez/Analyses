@@ -21,13 +21,13 @@ args = parser.parse_args()
 
 du1p5BASE= False
 du1p01 = False
+du1p1 = False
 du1p2 = False
 du1p3 = False
 du1p4 = False
-du1p5 = False
 du1p6 = False
-du1p7 = False
-du1p8 = True 
+du1p7 = True
+du1p8 = False 
 du1p9 = False
 
 #Ufile1 = "../Unparticles_du1p5_LambdaU-1000_TuneCUEP8M1_13TeV.root"
@@ -50,44 +50,51 @@ if du1p01:
 	Ufile2 = "../Unparticles_du1p01_LambdaU-800_TuneCUEP8M1_13TeV.root"
 	Ufile3 = "../Unparticles_du1p01_LambdaU-2000_TuneCUEP8M1_13TeV.root"
 	Ufile4 = "../Unparticles_SM_TuneCUEP8M1_13TeV.root"
+if du1p1:
+	tag = "du1p1"
+	print tag
+	Ufile1 = "../Unparticles_du1p1_LambdaU-1000_TuneCUEP8M1_13TeV.root"
+	Ufile2 = "../Unparticles_du1p1_LambdaU-800_TuneCUEP8M1_13TeV.root"
+	Ufile3 = "../Unparticles_du1p1_LambdaU-2000_TuneCUEP8M1_13TeV.root"
+	Ufile4 = "../Unparticles_SM_TuneCUEP8M1_13TeV.root"
 if du1p2:
 	tag = "du1p2"
 	print tag
-	Ufile1 = "../Unparticles_du1p5_LambdaU-1000_TuneCUEP8M1_13TeV.root"
-	Ufile2 = "../Unparticles_du1p5_LambdaU-800_TuneCUEP8M1_13TeV.root"
-	Ufile3 = "../Unparticles_du1p5_LambdaU-2000_TuneCUEP8M1_13TeV.root"
+	Ufile1 = "../Unparticles_du1p2_LambdaU-1000_TuneCUEP8M1_13TeV.root"
+	Ufile2 = "../Unparticles_du1p2_LambdaU-800_TuneCUEP8M1_13TeV.root"
+	Ufile3 = "../Unparticles_du1p2_LambdaU-2000_TuneCUEP8M1_13TeV.root"
 	Ufile4 = "../Unparticles_SM_TuneCUEP8M1_13TeV.root"
 
 if du1p3:
 	tag = "du1p3"
 	print tag
-	Ufile1 = "../Unparticles_du1p5_LambdaU-1000_TuneCUEP8M1_13TeV.root"
-	Ufile2 = "../Unparticles_du1p5_LambdaU-800_TuneCUEP8M1_13TeV.root"
-	Ufile3 = "../Unparticles_du1p5_LambdaU-2000_TuneCUEP8M1_13TeV.root"
+	Ufile1 = "../Unparticles_du1p3_LambdaU-1000_TuneCUEP8M1_13TeV.root"
+	Ufile2 = "../Unparticles_du1p3_LambdaU-800_TuneCUEP8M1_13TeV.root"
+	Ufile3 = "../Unparticles_du1p3_LambdaU-2000_TuneCUEP8M1_13TeV.root"
 	Ufile4 = "../Unparticles_SM_TuneCUEP8M1_13TeV.root"
 
 if du1p4:
-	tag = "du1p5"
+	tag = "du1p4"
 	print tag
-	Ufile1 = "../Unparticles_du1p5_LambdaU-1000_TuneCUEP8M1_13TeV.root"
-	Ufile2 = "../Unparticles_du1p5_LambdaU-800_TuneCUEP8M1_13TeV.root"
-	Ufile3 = "../Unparticles_du1p5_LambdaU-2000_TuneCUEP8M1_13TeV.root"
+	Ufile1 = "../Unparticles_du1p4_LambdaU-1000_TuneCUEP8M1_13TeV.root"
+	Ufile2 = "../Unparticles_du1p4_LambdaU-800_TuneCUEP8M1_13TeV.root"
+	Ufile3 = "../Unparticles_du1p4_LambdaU-2000_TuneCUEP8M1_13TeV.root"
 	Ufile4 = "../Unparticles_SM_TuneCUEP8M1_13TeV.root"
 
 if du1p6:
 	tag = "du1p6"
 	print tag
-	Ufile1 = "../Unparticles_du1p5_LambdaU-1000_TuneCUEP8M1_13TeV.root"
-	Ufile2 = "../Unparticles_du1p5_LambdaU-800_TuneCUEP8M1_13TeV.root"
-	Ufile3 = "../Unparticles_du1p5_LambdaU-2000_TuneCUEP8M1_13TeV.root"
+	Ufile1 = "../Unparticles_du1p6_LambdaU-1000_TuneCUEP8M1_13TeV.root"
+	Ufile2 = "../Unparticles_du1p6_LambdaU-800_TuneCUEP8M1_13TeV.root"
+	Ufile3 = "../Unparticles_du1p6_LambdaU-2000_TuneCUEP8M1_13TeV.root"
 	Ufile4 = "../Unparticles_SM_TuneCUEP8M1_13TeV.root"
 
 if du1p7:
 	tag = "du1p7"
 	print tag
-	Ufile1 = "../Unparticles_du1p5_LambdaU-1000_TuneCUEP8M1_13TeV.root"
-	Ufile2 = "../Unparticles_du1p5_LambdaU-800_TuneCUEP8M1_13TeV.root"
-	Ufile3 = "../Unparticles_du1p5_LambdaU-2000_TuneCUEP8M1_13TeV.root"
+	Ufile1 = "../Unparticles_du1p7_LambdaU-1000_TuneCUEP8M1_13TeV.root"
+	Ufile2 = "../Unparticles_du1p7_LambdaU-800_TuneCUEP8M1_13TeV.root"
+	Ufile3 = "../Unparticles_du1p7_LambdaU-2000_TuneCUEP8M1_13TeV.root"
 	Ufile4 = "../Unparticles_SM_TuneCUEP8M1_13TeV.root"
 
 if du1p8:
@@ -101,9 +108,9 @@ if du1p8:
 if du1p9:
 	tag = "du1p9"
 	print tag
-	Ufile1 = "../Unparticles_du1p5_LambdaU-1000_TuneCUEP8M1_13TeV.root"
-	Ufile2 = "../Unparticles_du1p5_LambdaU-800_TuneCUEP8M1_13TeV.root"
-	Ufile3 = "../Unparticles_du1p5_LambdaU-2000_TuneCUEP8M1_13TeV.root"
+	Ufile1 = "../Unparticles_du1p9_LambdaU-1000_TuneCUEP8M1_13TeV.root"
+	Ufile2 = "../Unparticles_du1p9_LambdaU-800_TuneCUEP8M1_13TeV.root"
+	Ufile3 = "../Unparticles_du1p9_LambdaU-2000_TuneCUEP8M1_13TeV.root"
 	Ufile4 = "../Unparticles_SM_TuneCUEP8M1_13TeV.root"
 
 
@@ -133,6 +140,8 @@ uh1.SetLineColor(1)
 uh2.SetLineColor(2)
 uh3.SetLineColor(3) 
 uh4.SetLineColor(4)
+#uh4.SetLineColor(7)
+uh4.SetFillColor(7)
 #uh4.SetFillColorAlpha(7, 0.8)
 #uh4.SetFillStyle(3944)
 
