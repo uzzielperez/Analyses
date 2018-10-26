@@ -34,10 +34,29 @@ void ClassUnparticles::Loop()
   gendiphotoncosthetastar->Sumw2();
 
   //TString fileout_name = "Unparticles_SM_TuneCUEP8M1_13TeV.root"; double xsec = 0.1205;
-  //TString fileout_name = "Unparticles_du1p5_LambdaU-1000_TuneCUEP8M1_13TeV.root"; double xsec = 0.1457;
-  //TString fileout_name = "Unparticles_du1p5_LambdaU-800_TuneCUEP8M1_13TeV.root"; double xsec = 0.1457;
-  //TString fileout_name = "Unparticles_du1p5_LambdaU-2000_TuneCUEP8M1_13TeV.root"; double xsec = 0.1457;
+  //TString fileout_name = "Unparticles_du1p5_LambdaU-1000_TuneCUEP8M1_13TeV.root"; double xsec = 0.1472;
+  //TString fileout_name = "Unparticles_du1p5_LambdaU-800_TuneCUEP8M1_13TeV.root"; double xsec = 0.2466;
+  //TString fileout_name = "Unparticles_du1p5_LambdaU-2000_TuneCUEP8M1_13TeV.root"; double xsec = 0.1131;
 
+  //TString fileout_name = "Unparticles_du1p01_LambdaU-1000_TuneCUEP8M1_13TeV.root"; double xsec = 0.8207;
+  //TString fileout_name = "Unparticles_du1p01_LambdaU-800_TuneCUEP8M1_13TeV.root"; double xsec = 1.982;
+  //TString fileout_name = "Unparticles_du1p01_LambdaU-2000_TuneCUEP8M1_13TeV.root"; double xsec = 0.1323;
+
+  //TString fileout_name = "Unparticles_du1p8_LambdaU-1000_TuneCUEP8M1_13TeV.root"; double xsec = 0.1426;
+  //TString fileout_name = "Unparticles_du1p8_LambdaU-800_TuneCUEP8M1_13TeV.root"; double xsec = 0.2430;
+  //TString fileout_name = "Unparticles_du1p8_LambdaU-2000_TuneCUEP8M1_13TeV.root"; double xsec = 0.1127;
+
+  //TString fileout_name = "Unparticles_du1p5_LambdaU-1000_TuneCUEP8M1_13TeV.root"; double xsec = 0.1472;
+  //TString fileout_name = "Unparticles_du1p5_LambdaU-800_TuneCUEP8M1_13TeV.root"; double xsec = 0.2466;
+  //TString fileout_name = "Unparticles_du1p5_LambdaU-2000_TuneCUEP8M1_13TeV.root"; double xsec = 0.1131;
+
+  //TString fileout_name = "Unparticles_du1p5_LambdaU-1000_TuneCUEP8M1_13TeV.root"; double xsec = 0.1472;
+  //TString fileout_name = "Unparticles_du1p5_LambdaU-800_TuneCUEP8M1_13TeV.root"; double xsec = 0.2466;
+  //TString fileout_name = "Unparticles_du1p5_LambdaU-2000_TuneCUEP8M1_13TeV.root"; double xsec = 0.1131;
+
+  //TString fileout_name = "Unparticles_du1p5_LambdaU-1000_TuneCUEP8M1_13TeV.root"; double xsec = 0.1472;
+  //TString fileout_name = "Unparticles_du1p5_LambdaU-800_TuneCUEP8M1_13TeV.root"; double xsec = 0.2466;
+  //TString fileout_name = "Unparticles_du1p5_LambdaU-2000_TuneCUEP8M1_13TeV.root"; double xsec = 0.1131;
 
   //TString fileout_name = "Unparticles_du1p5_LambdaU-500_TuneCUEP8M1_13TeV.root"; double xsec = 2.285;
   //TString fileout_name = "Unparticles_du1p5_LambdaU-5000_TuneCUEP8M1_13TeV.root"; double xsec = 0.1146;

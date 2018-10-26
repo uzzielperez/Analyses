@@ -142,6 +142,15 @@ ClassUnparticles::ClassUnparticles(TTree *tree) : fChain(0)
       //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestTest1p5Unp800_py_GEN.root/demo/fgenTree");
       //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestTest1p5Unp2000_py_GEN.root/demo/fgenTree");
 
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestTest1p01Unp1000p0_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestTest1p01Unp800p0_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestTest1p01Unp2000p0_py_GEN.root/demo/fgenTree");
+
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestTest1p8Unp1000p0_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestTest1p8Unp800p0_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestTest1p8Unp2000p0_py_GEN.root/demo/fgenTree");
+
+
       //1p5
       //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestTest100Unparticles_py_GEN.root/demo/fgenTree");
 

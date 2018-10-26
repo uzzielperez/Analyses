@@ -5,7 +5,7 @@ from ROOT import TClass,TKey, TIter,TCanvas, TPad,TFile, TPaveText, TColor, TGax
 from ROOT import kBlack, kBlue, kRed
 from ROOT import gBenchmark, gStyle, gROOT, gDirectory
 #from legend import *
-from plotsHelpercomp import *
+#from plotsHelpercomp import *
 import re
 
 import sys
@@ -19,19 +19,93 @@ parser = argparse.ArgumentParser(description="ratioPlotter")
 parser.add_argument("-i", "--inputfiles", dest="inputfiles", default=["TestADDG2gg_LambdaT-10000_M-500-pythia8.root"], nargs='*', help="List of input files")
 args = parser.parse_args()
 
-Ufile1 = "../Unparticles_du1p4_LambdaU-10p0_TuneCUEP8M1_13TeV.root"
-Ufile2 = "../Unparticles_du2p0_LambdaU-10p0_TuneCUEP8M1_13TeV.root"
-Ufile3 = "../Unparticles_du1p4_LambdaU-1p0_TuneCUEP8M1_13TeV.root"
-Ufile4 = "../Unparticles_du2p0_LambdaU-1p0_TuneCUEP8M1_13TeV.root"
+du1p5BASE= False
+du1p01 = False
+du1p2 = False
+du1p3 = False
+du1p4 = False
+du1p5 = False
+du1p6 = False
+du1p7 = False
+du1p8 = True 
+du1p9 = False
 
-#Ufile1 = "../Unparticles_du2p2_LambdaU-15000p0_TuneCUEP8M1_13TeV.root"
-#Ufile2 = "../Unparticles_du2p0_LambdaU-15000p0_TuneCUEP8M1_13TeV.root"
-#Ufile3 = "../Unparticles_du2p2_LambdaU-1p0_TuneCUEP8M1_13TeV.root"
-#Ufile4 = "../Unparticles_du2p0_LambdaU-1p0_TuneCUEP8M1_13TeV.root"
+#Ufile1 = "../Unparticles_du1p5_LambdaU-1000_TuneCUEP8M1_13TeV.root"
+#Ufile2 = "../Unparticles_du1p5_LambdaU-800_TuneCUEP8M1_13TeV.root"
+#Ufile3 = "../Unparticles_du1p5_LambdaU-2000_TuneCUEP8M1_13TeV.root"
+#Ufile4 = "../Unparticles_SM_TuneCUEP8M1_13TeV.root"
+#
 
+if du1p5BASE:
+	tag = "du1p5"
+	print tag
+	Ufile1 = "../Unparticles_du1p5_LambdaU-1000_TuneCUEP8M1_13TeV.root"
+	Ufile2 = "../Unparticles_du1p5_LambdaU-800_TuneCUEP8M1_13TeV.root"
+	Ufile3 = "../Unparticles_du1p5_LambdaU-2000_TuneCUEP8M1_13TeV.root"
+	Ufile4 = "../Unparticles_SM_TuneCUEP8M1_13TeV.root"
+if du1p01:
+	tag = "du1p01"	
+	print tag
+	Ufile1 = "../Unparticles_du1p01_LambdaU-1000_TuneCUEP8M1_13TeV.root"
+	Ufile2 = "../Unparticles_du1p01_LambdaU-800_TuneCUEP8M1_13TeV.root"
+	Ufile3 = "../Unparticles_du1p01_LambdaU-2000_TuneCUEP8M1_13TeV.root"
+	Ufile4 = "../Unparticles_SM_TuneCUEP8M1_13TeV.root"
+if du1p2:
+	tag = "du1p2"
+	print tag
+	Ufile1 = "../Unparticles_du1p5_LambdaU-1000_TuneCUEP8M1_13TeV.root"
+	Ufile2 = "../Unparticles_du1p5_LambdaU-800_TuneCUEP8M1_13TeV.root"
+	Ufile3 = "../Unparticles_du1p5_LambdaU-2000_TuneCUEP8M1_13TeV.root"
+	Ufile4 = "../Unparticles_SM_TuneCUEP8M1_13TeV.root"
 
-filename2 = "/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/Analysis_v1/ADDGravToGGPythiaStudy/Test.root"
-filename3 = "/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/Analysis_v1/GGJetsStudy/GGJets_histograms_M-500-11000.root"
+if du1p3:
+	tag = "du1p3"
+	print tag
+	Ufile1 = "../Unparticles_du1p5_LambdaU-1000_TuneCUEP8M1_13TeV.root"
+	Ufile2 = "../Unparticles_du1p5_LambdaU-800_TuneCUEP8M1_13TeV.root"
+	Ufile3 = "../Unparticles_du1p5_LambdaU-2000_TuneCUEP8M1_13TeV.root"
+	Ufile4 = "../Unparticles_SM_TuneCUEP8M1_13TeV.root"
+
+if du1p4:
+	tag = "du1p5"
+	print tag
+	Ufile1 = "../Unparticles_du1p5_LambdaU-1000_TuneCUEP8M1_13TeV.root"
+	Ufile2 = "../Unparticles_du1p5_LambdaU-800_TuneCUEP8M1_13TeV.root"
+	Ufile3 = "../Unparticles_du1p5_LambdaU-2000_TuneCUEP8M1_13TeV.root"
+	Ufile4 = "../Unparticles_SM_TuneCUEP8M1_13TeV.root"
+
+if du1p6:
+	tag = "du1p6"
+	print tag
+	Ufile1 = "../Unparticles_du1p5_LambdaU-1000_TuneCUEP8M1_13TeV.root"
+	Ufile2 = "../Unparticles_du1p5_LambdaU-800_TuneCUEP8M1_13TeV.root"
+	Ufile3 = "../Unparticles_du1p5_LambdaU-2000_TuneCUEP8M1_13TeV.root"
+	Ufile4 = "../Unparticles_SM_TuneCUEP8M1_13TeV.root"
+
+if du1p7:
+	tag = "du1p7"
+	print tag
+	Ufile1 = "../Unparticles_du1p5_LambdaU-1000_TuneCUEP8M1_13TeV.root"
+	Ufile2 = "../Unparticles_du1p5_LambdaU-800_TuneCUEP8M1_13TeV.root"
+	Ufile3 = "../Unparticles_du1p5_LambdaU-2000_TuneCUEP8M1_13TeV.root"
+	Ufile4 = "../Unparticles_SM_TuneCUEP8M1_13TeV.root"
+
+if du1p8:
+	tag = "du1p8"
+	print tag
+	Ufile1 = "../Unparticles_du1p8_LambdaU-1000_TuneCUEP8M1_13TeV.root"
+	Ufile2 = "../Unparticles_du1p8_LambdaU-800_TuneCUEP8M1_13TeV.root"
+	Ufile3 = "../Unparticles_du1p8_LambdaU-2000_TuneCUEP8M1_13TeV.root"
+	Ufile4 = "../Unparticles_SM_TuneCUEP8M1_13TeV.root"
+
+if du1p9:
+	tag = "du1p9"
+	print tag
+	Ufile1 = "../Unparticles_du1p5_LambdaU-1000_TuneCUEP8M1_13TeV.root"
+	Ufile2 = "../Unparticles_du1p5_LambdaU-800_TuneCUEP8M1_13TeV.root"
+	Ufile3 = "../Unparticles_du1p5_LambdaU-2000_TuneCUEP8M1_13TeV.root"
+	Ufile4 = "../Unparticles_SM_TuneCUEP8M1_13TeV.root"
+
 
 # Draw Options
 DrawAsHist = False
@@ -46,11 +120,9 @@ uf1 = ROOT.TFile(Ufile1, "READ")
 uf2 = ROOT.TFile(Ufile2, "READ")
 uf3 = ROOT.TFile(Ufile3, "READ")
 uf4 = ROOT.TFile(Ufile4, "READ")
-f2 = ROOT.TFile(filename2, "READ")
-f3 = ROOT.TFile(filename3, "READ")
 
 canvas = ROOT.TCanvas()
-canvas.SetLogy()
+#canvas.SetLogy()
 obj = "gendiphotonMinv"
 uh1 = uf1.Get(obj)
 uh2 = uf2.Get(obj)
@@ -61,6 +133,8 @@ uh1.SetLineColor(1)
 uh2.SetLineColor(2)
 uh3.SetLineColor(3) 
 uh4.SetLineColor(4)
+#uh4.SetFillColorAlpha(7, 0.8)
+#uh4.SetFillStyle(3944)
 
 xtitle = r"m_{#gamma#gamma}#scale[1.0]{(GeV)}"
 xmin, xmax = 300, 4000
@@ -84,11 +158,11 @@ uh1.GetYaxis().SetRangeUser(10**-5, max(eventsmaxlist))
 uh1.GetXaxis().SetRangeUser(xmin, xmax)
 
 uh1.Draw("hist")
-#uh2.Draw("hist, same")
-#uh3.Draw("hist, same")
-#uh4.Draw("hist, same")
+uh2.Draw("hist, same")
+uh3.Draw("hist, same")
+uh4.Draw("hist, same")
 
-xpos1, ypos1, xpos2, ypos2 = .60, 0.78, .95, .88
+xpos1, ypos1, xpos2, ypos2 = .50, 0.78, .85, .88
 
 leg = TLegend(xpos1, ypos1, xpos2, ypos2)
 leg.SetBorderSize(0)
@@ -98,16 +172,17 @@ leg.SetTextFont(42)
 leg.SetTextSize(0.035)
 
 pattern = r'Unparticles_([^(]*)_TuneCUEP8M1_13TeV.root'
+leg.AddEntry(uh2, "%s" %(re.findall(pattern, Ufile2)[0]), "l")
 leg.AddEntry(uh1, "%s" %(re.findall(pattern, Ufile1)[0]) ,"l")
-#leg.AddEntry(uh2, "%s" %(re.findall(pattern, Ufile2)[0]), "l")
-#leg.AddEntry(uh3, "%s" %(re.findall(pattern, Ufile3)[0]), "l")
-#leg.AddEntry(uh4, "%s" %(re.findall(pattern, Ufile4)[0]), "l")
-#leg.AddEntry(h2, "ADD", "f")
-#leg.AddEntry(h3, "SM", "f")
+leg.AddEntry(uh3, "%s" %(re.findall(pattern, Ufile3)[0]), "l")
+leg.AddEntry(uh4, "%s" %(re.findall(pattern, Ufile4)[0]), "l")
 leg.Draw()
 
 set_CMS_lumi(canvas, 4, 11, "1")
 canvas.Update()
 canvas.Draw()
-canvas.Print("Unparticles_%s.pdf" %(obj))
-
+canvas.Print("Unparticles_%s%s.pdf" %(obj,tag))
+canvas.SetLogy()
+canvas.Update()
+canvas.Draw()
+canvas.Print("LOGUnparticles_%s%s.pdf" %(obj,tag))
