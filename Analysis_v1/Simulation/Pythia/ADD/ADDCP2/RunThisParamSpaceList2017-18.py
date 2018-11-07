@@ -3,8 +3,8 @@ import os
 import subprocess as sp 
 import math
 
-GRW = True
-HLZ = False
+GRW = False
+HLZ = True
 
 if GRW:
 	ned         = 4 
