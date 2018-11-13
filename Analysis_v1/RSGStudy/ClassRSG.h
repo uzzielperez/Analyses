@@ -116,7 +116,7 @@ public :
 #endif
 
 #ifdef ClassRSG_cxx
-ClassRSG::ClassRSG(TTree *tree) : fChain(0) 
+ClassRSG::ClassRSG(TTree *tree) : fChain(0)
 {
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
@@ -136,7 +136,31 @@ ClassRSG::ClassRSG(TTree *tree) : fChain(0)
       // The following code should be used if you want this class to access a chain
       // of trees.
       TChain * chain = new TChain("demo/fgenTree","");
-      chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestRSGravitonToGammaGamma_kMpl02_M_750_TuneCUEP8M1_13TeV_pythia8_cfi_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out/TestRSGravitonToGammaGamma_kMpl02_M_750_TuneCUEP8M1_13TeV_pythia8_cfi_py_GEN.root/demo/fgenTree");
+      //Check
+
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_9_3_8/src/multiphoton-analysis/nPhotonAnalyzer/out/TestcheckRSG_kMpl02_M_750_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_9_3_8/src/multiphoton-analysis/nPhotonAnalyzer/out/TestcheckRSG_kMpl02_M_1000_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_9_3_8/src/multiphoton-analysis/nPhotonAnalyzer/out/TestcheckRSG_kMpl02_M_1250_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_9_3_8/src/multiphoton-analysis/nPhotonAnalyzer/out/TestcheckRSG_kMpl02_M_1500_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_9_3_8/src/multiphoton-analysis/nPhotonAnalyzer/out/TestcheckRSG_kMpl02_M_1750_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_9_3_8/src/multiphoton-analysis/nPhotonAnalyzer/out/TestcheckRSG_kMpl02_M_2000_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_9_3_8/src/multiphoton-analysis/nPhotonAnalyzer/out/TestcheckRSG_kMpl02_M_2250_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_9_3_8/src/multiphoton-analysis/nPhotonAnalyzer/out/TestcheckRSG_kMpl02_M_2500_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_9_3_8/src/multiphoton-analysis/nPhotonAnalyzer/out/TestcheckRSG_kMpl02_M_3000_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_9_3_8/src/multiphoton-analysis/nPhotonAnalyzer/out/TestcheckRSG_kMpl02_M_3500_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_9_3_8/src/multiphoton-analysis/nPhotonAnalyzer/out/TestcheckRSG_kMpl02_M_4000_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_9_3_8/src/multiphoton-analysis/nPhotonAnalyzer/out/TestcheckRSG_kMpl02_M_4500_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_9_3_8/src/multiphoton-analysis/nPhotonAnalyzer/out/TestcheckRSG_kMpl02_M_4750_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_9_3_8/src/multiphoton-analysis/nPhotonAnalyzer/out/TestcheckRSG_kMpl02_M_5000_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_9_3_8/src/multiphoton-analysis/nPhotonAnalyzer/out/TestcheckRSG_kMpl02_M_5250_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_9_3_8/src/multiphoton-analysis/nPhotonAnalyzer/out/TestcheckRSG_kMpl02_M_5500_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_9_3_8/src/multiphoton-analysis/nPhotonAnalyzer/out/TestcheckRSG_kMpl02_M_5750_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_9_3_8/src/multiphoton-analysis/nPhotonAnalyzer/out/TestcheckRSG_kMpl02_M_6000_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_9_3_8/src/multiphoton-analysis/nPhotonAnalyzer/out/TestcheckRSG_kMpl02_M_6500_py_GEN.root/demo/fgenTree");
+      //chain->Add("/uscms_data/d3/cuperez/CMSSW_9_3_8/src/multiphoton-analysis/nPhotonAnalyzer/out/TestcheckRSG_kMpl02_M_7000_py_GEN.root/demo/fgenTree");
+      chain->Add("/uscms_data/d3/cuperez/CMSSW_9_3_8/src/multiphoton-analysis/nPhotonAnalyzer/out/TestcheckRSG_kMpl02_M_8000_py_GEN.root/demo/fgenTree");
+
       tree = chain;
 #endif // SINGLE_TREE
 
