@@ -19,6 +19,9 @@ sw = ROOT.TStopwatch()
 sw.Start()
 
 LambdaT = "ALL"
+obj = "gendiphotonMinv"
+#obj = "genchidiphoton"
+#obj = "gendiphotoncosthetastar"
 
 SMPythia8 = True
 SM = False
@@ -31,7 +34,7 @@ drawstyle = "same"
 intlumi = 130
 
 BKG = []
-path = "/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/Analysis_v1/UnparticlesSplitStudy"
+path = "/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/Analysis_v1/ANSMStudy"
 
 BKG.append("%s/Unparticles_SM_M_500-2000.root" %(path))
 BKG.append("%s/Unparticles_SM_M-2000.root" %(path))
@@ -66,8 +69,9 @@ for datafile in DATASET:
 	uf.append(ROOT.TFile(datafile, "READ"))
 
 canvas = ROOT.TCanvas()
-canvas.SetLogy()
-obj = "gendiphotonMinv"
+
+
+
 uh = []
 bkgh = []
 
@@ -77,9 +81,20 @@ for ofile in bkgf:
 for openfile in uf:
 	uh.append(openfile.Get(obj))
 
-xtitle = r"m_{#gamma#gamma}#scale[1.0]{(GeV)}"
-ytitle = r"#scale[1.0]{Nevents}"
-xmin, xmax = 500, 13000
+if "Minv" in obj:
+	xtitle = r"m_{#gamma#gamma}#scale[1.0]{(GeV)}"
+	ytitle = r"#scale[1.0]{Nevents}"
+	xmin, xmax = 500, 13000
+	canvas.SetLogy()
+
+if "chidiphoton" in obj:
+	xtitle = r"#Chi_{#gamma#gamma}"
+	ytitle = r"#scale[1.0]{Nevents}"
+	xmin, xmax = 0, 300
+if "costhetastar" in obj:
+	xtitle = r"#cos#theta"
+	ytitle = r"#scale[1.0]{Nevents}"
+	xmin, xmax = -1, 1
 
 if zoom:
 	xmin, xmax = 1000, 2500
@@ -171,4 +186,4 @@ leg.Draw()
 set_CMS_lumi(canvas, 4, 11, intlumi)
 canvas.Update()
 canvas.Draw()
-canvas.Print("LOG%s_SMvsADD_%sfb-1_%s_%s.pdf" %(intlumi, LambdaT, obj,tag))
+canvas.Print("SMvsADD_%sfb-1_%s_%s.pdf" %(intlumi, LambdaT, obj,tag))
