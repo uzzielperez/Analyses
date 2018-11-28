@@ -3,6 +3,7 @@
 #include <TH2.h>
 #include <TStyle.h>
 #include <TCanvas.h>
+#include <math.h>
 
 
 void ${ClassANGGJets}::Loop()
@@ -40,7 +41,7 @@ void ${ClassANGGJets}::Loop()
   gendiphotoncosthetastar->Sumw2();
   genchidiphoton->Sumw2();
 
-  TString logfile = "UNPspin.txt";
+  TString logfile = "isEBEBLOG.txt";
 	TString fileout_name = "OUT${outputfile}"; double xsec = ${xsecvalue};
 
 
@@ -54,12 +55,12 @@ void ${ClassANGGJets}::Loop()
       double weight = xsec*1000/numevents;
       if(jentry%10000 == 0) cout << "Number of processed events: " << jentry << endl;
 
-      if (((GenPhoton1_eta < 1.4442) && (1.566 < GenPhoton2_eta && GenPhoton2_eta < 2.5)) || ((1.566 < GenPhoton1_eta && GenPhoton1_eta < 2.5) && (GenPhoton2_eta < 1.4442))) isEBEEorEEEB = isEBEEorEEEB + 1;
-      if ((1.566 < GenPhoton1_eta && GenPhoton1_eta < 2.5) && (1.566 < GenPhoton2_eta && GenPhoton2_eta < 2.5)) isEEEE = isEEEE + 1;
+      if (((std::abs(GenPhoton1_eta)<1.442) && (1.566 < std::abs(GenPhoton2_eta) && std::abs(GenPhoton2_eta) < 2.5)) || ((1.566 < std::abs(GenPhoton1_eta) && std::abs(GenPhoton1_eta) < 2.5) && (std::abs(GenPhoton2_eta) < 1.4442))) isEBEEorEEEB = isEBEEorEEEB + 1;
+      if ((1.566 < std::abs(GenPhoton1_eta) && std::abs(GenPhoton1_eta) < 2.5) && (1.566 < std::abs(GenPhoton2_eta) && std::abs(GenPhoton2_eta) < 2.5)) isEEEE = isEEEE + 1;
 
-    if  ((GenPhoton1_eta < 1.4442) && (GenPhoton2_eta< 1.4442)){
-      isEBEB = isEBEB + 1; //
-      if ((GenPhoton1_pt >75) && (GenPhoton2_pt >75)){
+    if  ((std::abs(GenPhoton1_eta)<1.442) && (std::abs(GenPhoton2_eta)<1.442)){
+         isEBEB = isEBEB + 1; //
+      // if ((GenPhoton1_pt >75) && (GenPhoton2_pt >75)){
         gendiphotonMinv->Fill(GenDiPhoton_Minv, weight);
         genphoton1Pt->Fill(GenPhoton1_pt, weight);
         genphoton2Pt->Fill(GenPhoton2_pt, weight);
@@ -69,7 +70,7 @@ void ${ClassANGGJets}::Loop()
         genphoton2Phi->Fill(GenPhoton2_phi, weight);
         gendiphotoncosthetastar->Fill(GenDiPhoton_cosThetaStar, weight);
         genchidiphoton->Fill(GenDiPhoton_chiDiphoton, weight);
-    }
+    // }
   }//isEBEB cut
       // if (Cut(ientry) < 0) continue;
    }//end loop over events

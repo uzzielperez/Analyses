@@ -33,17 +33,18 @@ if do1p13Test:
     DATASET.append("TestSTest1p1Unp4000p0_spin-2_M_2000_py_GEN.root/demo/fgenTree")
     DATASET.append("TestSTest1p1Unp4000p0_spin-2_M_500-2000_py_GEN.root/demo/fgenTree")
     xsecdict_temp = {"du-%s_LambdaU-1500_spin-0_M_500-2000": 1.722e-01+-9.696e-04,
-                "du-%s_LambdaU-1500_spin-0_M_2000": 7.249e-03+-4.311e-05,
-                "du-%s_LambdaU-2500_spin-0_M_2000": 1.986e-03+-1.181e-05,
-                "du-%s_LambdaU-2500_spin-0_M_500-2000": 5.329e-02+-2.974e-04,
-                "du-%s_LambdaU-4000_spin-0_M_500-2000": 2.168e-02+-1.209e-04,
-                "du-%s_LambdaU-4000_spin-0_M_2000": 6.149e-04+-3.639e-06,
-                "du-%s_LambdaU-1500_spin-2_M_2000": 6.102e-03+-3.660e-05,
-                "du-%s_LambdaU-1500_spin-2_M_500-2000": 1.643e-01+-7.972e-04,
-                "du-%s_LambdaU-2500_spin-2_M_500-2000": 1.426e-01+-6.848e-04,
-                "du-%s_LambdaU-2500_spin-2_M_2000": 9.302e-04+-5.216e-06,
-                "du-%s_LambdaU-4000_spin-2_M_500-2000": 1.438e-01+-6.919e-04,
-                "du-%s_LambdaU-4000_spin-2_M_2000": 6.016e-04+-3.076e-06}
+                    "du-%s_LambdaU-2500_spin-0_M_500-2000": 5.329e-02+-2.974e-04,
+                    "du-%s_LambdaU-4000_spin-0_M_500-2000": 2.168e-02+-1.209e-04,
+                    "du-%s_LambdaU-1500_spin-2_M_500-2000": 1.643e-01+-7.972e-04,
+                    "du-%s_LambdaU-2500_spin-2_M_500-2000": 1.426e-01+-6.848e-04,
+                    "du-%s_LambdaU-4000_spin-2_M_500-2000": 1.438e-01+-6.919e-04,
+
+                    "du-%s_LambdaU-1500_spin-0_M_2000": 7.249e-03+-4.311e-05,
+                    "du-%s_LambdaU-2500_spin-0_M_2000": 1.986e-03+-1.181e-05,
+                    "du-%s_LambdaU-4000_spin-0_M_2000": 6.149e-04+-3.639e-06,
+                    "du-%s_LambdaU-1500_spin-2_M_2000": 6.102e-03+-3.660e-05,
+                    "du-%s_LambdaU-2500_spin-2_M_2000": 9.302e-04+-5.216e-06,
+                    "du-%s_LambdaU-4000_spin-2_M_2000": 6.016e-04+-3.076e-06}
     xsecdict.update(xsecdict_temp)
 if do1p83Test:
     du_tag = "1p8"
@@ -59,18 +60,19 @@ if do1p83Test:
     # DATASET.append("TestSTest1p8Unp2500p0_spin-2_M_2000_py_GEN.root/demo/fgenTree")
     # DATASET.append("TestSTest1p8Unp4000p0_spin-2_M_500-2000_py_GEN.root/demo/fgenTree")
     # DATASET.append("TestSTest1p8Unp4000p0_spin-2_M_2000_py_GEN.root/demo/fgenTree")
-    xsecdict_temp = {"du-%s_LambdaU-1500_spin-0_M_2000" %(du_tag): 6.289e-04+-3.923e-06,
-                "du-%s_LambdaU-1500_spin-0_M_500-2000" %(du_tag): 7.725e-03+-4.125e-05,
-                "du-%s_LambdaU-2500_spin-0_M_500-2000" %(du_tag):6.934e-03+-3.681e-05,
-                "du-%s_LambdaU-2500_spin-0_M_2000" %(du_tag): 4.273e-05+-2.632e-07,
-                "du-%s_LambdaU-4000_spin-0_M_500-2000" %(du_tag): 6.979e-03+-3.696e-05,
-                "du-%s_LambdaU-4000_spin-0_M_2000" %(du_tag): 5.762e-06+-3.313e-08,
-                "du-%s_LambdaU-1500_spin-2_M_2000" %(du_tag): 6.289e-04+-3.923e-06,
-                "du-%s_LambdaU-1500_spin-2_M_500-2000" %(du_tag): 7.725e-03+-4.125e-05,
-                "du-%s_LambdaU-2500_spin-2_M_500-2000" %(du_tag): 6.934e-03+-3.681e-05,
-                "du-%s_LambdaU-2500_spin-2_M_2000" %(du_tag): 4.273e-05+-2.632e-07,
-                "du-%s_LambdaU-4000_spin-2_M_500-2000" %(du_tag): 6.979e-03+-3.696e-05,
-                "du-%s_LambdaU-4000_spin-2_M_2000" %(du_tag): 5.762e-06+-3.313e-08}
+    xsecdict_temp = {"du-%s_LambdaU-1500_spin-0_M_500-2000" %(du_tag): 7.725e-03+-4.125e-05,
+                     "du-%s_LambdaU-2500_spin-0_M_500-2000" %(du_tag):6.934e-03+-3.681e-05,
+                     "du-%s_LambdaU-4000_spin-0_M_500-2000" %(du_tag): 6.979e-03+-3.696e-05,
+                     "du-%s_LambdaU-1500_spin-2_M_500-2000" %(du_tag): 7.725e-03+-4.125e-05,
+                     "du-%s_LambdaU-2500_spin-2_M_500-2000" %(du_tag): 6.934e-03+-3.681e-05,
+                     "du-%s_LambdaU-4000_spin-2_M_500-2000" %(du_tag): 6.979e-03+-3.696e-05,
+
+                     "du-%s_LambdaU-1500_spin-0_M_2000" %(du_tag): 6.289e-04+-3.923e-06,
+                     "du-%s_LambdaU-2500_spin-0_M_2000" %(du_tag): 4.273e-05+-2.632e-07,
+                     "du-%s_LambdaU-4000_spin-0_M_2000" %(du_tag): 5.762e-06+-3.313e-08,
+                     "du-%s_LambdaU-1500_spin-2_M_2000" %(du_tag): 6.289e-04+-3.923e-06,
+                     "du-%s_LambdaU-2500_spin-2_M_2000" %(du_tag): 4.273e-05+-2.632e-07,
+                     "du-%s_LambdaU-4000_spin-2_M_2000" %(du_tag): 5.762e-06+-3.313e-08}
     xsecdict.update(xsecdict_temp)
 
 
@@ -91,14 +93,14 @@ if do1p93Test:
     xsecdict_temp = {"du-%s_LambdaU-1500_spin-0_M_2000" %(du_tag): 1.215e-03+-7.527e-06,
                 "du-%s_LambdaU-1500_spin-0_M_500-2000" %(du_tag): 8.024e-03+-4.260e-05,
                 "du-%s_LambdaU-2500_spin-0_M_500-2000" %(du_tag): 6.991e-03+-3.707e-05,
-                "du-%s_LambdaU-2500_spin-0_M_2000" %(du_tag): 6.667e-05+-4.138e-07,
                 "du-%s_LambdaU-4000_spin-0_M_500-2000" %(du_tag): 6.935e-03+-3.675e-05,
-                "du-%s_LambdaU-4000_spin-0_M_2000" %(du_tag):  6.880e-06+-4.059e-08,
-                "du-%s_LambdaU-1500_spin-2_M_2000" %(du_tag): 2.848e-03+-1.507e-05,
                 "du-%s_LambdaU-1500_spin-2_M_500-2000" %(du_tag): 1.506e-01+-7.085e-04,
                 "du-%s_LambdaU-2500_spin-2_M_500-2000" %(du_tag): 1.480e-01+-7.063e-04,
-                "du-%s_LambdaU-2500_spin-2_M_2000" %(du_tag): 8.027e-04+-3.948e-06,
                 "du-%s_LambdaU-4000_spin-2_M_500-2000" %(du_tag): 1.478e-01+-7.066e-04,
+                "du-%s_LambdaU-2500_spin-0_M_2000" %(du_tag): 6.667e-05+-4.138e-07,
+                "du-%s_LambdaU-4000_spin-0_M_2000" %(du_tag):  6.880e-06+-4.059e-08,
+                "du-%s_LambdaU-1500_spin-2_M_2000" %(du_tag): 2.848e-03+-1.507e-05,
+                "du-%s_LambdaU-2500_spin-2_M_2000" %(du_tag): 8.027e-04+-3.948e-06,
                 "du-%s_LambdaU-4000_spin-2_M_2000" %(du_tag): 7.013e-04+-3.510e-06}
     xsecdict.update(xsecdict_temp)
 
