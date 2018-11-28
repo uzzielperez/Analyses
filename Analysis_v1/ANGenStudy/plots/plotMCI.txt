@@ -1,0 +1,11 @@
+
+../isEBEB/OUTUnp_LU1500_du1p8_spin0-ggffON_M2000.root
+../isEBEB/OUTUnp_LU1500_du1p8_spin0-ggffON_M500_2000.root
+../isEBEB/OUTUnp_LU1500_du1p8_spin2-ggON_M2000.root
+../isEBEB/OUTUnp_LU1500_du1p8_spin2-ggON_M500_2000.root
+../isEBEB/OUTUnp_LU1500_du1p8_spin2-ggffON_M2000.root
+../isEBEB/OUTUnp_LU1500_du1p8_spin2-ggffON_M500_2000.root
+../isEBEB/OUTUnp_LU1500_du1p8_spin2_M2000.root
+../isEBEB/OUTUnp_LU1500_du1p8_spin2_M500_2000.root
+../isEBEB/OUTUnp_LU1500_du1p8_spin2__M2000.root
+../isEBEB/OUTUnp_LU1500_du1p8_spin2__M500_2000.root

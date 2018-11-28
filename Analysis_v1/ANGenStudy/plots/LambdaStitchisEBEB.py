@@ -20,13 +20,13 @@ sw = ROOT.TStopwatch()
 sw.Start()
 
 dodu1p1 = False
-dodu1p8 = True
-dodu1p9 = False
+dodu1p8 = False
+dodu1p9 = True
 #du_tag = "1p01"
 Lambda_tag = "LU"
-#obj = "gendiphotonMinv"
+obj = "gendiphotonMinv"
 #obj = "gendiphotoncosthetastar"
-obj = "genchidiphoton"
+#obj = "genchidiphoton"
 
 SM = True
 UNP = True
@@ -35,10 +35,10 @@ zoom = False
 drawstyle = "same"
 intlumi = 130
 today = str(date.today())
-xtratag = "all"
+xtratag = "isEBEB"
 #xtratag = ""
 #xtratag = "b"
-path = "/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/Analysis_v1/UnparticlesSplitStudy"
+path = "/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/Analysis_v1/UnparticlesSplitStudy/isEBEB"
 BKG = []
 BKG.append("%s/Unparticles_SM_M_500-2000.root" %(path))
 BKG.append("%s/Unparticles_SM_M-2000.root" %(path))
@@ -46,46 +46,35 @@ BKG.append("%s/Unparticles_SM_M-2000.root" %(path))
 DATASET = []
 if dodu1p1:
 	dutag = "1.1"
-	DATASET.append("../MkClassScripts/OUTTestSTest1p1Unp1500p0_spin-0_M_500-2000_py_GEN.root")
-	DATASET.append("../MkClassScripts/OUTTestSTest1p1Unp1500p0_spin-0_M_2000_py_GEN.root")
-	DATASET.append("../MkClassScripts/OUTTestSTest1p1Unp1500p0_spin-2_M_500-2000_py_GEN.root")
-	DATASET.append("../MkClassScripts/OUTTestSTest1p1Unp1500p0_spin-2_M_2000_py_GEN.root")
-	DATASET.append("../MkClassScripts/OUTTestSTest1p1Unp2500p0_spin-0_M_500-2000_py_GEN.root")
-	DATASET.append("../MkClassScripts/OUTTestSTest1p1Unp2500p0_spin-0_M_2000_py_GEN.root")
-	DATASET.append("../MkClassScripts/OUTTestSTest1p1Unp2500p0_spin-2_M_500-2000_py_GEN.root")
-	DATASET.append("../MkClassScripts/OUTTestSTest1p1Unp2500p0_spin-2_M_2000_py_GEN.root")
-	DATASET.append("../MkClassScripts/OUTTestSTest1p1Unp4000p0_spin-0_M_500-2000_py_GEN.root")
-	DATASET.append("../MkClassScripts/OUTTestSTest1p1Unp4000p0_spin-0_M_2000_py_GEN.root")
-	DATASET.append("../MkClassScripts/OUTTestSTest1p1Unp4000p0_spin-2_M_500-2000_py_GEN.root")
-	DATASET.append("../MkClassScripts/OUTTestSTest1p1Unp4000p0_spin-2_M_2000_py_GEN.root")
+	DATASET.append("../varCutsTemplates/OUTTestSTest1p1Unp1500p0_spin-0_M_500-2000_py_GEN.root")
+	DATASET.append("../varCutsTemplates/OUTTestSTest1p1Unp1500p0_spin-0_M_2000_py_GEN.root")
+	DATASET.append("../varCutsTemplates/OUTTestSTest1p1Unp1500p0_spin-2_M_500-2000_py_GEN.root")
+	DATASET.append("../varCutsTemplates/OUTTestSTest1p1Unp1500p0_spin-2_M_2000_py_GEN.root")
+	DATASET.append("../varCutsTemplates/OUTTestSTest1p1Unp2500p0_spin-0_M_500-2000_py_GEN.root")
+	DATASET.append("../varCutsTemplates/OUTTestSTest1p1Unp2500p0_spin-0_M_2000_py_GEN.root")
+	DATASET.append("../varCutsTemplates/OUTTestSTest1p1Unp2500p0_spin-2_M_500-2000_py_GEN.root")
+	DATASET.append("../varCutsTemplates/OUTTestSTest1p1Unp2500p0_spin-2_M_2000_py_GEN.root")
+	DATASET.append("../varCutsTemplates/OUTTestSTest1p1Unp4000p0_spin-0_M_500-2000_py_GEN.root")
+	DATASET.append("../varCutsTemplates/OUTTestSTest1p1Unp4000p0_spin-0_M_2000_py_GEN.root")
+	DATASET.append("../varCutsTemplates/OUTTestSTest1p1Unp4000p0_spin-2_M_500-2000_py_GEN.root")
+	DATASET.append("../varCutsTemplates/OUTTestSTest1p1Unp4000p0_spin-2_M_2000_py_GEN.root")
 if dodu1p8:
 	dutag = "1.8"
-	DATASET.append("../MkClassScripts/OUTTestSTest1p8Unp1500p0_spin-2_M_500-2000_py_GEN.root")
-	DATASET.append("../MkClassScripts/OUTTestSTest1p8Unp1500p0_spin-2_M_2000_py_GEN.root")
-	# DATASET.append("../MkClassScripts/OUTTestSTest1p8Unp2500p0_spin-2_M_500-2000_py_GEN.root")
-	# DATASET.append("../MkClassScripts/OUTTestSTest1p8Unp2500p0_spin-2_M_2000_py_GEN.root")
-	# DATASET.append("../MkClassScripts/OUTTestSTest1p8Unp4000p0_spin-2_M_500-2000_py_GEN.root")
-	# DATASET.append("../MkClassScripts/OUTTestSTest1p8Unp4000p0_spin-2_M_2000_py_GEN.root")
-	DATASET.append("../MkClassScripts/OUTTestSTest1p8Unp1500p0_spin-0_M_500-2000_py_GEN.root")
-	DATASET.append("../MkClassScripts/OUTTestSTest1p8Unp1500p0_spin-0_M_2000_py_GEN.root")
-	# DATASET.append("../MkClassScripts/OUTTestSTest1p8Unp2500p0_spin-0_M_500-2000_py_GEN.root")
-	# DATASET.append("../MkClassScripts/OUTTestSTest1p8Unp2500p0_spin-0_M_2000_py_GEN.root")
-	# DATASET.append("../MkClassScripts/OUTTestSTest1p8Unp4000p0_spin-0_M_500-2000_py_GEN.root")
-	# DATASET.append("../MkClassScripts/OUTTestSTest1p8Unp4000p0_spin-0_M_2000_py_GEN.root")
+	DATASET.append("../varCutsTemplates/OUTTestSTest1p8Unp1500p0_spin-2_M_500-2000_py_GEN.root")
+	DATASET.append("../varCutsTemplates/OUTTestSTest1p8Unp1500p0_spin-2_M_2000_py_GEN.root")
+	DATASET.append("../varCutsTemplates/OUTTestSTest1p8Unp2500p0_spin-2_M_500-2000_py_GEN.root")
+	DATASET.append("../varCutsTemplates/OUTTestSTest1p8Unp2500p0_spin-2_M_2000_py_GEN.root")
+	DATASET.append("../varCutsTemplates/OUTTestSTest1p8Unp4000p0_spin-2_M_500-2000_py_GEN.root")
+	DATASET.append("../varCutsTemplates/OUTTestSTest1p8Unp4000p0_spin-2_M_2000_py_GEN.root")
+
 if dodu1p9:
 	dutag = "1.9"
-	DATASET.append("../MkClassScripts/OUTTestSTest1p9Unp1500p0_spin-2_M_500-2000_py_GEN.root")
-	DATASET.append("../MkClassScripts/OUTTestSTest1p9Unp1500p0_spin-2_M_2000_py_GEN.root")
-	DATASET.append("../MkClassScripts/OUTTestSTest1p9Unp2500p0_spin-2_M_500-2000_py_GEN.root")
-	DATASET.append("../MkClassScripts/OUTTestSTest1p9Unp2500p0_spin-2_M_2000_py_GEN.root")
-	DATASET.append("../MkClassScripts/OUTTestSTest1p9Unp4000p0_spin-2_M_500-2000_py_GEN.root")
-	DATASET.append("../MkClassScripts/OUTTestSTest1p9Unp4000p0_spin-2_M_2000_py_GEN.root")
-	DATASET.append("../MkClassScripts/OUTTestSTest1p9Unp1500p0_spin-0_M_500-2000_py_GEN.root")
-	DATASET.append("../MkClassScripts/OUTTestSTest1p9Unp1500p0_spin-0_M_2000_py_GEN.root")
-	DATASET.append("../MkClassScripts/OUTTestSTest1p9Unp2500p0_spin-0_M_500-2000_py_GEN.root")
-	DATASET.append("../MkClassScripts/OUTTestSTest1p9Unp2500p0_spin-0_M_2000_py_GEN.root")
-	DATASET.append("../MkClassScripts/OUTTestSTest1p9Unp4000p0_spin-0_M_500-2000_py_GEN.root")
-	DATASET.append("../MkClassScripts/OUTTestSTest1p9Unp4000p0_spin-0_M_2000_py_GEN.root")
+	DATASET.append("../varCutsTemplates/OUTTestSTest1p9Unp1500p0_spin-2_M_500-2000_py_GEN.root")
+	DATASET.append("../varCutsTemplates/OUTTestSTest1p9Unp1500p0_spin-2_M_2000_py_GEN.root")
+	DATASET.append("../varCutsTemplates/OUTTestSTest1p9Unp2500p0_spin-2_M_500-2000_py_GEN.root")
+	DATASET.append("../varCutsTemplates/OUTTestSTest1p9Unp2500p0_spin-2_M_2000_py_GEN.root")
+	DATASET.append("../varCutsTemplates/OUTTestSTest1p9Unp4000p0_spin-2_M_500-2000_py_GEN.root")
+	DATASET.append("../varCutsTemplates/OUTTestSTest1p9Unp4000p0_spin-2_M_2000_py_GEN.root")
 
 dulabel = r"d_{u} = %s" %(dutag)
 # Draw Options
