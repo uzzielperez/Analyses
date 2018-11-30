@@ -11,7 +11,6 @@ import sys
 sw = ROOT.TStopwatch()
 sw.Start()
 
-#filepath = "/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out"
 DATASET = []
 
 do1p93Test = False
@@ -121,7 +120,6 @@ for dset in DATASET:
         #print classname
 
     rep = {'ClassANGGJets': classname, "xsecvalue": xsecval, "outputfile": outfile, "inputTree": dset, "analyzefunc": an_func}
-    #print outfile
 
     #Read and replace template file
     C_src = Template(open(class_Ctemp).read())
@@ -157,7 +155,7 @@ def DelClassFiles(file_list):
             os.system(del_cmd)
     print "deleted auxilliary files"
 RunAnalyze(os.listdir('.'))
-#DelClassFiles(os.listdir('.'))
+DelClassFiles(os.listdir('.'))
 
 sw.Stop()
 print "Real time: " + str(sw.RealTime() / 60.0) + " minutes"
