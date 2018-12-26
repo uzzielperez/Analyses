@@ -11,11 +11,12 @@ import sys
 sw = ROOT.TStopwatch()
 sw.Start()
 
+#filepath = "/uscms_data/d3/cuperez/CMSSW_8_0_25/src/multiphoton-analysis/nPhotonAnalyzer/out"
 DATASET = []
 
 do1p93Test = False
-doMCTest = True
-doMCPlusTest = False
+doMCTest = False
+doMCPlusTest = True
 
 
 #Templates
@@ -23,27 +24,56 @@ class_Ctemp = "ClassTemplateisEBEB.C"
 class_htemp = "ClassTemplateisEBEB.h"
 run_analyzetemp = "analyzeTemplate.C"
 
-#pattern = r'TestSTest%sUnp([^(]*)p0_spin-([^(]*)_M_([^(]*)_py_GEN' %(du_tag)
-#pattern = r'TestMCI_Unp-LU500-du1p8_spin-2-ggffON_pT125_M_500-2000_TuneCP2_py_GEN'
-
 xsecdict = {}
 if doMCPlusTest:
     du_tag = ""
-    DATASET.append("TestMCIPlus0_Unp-LU500-du1p8_spin-0-ggffON_pT125_M_1000_TuneCP2_py_GEN.root/demo/fgenTree")
-    DATASET.append("TestMCIPlus0_Unp-LU500-du1p8_spin-0-ggffON_pT125_M_1500_TuneCP2_py_GEN.root/demo/fgenTree")
-    DATASET.append("TestMCIPlus2_Unp-LU500-du1p8_spin-0-ggffON_pT125_M_1000_TuneCP2_py_GEN.root/demo/fgenTree")
-    DATASET.append("TestMCIPlus2_Unp-LU500-du1p8_spin-0-ggffON_pT125_M_1500_TuneCP2_py_GEN.root/demo/fgenTree")
-    DATASET.append("TestMCIPlus_SM_pT125_M_1000_TuneCP2_py_GEN.root/demo/fgenTree")
-    DATASET.append("TestMCIPlus_SM_pT125_M_1500_TuneCP2_py_GEN.root/demo/fgenTree")
-    DATASET.append("TestMCIPlus_SM_pT125_M_2000_TuneCP2_py_GEN.root/demo/fgenTree")
+    #DATASET.append("TesttMCIPlus2_Unp-LU4000-du1p8_spin-2-ggON_pT125_M_2000_TuneCP2_py_GEN.root/demo/fgenTree")
+    # DATASET.append("TesttMCIPlus2_Unp-LU3000-du1p4_spin-2-ggON_pT125_M_2000_TuneCP2_py_GEN.root/demo/fgenTree")
+    #DATASET.append("TesttMCIPlus2_Unp-LU4250-du1p1_spin-2-ggON_pT125_M_2000_TuneCP2_py_GEN.root/demo/fgenTree")
+    DATASET.append("TesttMCIPlus2_Unp-LU4000-du1p5_spin-2-ggON_pT125_M_2000_TuneCP2_py_GEN.root/demo/fgenTree")
+    # DATASET.append("TesttMCIPlus2_Unp-LU3750-du1p1_spin-2-ggON_pT125_M_2000_TuneCP2_py_GEN.root/demo/fgenTree")
+    # DATASET.append("TesttMCIPlus2_Unp-LU3500-du1p4_spin-2-ggON_pT125_M_2000_TuneCP2_py_GEN.root/demo/fgenTree")
+    # DATASET.append("TesttMCIPlus2_Unp-LU3000-du1p1_spin-2-ggON_pT125_M_2000_TuneCP2_py_GEN.root/demo/fgenTree")
+    #DATASET.append("TestMCIPlus2_Unp-LU5000-du1p01_spin-2-ggON_pT125_M_1500_TuneCP2_py_GEN.root/demo/fgenTree")
+    #DATASET.append("TestMCIPlus2_Unp-LU4500-du1p01_spin-2-ggON_pT125_M_1000_TuneCP2_py_GEN.root/demo/fgenTree")
+    #DATASET.append("TestMCIPlus2_Unp-LU4500-du1p01_spin-2-ggON_pT125_M_1500_TuneCP2_py_GEN.root/demo/fgenTree")
+    #DATASET.append("TestMCIPlus2_Unp-LU4750-du1p01_spin-2-ggON_pT125_M_1500_TuneCP2_py_GEN.root/demo/fgenTree")
+    #DATASET.append("TestMCIPlus2_Unp-LU4500-du1p9_spin-2-ggON_pT125_M_1500_TuneCP2_py_GEN.root/demo/fgenTree")
+    #DATASET.append("TestMCIPlus2_Unp-LU4500-du1p9_spin-2-ggON_pT125_M_2000_TuneCP2_py_GEN.root/demo/fgenTree")
+    #DATASET.append("TestMCIPlus2_Unp-LU2500-du1p9_spin-2-ggON_pT125_M_2000_TuneCP2_py_GEN.root/demo/fgenTree")
+    #DATASET.append("TestMCIPlus2_Unp-LU4000-du1p9_spin-2-ggON_pT125_M_2000_TuneCP2_py_GEN.root/demo/fgenTree")
+
+   # DATASET.append("TestMCIPlus0_Unp-LU500-du1p8_spin-0-ggffON_pT125_M_1000_TuneCP2_py_GEN.root/demo/fgenTree")
+    # DATASET.append("TestMCIPlus0_Unp-LU500-du1p8_spin-0-ggffON_pT125_M_1500_TuneCP2_py_GEN.root/demo/fgenTree")
+    # DATASET.append("TestMCIPlus2_Unp-LU500-du1p8_spin-2-ggON_pT125_M_1000_TuneCP2_py_GEN.root/demo/fgenTree")
+    # DATASET.append("TestMCIPlus2_Unp-LU500-du1p8_spin-2-ggON_pT125_M_1500_TuneCP2_py_GEN.root/demo/fgenTree")
+    #DATASET.append("TestMCIPlus_SM_pT125_M_1000_TuneCP2_py_GEN.root/demo/fgenTree")
+    #DATASET.append("TestMCIPlus_SM_pT125_M_1500_TuneCP2_py_GEN.root/demo/fgenTree")
+    #DATASET.append("TestMCIPlus_SM_pT125_M_2000_TuneCP2_py_GEN.root/demo/fgenTree")
 
     xsecdict_temp = {"MCIPlus_SM_pT125_M_2000_TuneCP2_py":	5.312e-04+-2.734e-06,
-    "MCIPlus_SM_pT125_M_1500_TuneCP2_py":	2.073e-03+-1.081e-05,
-    "MCIPlus2_Unp-LU500-du1p8_spin-0-ggffON_pT125_M_1000_TuneCP2_py":	1.323e-03+-7.273e-06,
-    "MCIPlus2_Unp-LU500-du1p8_spin-0-ggffON_pT125_M_1500_TuneCP2_py":	9.010e-04+-5.157e-06,
-    "MCIPlus0_Unp-LU500-du1p8_spin-0-ggffON_pT125_M_1500_TuneCP2_py":	2.943e-03+-1.584e-05,
+    "MCIPlus_SM_pT125_M_1000_TuneCP2_py":	1.068e-02+-5.607e-05,
     "MCIPlus0_Unp-LU500-du1p8_spin-0-ggffON_pT125_M_1000_TuneCP2_py":	1.175e-02+-6.217e-05,
-    "MCIPlus_SM_pT125_M_1000_TuneCP2_py":	1.068e-02+-5.607e-05}
+    "MCIPlus2_Unp-LU500-du1p8_spin-2-ggON_pT125_M_1000_TuneCP2_py" :  1.282e-02+-6.459e-05, #1.282e-02+-6.459e-05
+    "MCIPlus2_Unp-LU4500-du1p01_spin-2-ggON_pT125_M_1000_TuneCP2_py" : 9.450e-03 +- 5.049e-05,
+    "MCIPlus2_Unp-LU5000-du1p01_spin-2-ggON_pT125_M_1500_TuneCP2_py" : 1.777e-03 +- 9.420e-06,
+    "MCIPlus_SM_pT125_M_1500_TuneCP2_py":	2.073e-03+-1.081e-05,
+    "MCIPlus0_Unp-LU500-du1p8_spin-0-ggffON_pT125_M_1500_TuneCP2_py":	2.943e-03+-1.584e-05,
+    "MCIPlus2_Unp-LU500-du1p8_spin-2-ggON_pT125_M_1500_TuneCP2_py" :  3.629e-03+-1.921e-05, #3.629e-03+-1.921e-05
+    "MCIPlus2_Unp-LU4500-du1p01_spin-2-ggON_pT125_M_1500_TuneCP2_py" : 9.450e-03 +- 5.049e-05,
+    "MCIPlus2_Unp-LU4750-du1p01_spin-2-ggON_pT125_M_1500_TuneCP2_py" : 1.796e-03 +- 9.600e-06,
+    "MCIPlus2_Unp-LU4500-du1p9_spin-2-ggON_pT125_M_1500_TuneCP2_py" : 2.095e-03 +- 1.094e-05,
+    "MCIPlus2_Unp-LU4500-du1p9_spin-2-ggON_pT125_M_2000_TuneCP2_py" : 5.399e-04 +- 2.767e-06,
+    "MCIPlus2_Unp-LU2500-du1p9_spin-2-ggON_pT125_M_2000_TuneCP2_py" : 6.440e-04 +- 3.169e-06,
+    "MCIPlus2_Unp-LU4000-du1p9_spin-2-ggON_pT125_M_2000_TuneCP2_py" : 5.457e-04 +- 2.791e-06,
+    "MCIPlus2_Unp-LU3000-du1p4_spin-2-ggON_pT125_M_2000_TuneCP2_py": 5.290e-04+-2.685e-06,
+    "MCIPlus2_Unp-LU3750-du1p1_spin-2-ggON_pT125_M_2000_TuneCP2_py": 4.554e-04+-2.338e-06,
+    "MCIPlus2_Unp-LU3500-du1p4_spin-2-ggON_pT125_M_2000_TuneCP2_py": 5.246e-04+-2.687e-06,
+    "MCIPlus2_Unp-LU3000-du1p1_spin-2-ggON_pT125_M_2000_TuneCP2_py": 5.357e-04+-2.684e-06,
+    "MCIPlus2_Unp-LU4000-du1p8_spin-2-ggON_pT125_M_2000_TuneCP2_py": 5.451e-04+-2.775e-06,
+    "MCIPlus2_Unp-LU4250-du1p1_spin-2-ggON_pT125_M_2000_TuneCP2_py": 4.535e-04+-2.350e-06,
+    "MCIPlus2_Unp-LU4000-du1p5_spin-2-ggON_pT125_M_2000_TuneCP2_py": 5.336e-04 +- 2.716e-06,
+}
     xsecdict.update(xsecdict_temp)
 if doMCTest:
     du_tag = ""
@@ -81,17 +111,18 @@ if doMCTest:
     xsecdict.update(xsecdict_temp)
 for dset in DATASET:
     if "SM" in dset:
-        pattern = "TestMCI_([^(]*)_pT125_M_([^(]*)_TuneCP2_py_GEN"
-        #pattern = "TestMCIPlus_([^(]*)_pT125_M_([^(]*)_TuneCP2_py_GEN"
-        match = re.findall(pattern, dset);
+        ## TestMCIPlus_SM_pT125_M_2000
+        #pattern = "TestMCI_([^(]*)_pT125_M_([^(]*)_TuneCP2_py_GEN"
+        pattern = "TestMCIPlus_([^(]*)_pT125_M_([^(]*)_TuneCP2_py_GEN"
+        match = re.findall(pattern, dset)
         PH, massrange = match[0]
         #print PH, massrange
     if "Unp" in dset:
-        pattern = "TestMCI_([^(]*)-LU([^(]*)-du([^(]*)_spin-([^(]*)([^(]*)_pT125_M_([^(]*)_TuneCP2_py_GEN"
-        # if "Plus0" in dset:
-        #     pattern = "TestMCIPlus0_([^(]*)-LU([^(]*)-du([^(]*)_spin-([^(]*)-([^(]*)_pT125_M_([^(]*)_TuneCP2_py_GEN.root"
-        # if "Plus2" in dset:
-        #     pattern = "TestMCIPlus2_([^(]*)-LU([^(]*)-du([^(]*)_spin-([^(]*)-([^(]*)_pT125_M_([^(]*)_TuneCP2_py_GEN.root"
+        #pattern = "TestMCI_([^(]*)-LU([^(]*)-du([^(]*)_spin-([^(]*)([^(]*)_pT125_M_([^(]*)_TuneCP2_py_GEN"
+        if "Plus0" in dset:
+            pattern = "TestMCIPlus0_([^(]*)-LU([^(]*)-du([^(]*)_spin-([^(]*)-([^(]*)_pT125_M_([^(]*)_TuneCP2_py_GEN.root"
+        if "Plus2" in dset:
+            pattern = "TesttMCIPlus2_([^(]*)-LU([^(]*)-du([^(]*)_spin-([^(]*)-([^(]*)_pT125_M_([^(]*)_TuneCP2_py_GEN.root"
         match = re.findall(pattern, dset);
         PH, LambdaU, du, spin, switch, massrange = match[0]
         if LambdaU == '500':
@@ -100,7 +131,7 @@ for dset in DATASET:
 
     print match
 
-    keypattern = "Test([^(]*)_GEN.root"
+    keypattern = "Testt([^(]*)_GEN.root"
     matchkey = re.findall(keypattern, dset)
     xseckey = matchkey[0]
     mrange = massrange.replace('-', '_')
@@ -120,6 +151,7 @@ for dset in DATASET:
         #print classname
 
     rep = {'ClassANGGJets': classname, "xsecvalue": xsecval, "outputfile": outfile, "inputTree": dset, "analyzefunc": an_func}
+    #print outfile
 
     #Read and replace template file
     C_src = Template(open(class_Ctemp).read())
@@ -155,7 +187,7 @@ def DelClassFiles(file_list):
             os.system(del_cmd)
     print "deleted auxilliary files"
 RunAnalyze(os.listdir('.'))
-DelClassFiles(os.listdir('.'))
+#DelClassFiles(os.listdir('.'))
 
 sw.Stop()
 print "Real time: " + str(sw.RealTime() / 60.0) + " minutes"

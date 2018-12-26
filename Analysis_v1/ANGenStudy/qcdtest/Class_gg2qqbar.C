@@ -1,12 +1,12 @@
-#define ${ClassANGGJets}_cxx
-#include "${ClassANGGJets}.h"
+#define Class_gg2qqbar_cxx
+#include "Class_gg2qqbar.h"
 #include <TH2.h>
 #include <TStyle.h>
 #include <TCanvas.h>
 #include <math.h>
 
 
-void ${ClassANGGJets}::Loop()
+void Class_gg2qqbar::Loop()
 {
    if (fChain == 0) return;
 
@@ -22,12 +22,12 @@ void ${ClassANGGJets}::Loop()
 	int numevents   = 10000;
   //histograms
   TH1D* gendiphotonMinv = new TH1D("gendiphotonMinv", "", 100, 500., 13000.);// 100, 0, 10000
-  TH1D* genphoton1Pt    = new TH1D("genphoton1Pt", "", 100, 0., 7000.);//
-  TH1D* genphoton2Pt    = new TH1D("genphoton2Pt", "", 100, 0., 7000.);
-  TH1D* genphoton1Eta   = new TH1D("genphoton1Eta", "", 20, -4.0, 4.0);
-  TH1D* genphoton2Eta   = new TH1D("genphoton2Eta", "", 20, -4.0, 4.0);
-  TH1D* genphoton1Phi   = new TH1D("genphoton1Phi", "", 20, -4.0, 4.5);
-  TH1D* genphoton2Phi   = new TH1D("genphoton2Phi", "", 20, -4.0, 4.5);
+  TH1D* genphoton1Pt    = new TH1D("genphoton1Pt", "", 1000, 0., 7000.);//
+  TH1D* genphoton2Pt    = new TH1D("genphoton2Pt", "", 1000, 0., 7000.);
+  TH1D* genphoton1Eta   = new TH1D("genphoton1Eta", "", 80, -3.0, 3.0);
+  TH1D* genphoton2Eta   = new TH1D("genphoton2Eta", "", 80, -3.0, 3.0);
+  TH1D* genphoton1Phi   = new TH1D("genphoton1Phi", "", 80, -3.5, 3.5);
+  TH1D* genphoton2Phi   = new TH1D("genphoton2Phi", "", 80, -3.5, 3.5);
   TH1D* gendiphotoncosthetastar = new TH1D("gendiphotoncosthetastar", "", 100, -1.0, 1.0);
   TH1D* genchidiphoton  = new TH1D("genchidiphoton", "", 100, 0, 50);
 
@@ -41,8 +41,8 @@ void ${ClassANGGJets}::Loop()
   gendiphotoncosthetastar->Sumw2();
   genchidiphoton->Sumw2();
 
-  TString logfile = "isEBEBLOG.txt";
-  TString fileout_name = "OUT${outputfile}"; double xsec = ${xsecvalue};
+  TString logfile = "qcd.txt";
+	TString fileout_name = "OUTgg2qqbar.root"; double xsec = 5058.14;
 
 
    Long64_t nbytes = 0, nb = 0;

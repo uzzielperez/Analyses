@@ -1,12 +1,12 @@
-#define ${ClassANGGJets}_cxx
-#include "${ClassANGGJets}.h"
+#define ClassLU1000_du1p6_spin0_M2000_cxx
+#include "ClassLU1000_du1p6_spin0_M2000.h"
 #include <TH2.h>
 #include <TStyle.h>
 #include <TCanvas.h>
 #include <math.h>
 
 
-void ${ClassANGGJets}::Loop()
+void ClassLU1000_du1p6_spin0_M2000::Loop()
 {
    if (fChain == 0) return;
 
@@ -26,8 +26,8 @@ void ${ClassANGGJets}::Loop()
   TH1D* genphoton2Pt    = new TH1D("genphoton2Pt", "", 100, 0., 7000.);
   TH1D* genphoton1Eta   = new TH1D("genphoton1Eta", "", 20, -4.0, 4.0);
   TH1D* genphoton2Eta   = new TH1D("genphoton2Eta", "", 20, -4.0, 4.0);
-  TH1D* genphoton1Phi   = new TH1D("genphoton1Phi", "", 20, -4.0, 4.5);
-  TH1D* genphoton2Phi   = new TH1D("genphoton2Phi", "", 20, -4.0, 4.5);
+  TH1D* genphoton1Phi   = new TH1D("genphoton1Phi", "", 20, -4.0, 4.0);
+  TH1D* genphoton2Phi   = new TH1D("genphoton2Phi", "", 20, -4.0, 4.0);
   TH1D* gendiphotoncosthetastar = new TH1D("gendiphotoncosthetastar", "", 100, -1.0, 1.0);
   TH1D* genchidiphoton  = new TH1D("genchidiphoton", "", 100, 0, 50);
 
@@ -41,8 +41,8 @@ void ${ClassANGGJets}::Loop()
   gendiphotoncosthetastar->Sumw2();
   genchidiphoton->Sumw2();
 
-  TString logfile = "isEBEBLOG.txt";
-  TString fileout_name = "OUT${outputfile}"; double xsec = ${xsecvalue};
+  TString logfile = "ALLlog.txt";
+	TString fileout_name = "OUTLU1000_du1p6_spin0_M2000.root"; double xsec = 0.0050743;
 
 
    Long64_t nbytes = 0, nb = 0;
@@ -61,7 +61,7 @@ void ${ClassANGGJets}::Loop()
     if  ((std::abs(GenPhoton1_eta)<1.442) && (std::abs(GenPhoton2_eta)<1.442)){
          isEBEB = isEBEB + 1; //
       // if ((GenPhoton1_pt >75) && (GenPhoton2_pt >75)){
-
+    }
         gendiphotonMinv->Fill(GenDiPhoton_Minv, weight);
         genphoton1Pt->Fill(GenPhoton1_pt, weight);
         genphoton2Pt->Fill(GenPhoton2_pt, weight);
@@ -71,9 +71,8 @@ void ${ClassANGGJets}::Loop()
         genphoton2Phi->Fill(GenPhoton2_phi, weight);
         gendiphotoncosthetastar->Fill(GenDiPhoton_cosThetaStar, weight);
         genchidiphoton->Fill(GenDiPhoton_chiDiphoton, weight);
-
     // }
-  }//isEBEB cut
+
       // if (Cut(ientry) < 0) continue;
    }//end loop over events
    cout << endl;

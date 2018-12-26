@@ -1,12 +1,12 @@
-#define ${ClassANGGJets}_cxx
-#include "${ClassANGGJets}.h"
+#define Class_Unp_LU4000_du1p8_spin2_ggON_M2000_cxx
+#include "Class_Unp_LU4000_du1p8_spin2_ggON_M2000.h"
 #include <TH2.h>
 #include <TStyle.h>
 #include <TCanvas.h>
 #include <math.h>
 
 
-void ${ClassANGGJets}::Loop()
+void Class_Unp_LU4000_du1p8_spin2_ggON_M2000::Loop()
 {
    if (fChain == 0) return;
 
@@ -42,7 +42,7 @@ void ${ClassANGGJets}::Loop()
   genchidiphoton->Sumw2();
 
   TString logfile = "isEBEBLOG.txt";
-  TString fileout_name = "OUT${outputfile}"; double xsec = ${xsecvalue};
+  TString fileout_name = "OUTUnp_LU4000_du1p8_spin2_ggONM2000.root"; double xsec = 0.000542325;
 
 
    Long64_t nbytes = 0, nb = 0;
