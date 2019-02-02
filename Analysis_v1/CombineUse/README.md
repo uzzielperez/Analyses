@@ -20,4 +20,4 @@ python limits_formatter.py.
 ```bash
 python plot_limits.py
 ``` 
-Special thanks to Wenyu Zhang for her plotting script and for Caleb Smith for helping me put it all together.
+Special thanks to Wenyu Zhang for her plotting script and for Caleb Smith (Baylor U.) for helping me put it all together.
