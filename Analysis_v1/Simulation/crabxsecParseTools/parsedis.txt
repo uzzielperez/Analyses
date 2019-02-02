@@ -1,0 +1,2 @@
+root://cmseos.fnal.gov//store/user/cuperez/DiPhotonAnalysis/xsec/GluGluSpin0ToGammaGamma_W_0p014_M_750_TuneCP2_13TeV_pythia8/crab_xsecGluGluSpin0ToGammaGamma_W_0p014_M_750_13TeV-CP2-PY8__94XMiniAODv2__MINIAODSIM/190201_202817/0000/log/cmsRun_1.log.tar.gz
+root://cmseos.fnal.gov//store/user/cuperez/DiPhotonAnalysis/xsec/RSGravitonToGammaGamma_kMpl001_M_750_TuneCP2_13TeV_pythia8/crab_xsecRSGravitonToGammaGamma_kMpl001_M_750_13TeV-CP2-PY8__94XMiniAODv2__MINIAODSIM/190201_202807/0000/log/cmsRun_1.log.tar.gz
