@@ -14,9 +14,9 @@
 ```bash
 cd CombineCustomPlt
 python limits_formatter.py. 
-```. 
+```
 6.) Plot.  
 
 ```bash
 python plot_limits.py
-```. 
+``` 
