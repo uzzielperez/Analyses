@@ -1,5 +1,4 @@
 # USING COMBINE
-### Special thanks to Wenyu Zhang for her plotting script and for Caleb Smith for helping me put it all together.
 
 1.) Setup combine and Combine Harvester.  
 2.) Prepare datacards in HiggsAnalysis/CombinedLimit directory.   
@@ -21,3 +20,4 @@ python limits_formatter.py.
 ```bash
 python plot_limits.py
 ``` 
+Special thanks to Wenyu Zhang for her plotting script and for Caleb Smith for helping me put it all together.
