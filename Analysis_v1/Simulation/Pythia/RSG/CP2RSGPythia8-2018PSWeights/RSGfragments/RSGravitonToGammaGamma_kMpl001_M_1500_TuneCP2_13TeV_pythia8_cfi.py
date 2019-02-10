@@ -2,6 +2,7 @@ import FWCore.ParameterSet.Config as cms
 
 from Configuration.Generator.Pythia8CommonSettings_cfi import *
 from Configuration.Generator.MCTunes2017.PythiaCP2Settings_cfi import *
+from Configuration.Generator.PSweightsPythia.PythiaPSweightsSettings_cfi import *
 
 generator = cms.EDFilter("Pythia8GeneratorFilter",
         comEnergy = cms.double(13000.0),
@@ -13,6 +14,7 @@ generator = cms.EDFilter("Pythia8GeneratorFilter",
         PythiaParameters = cms.PSet(
 	pythia8CommonSettingsBlock,
         pythia8CP2SettingsBlock,
+	pythia8PSweightsSettingsBlock,
         processParameters = cms.vstring(
             'ExtraDimensionsG*:all = on',
             'ExtraDimensionsG*:kappaMG = 0.0541643794389',
@@ -23,6 +25,7 @@ generator = cms.EDFilter("Pythia8GeneratorFilter",
         parameterSets = cms.vstring('pythia8CommonSettings',
 				    'pythia8CP2Settings', 
                                     'processParameters',
+				    'pythia8PSweightsSettings',
                                     )
         )
 )
