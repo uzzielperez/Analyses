@@ -1,6 +1,6 @@
 import os
 import subprocess as sp
-import ROOT 
+import ROOT
 import argparse
 from multiprocessing import Pool
 
@@ -16,25 +16,26 @@ directory = args.directory
 sw = ROOT.TStopwatch()
 sw.Start()
 
+cmssw_base = os.getenv("CMSSW_BASE")
 def moveCard(folder, pattern):
-	file_list = os.listdir(folder) 
+	file_list = os.listdir(folder)
  	for filename in file_list:
 		if filename.startswith("%s" %(pattern)) and filename.endswith(".txt"):
-			cmd = "mv /uscms_data/d3/cuperez/CMSSW_9_3_8/src/{}  /uscms_data/d3/cuperez/CMSSW_9_3_8/src/fin".format(filename)
+			cmd = "mv {}/src/{}  {}/src/fin".format(cmssw_base, filename, cmssw_base)
 			os.system(cmd)
 			print "moved %s to fin/" %(filename)
 		if filename.startswith("%s" %(pattern)) and filename.endswith(".py"):
-			if "Configuration" in folder:			
-				cmd = "mv /uscms_data/d3/cuperez/CMSSW_9_3_8/src/Configuration/GenProduction/python/ThirteenTeV/{}  /uscms_data/d3/cuperez/CMSSW_9_3_8/src/Configuration/GenProduction/python/ThirteenTeV/fin".format(filename)
+			if "Configuration" in folder:
+				cmd = "mv {}/src/Configuration/GenProduction/python/ThirteenTeV/{} {}/src/Configuration/GenProduction/python/ThirteenTeV/fin".format(cmssw_base, filename, cmssw_base)
 			else:
-				cmd = "mv /uscms_data/d3/cuperez/CMSSW_9_3_8/src/{}  /uscms_data/d3/cuperez/CMSSW_9_3_8/src/fin".format(filename)
+				cmd = "mv {}/src/{}  {}/src/fin".format(cmssw_base, filename, cmssw_base)
 			os.system(cmd)
 			print "moved %s to fin/" %(filename)
 
 if directory == "config":
-	moveCard('/uscms_data/d3/cuperez/CMSSW_9_3_8/src/Configuration/GenProduction/python/ThirteenTeV/', pattern)
-else: 
-	moveCard('/uscms_data/d3/cuperez/CMSSW_9_3_8/src/', pattern)
+	moveCard('%s/src/Configuration/GenProduction/python/ThirteenTeV/' %(cmssw_base), pattern)
+else:
+	moveCard('%s/src/' %(cmssw_base), pattern)
 
 sw.Stop()
 print ("Processing Time:")
