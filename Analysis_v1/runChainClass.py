@@ -6,9 +6,9 @@ import argparse
 
 # Command line options
 parser = argparse.ArgumentParser(description="Run-Chain-Class")
-parser.add_argument("-i", "--inputfiles", dest="inputfiles", default="aInputMerged.txt", help="List of input files")
+parser.add_argument("-i", "--inputfiles", dest="inputfiles", default="aInputMerged.txt", help="List of input files. A file listing the path to inputfiles.")
 parser.add_argument("-s", "--study", dest="study", default="SomeStudy", help="Study Name")
-parser.add_argument("-t", "--ttree", dest="ttree", default="diphoton/fTree", help="TTree Name")
+parser.add_argument("-t", "--ttree", dest="ttree", default="diphoton/fTree", help="TTree Name. Default is diphoton/fTree.")
 args = parser.parse_args()
 
 
