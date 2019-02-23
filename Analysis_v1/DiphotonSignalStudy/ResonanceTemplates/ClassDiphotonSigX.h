@@ -929,6 +929,7 @@ public :
    Double_t        Photon1_phi;
    Double_t        Photon1_scEta;
    Double_t        Photon1_scPhi;
+   Double_t        Photon1_rapidity;
    Double_t        Photon1_rho;
    Double_t        Photon1_chargedHadIso03;
    Double_t        Photon1_neutralHadIso03;
@@ -985,6 +986,7 @@ public :
    Double_t        Photon2_phi;
    Double_t        Photon2_scEta;
    Double_t        Photon2_scPhi;
+   Double_t        Photon2_rapidity;
    Double_t        Photon2_rho;
    Double_t        Photon2_chargedHadIso03;
    Double_t        Photon2_neutralHadIso03;
@@ -1073,6 +1075,7 @@ public :
    Double_t        Diphoton_deltaR;
    Double_t        Diphoton_cosThetaStar;
    Double_t        Diphoton_cosThetaStar_old;
+   Double_t        Diphoton_chiDiphoton;
    Bool_t          Diphoton_isEBEB;
    Bool_t          Diphoton_isEBEE;
    Bool_t          Diphoton_isEEEB;
@@ -1084,6 +1087,7 @@ public :
    Double_t        GenDiphoton_deltaR;
    Double_t        GenDiphoton_cosThetaStar;
    Double_t        GenDiphoton_cosThetaStar_old;
+   Double_t        GenDiphoton_chiDiphoton;
    Bool_t          GenDiphoton_isEBEB;
    Bool_t          GenDiphoton_isEBEE;
    Bool_t          GenDiphoton_isEEEB;
@@ -1093,6 +1097,7 @@ public :
    Double_t        TTPhoton1_phi;
    Double_t        TTPhoton1_scEta;
    Double_t        TTPhoton1_scPhi;
+   Double_t        TTPhoton1_rapidity;
    Double_t        TTPhoton1_rho;
    Double_t        TTPhoton1_chargedHadIso03;
    Double_t        TTPhoton1_neutralHadIso03;
@@ -1149,6 +1154,7 @@ public :
    Double_t        TTPhoton2_phi;
    Double_t        TTPhoton2_scEta;
    Double_t        TTPhoton2_scPhi;
+   Double_t        TTPhoton2_rapidity;
    Double_t        TTPhoton2_rho;
    Double_t        TTPhoton2_chargedHadIso03;
    Double_t        TTPhoton2_neutralHadIso03;
@@ -1207,6 +1213,7 @@ public :
    Double_t        TTDiphoton_deltaR;
    Double_t        TTDiphoton_cosThetaStar;
    Double_t        TTDiphoton_cosThetaStar_old;
+   Double_t        TTDiphoton_chiDiphoton;
    Bool_t          TTDiphoton_isEBEB;
    Bool_t          TTDiphoton_isEBEE;
    Bool_t          TTDiphoton_isEEEB;
@@ -1216,6 +1223,7 @@ public :
    Double_t        TFPhoton1_phi;
    Double_t        TFPhoton1_scEta;
    Double_t        TFPhoton1_scPhi;
+   Double_t        TFPhoton1_rapidity;
    Double_t        TFPhoton1_rho;
    Double_t        TFPhoton1_chargedHadIso03;
    Double_t        TFPhoton1_neutralHadIso03;
@@ -1272,6 +1280,7 @@ public :
    Double_t        TFPhoton2_phi;
    Double_t        TFPhoton2_scEta;
    Double_t        TFPhoton2_scPhi;
+   Double_t        TFPhoton2_rapidity;
    Double_t        TFPhoton2_rho;
    Double_t        TFPhoton2_chargedHadIso03;
    Double_t        TFPhoton2_neutralHadIso03;
@@ -1330,6 +1339,7 @@ public :
    Double_t        TFDiphoton_deltaR;
    Double_t        TFDiphoton_cosThetaStar;
    Double_t        TFDiphoton_cosThetaStar_old;
+   Double_t        TFDiphoton_chiDiphoton;
    Bool_t          TFDiphoton_isEBEB;
    Bool_t          TFDiphoton_isEBEE;
    Bool_t          TFDiphoton_isEEEB;
@@ -1339,6 +1349,7 @@ public :
    Double_t        FTPhoton1_phi;
    Double_t        FTPhoton1_scEta;
    Double_t        FTPhoton1_scPhi;
+   Double_t        FTPhoton1_rapidity;
    Double_t        FTPhoton1_rho;
    Double_t        FTPhoton1_chargedHadIso03;
    Double_t        FTPhoton1_neutralHadIso03;
@@ -1395,6 +1406,7 @@ public :
    Double_t        FTPhoton2_phi;
    Double_t        FTPhoton2_scEta;
    Double_t        FTPhoton2_scPhi;
+   Double_t        FTPhoton2_rapidity;
    Double_t        FTPhoton2_rho;
    Double_t        FTPhoton2_chargedHadIso03;
    Double_t        FTPhoton2_neutralHadIso03;
@@ -1453,6 +1465,7 @@ public :
    Double_t        FTDiphoton_deltaR;
    Double_t        FTDiphoton_cosThetaStar;
    Double_t        FTDiphoton_cosThetaStar_old;
+   Double_t        FTDiphoton_chiDiphoton;
    Bool_t          FTDiphoton_isEBEB;
    Bool_t          FTDiphoton_isEBEE;
    Bool_t          FTDiphoton_isEEEB;
@@ -1462,6 +1475,7 @@ public :
    Double_t        FFPhoton1_phi;
    Double_t        FFPhoton1_scEta;
    Double_t        FFPhoton1_scPhi;
+   Double_t        FFPhoton1_rapidity;
    Double_t        FFPhoton1_rho;
    Double_t        FFPhoton1_chargedHadIso03;
    Double_t        FFPhoton1_neutralHadIso03;
@@ -1518,6 +1532,7 @@ public :
    Double_t        FFPhoton2_phi;
    Double_t        FFPhoton2_scEta;
    Double_t        FFPhoton2_scPhi;
+   Double_t        FFPhoton2_rapidity;
    Double_t        FFPhoton2_rho;
    Double_t        FFPhoton2_chargedHadIso03;
    Double_t        FFPhoton2_neutralHadIso03;
@@ -1576,6 +1591,7 @@ public :
    Double_t        FFDiphoton_deltaR;
    Double_t        FFDiphoton_cosThetaStar;
    Double_t        FFDiphoton_cosThetaStar_old;
+   Double_t        FFDiphoton_chiDiphoton;
    Bool_t          FFDiphoton_isEBEB;
    Bool_t          FFDiphoton_isEBEE;
    Bool_t          FFDiphoton_isEEEB;

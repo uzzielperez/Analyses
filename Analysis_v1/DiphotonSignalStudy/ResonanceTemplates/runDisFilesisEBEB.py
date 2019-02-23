@@ -21,7 +21,7 @@ DATASET = []
 
 doADD         = False
 doRSG         = True
-doHeavyHiggs  = True
+doHeavyHiggs  = False
 doUnparticles = False
 
 numevent = 10000
@@ -32,16 +32,42 @@ class_htemp = "ClassDiphotonSigX.h"
 run_analyzetemp = "analyze.C"
 
 if doADD:
-    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/signal-2018/ADDGravToGG_NegInt-0_LambdaT-10000_M-2000To4000_TuneCP2_13TeV-pythia8/crab_ADDGravToGG_NegInt-0_LambdaT-10000_M-2000To4000_TuneCP2_13TeV-pythia8__Fall17_PU2017-v1__MINIAODSIM/190207_171204/0000')
+    #DATASET.append('/store/user/cuperez/DiPhotonAnalysis/signal-2018/ADDGravToGG_NegInt-0_LambdaT-10000_M-2000To4000_TuneCP2_13TeV-pythia8/crab_ADDGravToGG_NegInt-0_LambdaT-10000_M-2000To4000_TuneCP2_13TeV-pythia8__Fall17_PU2017-v1__MINIAODSIM/190207_171204/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_NegInt-0_LambdaT-10000_M-2000To4000_TuneCP2_13TeV-pythia8/crab_ADDGravToGG_NegInt-0_LambdaT-10000_M-2000To4000_TuneCP2_13TeV-pythia8__Fall17_PU2017-v1__MINIAODSIM/190222_083541/0000')
 if doRSG:
-    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/signal-2018/RSGravitonToGammaGamma_kMpl001_M_750_TuneCP2_13TeV_pythia8/crab_RSGravitonToGammaGamma_kMpl001_M_750_TuneCP2_13TeV_pythia8__Fall17_PU2017-v1__MINIAODSIM/190207_171215/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/RSGravitonToGammaGamma_kMpl001_M_750_TuneCP2_13TeV_pythia8/crab_RSGravitonToGammaGamma_kMpl001_M_750_TuneCP2_13TeV_pythia8__Fall17_PU2017-v1__MINIAODSIM/190222_083555/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/RSGravitonToGammaGamma_kMpl01_M_1250_TuneCP2_13TeV_pythia8/crab_RSGravitonToGammaGamma_kMpl01_M_1250_TuneCP2_13TeV_pythia8__Fall17_PU2017-v1__MINIAODSIM/190222_083606/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/RSGravitonToGammaGamma_kMpl01_M_1500_TuneCP2_13TeV_pythia8/crab_RSGravitonToGammaGamma_kMpl01_M_1500_TuneCP2_13TeV_pythia8__Fall17_PU2017-v1__MINIAODSIM/190222_083617/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/RSGravitonToGammaGamma_kMpl01_M_2500_TuneCP2_13TeV_pythia8/crab_RSGravitonToGammaGamma_kMpl01_M_2500_TuneCP2_13TeV_pythia8__Fall17_PU2017-v1__MINIAODSIM/190222_083628/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/RSGravitonToGammaGamma_kMpl01_M_3000_TuneCP2_13TeV_pythia8/crab_RSGravitonToGammaGamma_kMpl01_M_3000_TuneCP2_13TeV_pythia8__Fall17_PU2017-v1__MINIAODSIM/190222_083639/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/RSGravitonToGammaGamma_kMpl01_M_4250_TuneCP2_13TeV_pythia8/crab_RSGravitonToGammaGamma_kMpl01_M_4250_TuneCP2_13TeV_pythia8__Fall17_PU2017-v1__MINIAODSIM/190222_083653/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/RSGravitonToGammaGamma_kMpl01_M_4750_TuneCP2_13TeV_pythia8/crab_RSGravitonToGammaGamma_kMpl01_M_4750_TuneCP2_13TeV_pythia8__Fall17_PU2017-v1__MINIAODSIM/190222_083715/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/RSGravitonToGammaGamma_kMpl01_M_5000_TuneCP2_13TeV_pythia8/crab_RSGravitonToGammaGamma_kMpl01_M_5000_TuneCP2_13TeV_pythia8__Fall17_PU2017-v1__MINIAODSIM/190222_083754/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/RSGravitonToGammaGamma_kMpl01_M_5750_TuneCP2_13TeV_pythia8/crab_RSGravitonToGammaGamma_kMpl01_M_5750_TuneCP2_13TeV_pythia8__Fall17_PU2017-v1__MINIAODSIM/190222_083808/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/RSGravitonToGammaGamma_kMpl01_M_6000_TuneCP2_13TeV_pythia8/crab_RSGravitonToGammaGamma_kMpl01_M_6000_TuneCP2_13TeV_pythia8__Fall17_PU2017-v1__MINIAODSIM/190222_083819/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/RSGravitonToGammaGamma_kMpl01_M_6500_TuneCP2_13TeV_pythia8/crab_RSGravitonToGammaGamma_kMpl01_M_6500_TuneCP2_13TeV_pythia8__Fall17_PU2017-v1__MINIAODSIM/190222_083831/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/RSGravitonToGammaGamma_kMpl02_M_1000_TuneCP2_13TeV_pythia8/crab_RSGravitonToGammaGamma_kMpl02_M_1000_TuneCP2_13TeV_pythia8__Fall17_PU2017-v1__MINIAODSIM/190222_083907/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/RSGravitonToGammaGamma_kMpl02_M_1750_TuneCP2_13TeV_pythia8/crab_RSGravitonToGammaGamma_kMpl02_M_1750_TuneCP2_13TeV_pythia8__Fall17_PU2017-v1__MINIAODSIM/190222_083932/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/RSGravitonToGammaGamma_kMpl02_M_2000_TuneCP2_13TeV_pythia8/crab_RSGravitonToGammaGamma_kMpl02_M_2000_TuneCP2_13TeV_pythia8__Fall17_PU2017-v1__MINIAODSIM/190222_083944/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/RSGravitonToGammaGamma_kMpl02_M_2250_TuneCP2_13TeV_pythia8/crab_RSGravitonToGammaGamma_kMpl02_M_2250_TuneCP2_13TeV_pythia8__Fall17_PU2017-v1__MINIAODSIM/190222_084017/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/RSGravitonToGammaGamma_kMpl02_M_2500_TuneCP2_13TeV_pythia8/crab_RSGravitonToGammaGamma_kMpl02_M_2500_TuneCP2_13TeV_pythia8__Fall17_PU2017-v1__MINIAODSIM/190222_084029/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/RSGravitonToGammaGamma_kMpl02_M_3500_TuneCP2_13TeV_pythia8/crab_RSGravitonToGammaGamma_kMpl02_M_3500_TuneCP2_13TeV_pythia8__Fall17_PU2017-v1__MINIAODSIM/190222_084041/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/RSGravitonToGammaGamma_kMpl02_M_5000_TuneCP2_13TeV_pythia8/crab_RSGravitonToGammaGamma_kMpl02_M_5000_TuneCP2_13TeV_pythia8__Fall17_PU2017-v1__MINIAODSIM/190222_084052/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/RSGravitonToGammaGamma_kMpl02_M_5500_TuneCP2_13TeV_pythia8/crab_RSGravitonToGammaGamma_kMpl02_M_5500_TuneCP2_13TeV_pythia8__Fall17_PU2017-v1__MINIAODSIM/190222_084105/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/RSGravitonToGammaGamma_kMpl02_M_5750_TuneCP2_13TeV_pythia8/crab_RSGravitonToGammaGamma_kMpl02_M_5750_TuneCP2_13TeV_pythia8__Fall17_PU2017-v1__MINIAODSIM/190222_084117/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/RSGravitonToGammaGamma_kMpl02_M_7000_TuneCP2_13TeV_pythia8/crab_RSGravitonToGammaGamma_kMpl02_M_7000_TuneCP2_13TeV_pythia8__Fall17_PU2017-v1__MINIAODSIM/190222_084141/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/RSGravitonToGammaGamma_kMpl02_M_750_TuneCP2_13TeV_pythia8/crab_RSGravitonToGammaGamma_kMpl02_M_750_TuneCP2_13TeV_pythia8__Fall17_PU2017-v1__MINIAODSIM/190222_084151/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/RSGravitonToGammaGamma_kMpl02_M_8000_TuneCP2_13TeV_pythia8/crab_RSGravitonToGammaGamma_kMpl02_M_8000_TuneCP2_13TeV_pythia8__Fall17_PU2017-v1__MINIAODSIM/190222_084202/0000')
+    #DATASET.append('/store/user/cuperez/DiPhotonAnalysis/signal-2018/RSGravitonToGammaGamma_kMpl001_M_750_TuneCP2_13TeV_pythia8/crab_RSGravitonToGammaGamma_kMpl001_M_750_TuneCP2_13TeV_pythia8__Fall17_PU2017-v1__MINIAODSIM/190207_171215/0000')
 if doHeavyHiggs:
     DATASET.append('/store/user/cuperez/DiPhotonAnalysis/signal-2018/GluGluSpin0ToGammaGamma_W_0p014_M_750_TuneCP2_13TeV_pythia8/crab_GluGluSpin0ToGammaGamma_W_0p014_M_750_TuneCP2_13TeV_pythia8__Fall17_PU2017-v1__MINIAODSIM/190207_171226/0000')
 
 for dset in DATASET:
-    pattern = "store/user/cuperez/DiPhotonAnalysis/signal-2018/([^(]*)_TuneCP2_13TeV_pythia8/crab_"
+    #pattern = "store/user/cuperez/DiPhotonAnalysis/signal-2018/([^(]*)_TuneCP2_13TeV_pythia8/crab_"
+    pattern = "store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/([^(]*)_TuneCP2_13TeV_pythia8/crab_"
     if doADD:
-        pattern = "store/user/cuperez/DiPhotonAnalysis/signal-2018/([^(]*)_TuneCP2_13TeV-pythia8/crab_"
+        #pattern = "store/user/cuperez/DiPhotonAnalysis/signal-2018/([^(]*)_TuneCP2_13TeV-pythia8/crab_"
+        pattern = "store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/([^(]*)_TuneCP2_13TeV-pythia8/crab_"
     match = re.findall(pattern, dset)
     print match
     nametag   = match[0].replace('-', '_')
