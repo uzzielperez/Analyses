@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# My first bash script ever 
+# Not pretty but it works 
+
+
 ####### Directories
 # Main
 eosdir='/store/user/cuperez'
@@ -13,12 +17,12 @@ crabADD=false
 crabADDfiles=false
 midsearch=false
 ## EDIT HERE sub
-#project='/DiPhotonAnalysis/signal-2018'
 #project='/DiPhotonAnalysis'
 #project='/DiPhotonAnalysis/Signal17-18AN'
-project='/DiPhotonAnalysis/Signal17-18-ExoDiPhotonAnalyzer'
+#project='/DiPhotonAnalysis/signal-2018' # Test
 #project='/ADDGravToGGSherpa'
 #project='/TriPhotonAnalysis'
+project='/DiPhotonAnalysis/ExoANDiphoton' #
 
 #project='/DiPhotonAnalysis/EGammaData/EGamma'
 #project='/DiPhotonAnalysis/EGammaData/EGamma/crab_EGamma__Run2018*_toRun2018Dv2_322381'

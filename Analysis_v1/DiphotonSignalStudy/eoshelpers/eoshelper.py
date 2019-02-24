@@ -18,6 +18,6 @@ for dataset in datasetlist:
         (subrootdir, err) = proc.communicate()
 	datadir = "%s/%s" %(rootdir[:-1], subrootdir)
 
-	print datadir
+	print datadir[:-1]
 
 	
