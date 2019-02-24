@@ -10,8 +10,13 @@ from ROOT import gBenchmark, gStyle, gROOT, gDirectory
 import re
 from ROOT import TMath
 import sys
-CMSlumiPath = '/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/pyroot'
-sys.path.append(CMSlumiPath)
+import os
+
+#cmssw_base = os.getenv("CMSSW_BASE")
+#CMSlumiPath = '/uscms_data/d3/cuperez/CMSSW_8_0_25/src/scripts/pyroot'
+#CMSlumiPath = cmssw_base + 'Analyses/pyroot'
+#sys.path.append(CMSlumiPath)
+
 from CMSlumi import CMS_lumi, set_CMS_lumi
 import argparse
 from LambdaUcalc import xsecRatio
@@ -33,37 +38,198 @@ intlumi = 137
 DrawAsHi = False
 gStyle.SetOptStat(0)
 
-def createHist(obj, sample):
-	file1 = ROOT.TFile(sample, "READ")
-	hist = file1.Get(obj)
-
+def labelParser(sample):
 	if "RSG" in sample:
-		match = [None]
-		match[0] = "RSG-M750-kMpl001"
+		pattern = "OUT([^(]*)ravitonToGammaGamma_kMpl([^(]*)_M_([^(]*).root"
+		match = re.findall(pattern, sample)
+		#PH, kMpl, M = match[0]
+		label = match[0]
 	if "GluGlu" in sample:
-		match = [None]
-		match[0] = "HeavyHiggs-M750-0p014"
+		pattern = "OUT([^(]*)Spin0ToGammaGamma_W_([^(]*)_M_([^(]*).root"
+		match = re.findall(pattern, sample)
+		#PH,W, M  = match[0]
+		label = match[0]
 	if "ADD" in sample:
 		pattern = "OUT([^(]*)GravToGG_NegInt_([^(]*)_LambdaT_([^(]*)_M_2000To4000.root"
 		match = re.findall(pattern, sample)
 		PH, NegInt, LambdaT = match[0]
-		print PH, NegInt, LambdaT
-
 	if "Unp" in sample:
 		pattern = "OUTUnp_spin([^(]*)_du([^(]*)_LU([^(]*)p0_m([^(]*)_pT([^(]*)_M([^(]*).root"
 		match = re.findall(pattern, sample)
 		spin, du, LU, mCut, pTcut, massmin = match[0]
+		label = "Unp", spin, du, LU, mCut, pTcut, massmin
+	return label
 
-	hist.Scale(intlumi)
+
+def createHist(obj, sample, lumi=None):
+	file1 = ROOT.TFile(sample, "READ")
+	hist = file1.Get(obj)
+	if lumi is not None:
+		hist.Scale(lumi)
 	hist.SetDirectory(0)
-	return hist, match[0]
+	return hist, labelParser(sample)
+
+def LabelMaker(obj, canvas, PeakParams=None):
+	binSize = "125 GeV"
+	if "Minv" in obj:
+		canvas.SetLogy()
+		xtitle = r"m_{#gamma#gamma}#scale[1.0]{(GeV)}"
+	        ytitle = r"#scale[1.0]{Nevents/%s}" %(binSize)
+		if PeakParams is None:
+	   		xmin, xmax = 500, 13000
+		else:
+	        	ytitle = r"#scale[1.0]{Nevents}"
+			W, M = PeakParams
+			xmin, xmax = 500, int(M)+500
+			if "001" not in W:
+				xmin, xmax = 500,  int(M)+3000
+		legpos = .65, 0.70, .80, .88
+	if "Pt" in obj:
+  		canvas.SetLogy()
+  		xtitle = r"p_{T}#scale[1.0]{(GeV)}"
+  		ytitle = r"#scale[1.0]{Nevents}"
+  		xmin, xmax = 0, 10000
+		if PeakParams is None:
+	   		xmin, xmax = 500, 13000
+		else:
+			W, M = PeakParams
+			xmin, xmax = 0, int(M)+500
+			if "001" not in W:
+				xmin, xmax = 0,  int(M)+2000
+		legpos = .65, 0.70, .80, .88
+  	if "chidiphoton" in obj:
+      		xtitle = r"#Chi_{#gamma#gamma}"
+     		ytitle = r"#scale[1.0]{Nevents}"
+      		xmin, xmax = 1, 20
+		legpos = .55, 0.78, .80, .88
+  	if "costhetastar" in obj:
+      		xtitle = r"cos#theta^{*}"
+      		ytitle = r"#scale[1.0]{Nevents}"
+      		xmin, xmax = -1, 1
+        	#xpos1, ypos1, xpos2, ypos2 = .30, 0.30, .65, .50
+        	legpos = .30, 0.50, .65, .70
+  	if "Eta" in obj:
+      		xtitle = r"#eta"
+      		ytitle = r"#scale[1.0]{Nevents}"
+      		xmin, xmax = -4, 4
+		legpos = .65, 0.70, .80, .88
+	if "Phi" in obj:
+      		xtitle = r"#phi"
+      		ytitle = r"#scale[1.0]{Nevents}"
+      		xmin, xmax = -3.5, 3.5
+		legpos = .65, 0.70, .80, .88
+	canvas_and_labels = canvas, xtitle, ytitle, xmin, xmax, legpos
+	return canvas_and_labels
+
+def makeLegend(legpos, legendtitle=None):
+	leg = TLegend(*legpos)
+	leg.SetBorderSize(0)
+        leg.SetFillColor(0)
+       	leg.SetFillStyle(0)
+        leg.SetTextFont(42)
+        leg.SetTextSize(0.035)
+
+	if legendtitle is None:
+		return leg
+	else:
+		leg.SetHeader(legendtitle, "C")
+		return leg
+
+def CreateSMsty(histSM, lumi=None):
+	#histSM.SetFillStyle(3144)
+	histSM.SetFillColor(7)
+	if lumi is not None:
+		histSM.Scale(lumi)
+	return histSM
+
+def PlotResonance(obj, sample, color=None, outputdir=None, Background=None, lumi=None):
+	hist, label = createHist(obj, sample)
+	canvas = ROOT.TCanvas()
+	PH, W, M= label
+	if "RSG" in label:
+		leglabel = r"kMpl-%s, M-%s" %(W, M)
+		Plot_outFileName = "RSG_kMpl-%s_M-%s%s.pdf" %(W, M, obj)
+		outputdir = "%s_kMpl-%s_M-%s" %(PH, W, M)
+		modeltag = "RS Graviton"
+	if "GluGlu" in label:
+		 leglabel = r"HeavyHiggs_W=%s, M-%s" %(W, M)
+		 Plot_outFileName = "HeavyHiggs_W%s_M-%s_%s.pdf" %(W, M, obj)
+		 outputdir = "%s_W-%s_M-%s" %(PH, W, M)
+		 modeltag = "Heavy Higgs"
+	canvas, xtitle, ytitle, xmin, xmax, legpos = LabelMaker(obj, canvas, (W,M))
+        #print leglabel, xmin, xmax
+	if "gen" in obj:
+		Plot_outFileName = "GEN" + Plot_outFileName
+
+	#legpos = .55, 0.78, .80, .88
+	legend = makeLegend(legpos, "#bf{Legend:} %s"  %(modeltag))
+	h = hist.Clone("shaperhist")	
+	
+	# Error Markers
+	hist.SetMarkerSize(0)
+	hist.SetFillColor(kBlack)
+	hist.SetFillStyle(3344)
+
+	if color is None:
+		h.SetLineColor(1)
+	else:
+		h.SetLineColor(color)
+	
+	h.SetFillStyle(3244)	
+	h.SetFillColor(kOrange-3)
+	
+	# If Standard Model/Background given, reconfigure canvas to overlay S+B.
+	if Background is not None:
+		histSM, labelSM = Background	
+		histSM = CreateSMsty(histSM)
+		ymax = max(histSM.GetMaximum(), hist.GetMaximum())
+		ymax = ymax + ymax*(0.3)
+		histSM.SetMaximum(ymax)
+		histSM.GetXaxis().SetTitle(xtitle)
+		histSM.GetXaxis().SetRangeUser(xmin, xmax)
+		histSM.GetYaxis().SetTitle(ytitle)
+		hist.GetYaxis().SetTitleOffset(1.0)
+		histSM.Draw("hist, same")
+		h.Draw("hist, same") #Redraw Shape 
+		hist.Draw("same, E2") #Keep same option, Draw Error	
+		#histSM.Draw("hist, same") #Redraw SM 
+		legend.AddEntry(histSM, "%s" %(labelSM), "f")
+		Plot_outFileName = "SM_vs_"+ Plot_outFileName 
+	else:
+		h.GetYaxis().SetTitle(ytitle)
+		h.GetYaxis().SetTitleOffset(1.0)
+		h.GetXaxis().SetTitle(xtitle)
+		h.GetXaxis().SetRangeUser(xmin, xmax)
+		h.Draw("hist, same") #Redraw Shape 
+		hist.Draw("same, E2") # Draw Error	
+	legend.AddEntry(h, "%s" %(leglabel), "f")
+	legend.Draw()
+	set_CMS_lumi(canvas, 4, 0, intlumi)
+	if lumi is not None:
+		set_CMS_lumi(canvas, 4, 11, lumi)
+	canvas.Update()
+	canvas.Draw()
+	if outputdir is None:
+		canvas.SaveAs(Plot_outFileName)
+	else:
+		# Rename outputdir with parameters
+        	if not os.path.exists(outputdir):
+            		os.mkdir(outputdir)
+		os.chdir(outputdir)
+            	canvas.SaveAs(Plot_outFileName)
+		os.chdir("..")
 
 def Stitch(toStitchList, obj):
-
+    # Used for stitching non-resonant mass bins
     openFileList, labelList = [], []
     for data in toStitchList:
 		if "SM" in data:
 			pattern = "OUT([^(]*)_pT70_"
+			match = re.findall(pattern, data)
+			label = match[0]
+			#labelList.append(match[0])
+		if "GGJets" in data:
+			pattern = "OUT([^(]*)_M"
 			match = re.findall(pattern, data)
 			label = match[0]
 			#labelList.append(match[0])
@@ -75,7 +241,7 @@ def Stitch(toStitchList, obj):
 			label = PH, spin, du, LU, pT
 		# Open ROOT files
         	openFileList.append(ROOT.TFile(data, "READ"))
-    labelList.append(label)
+    		labelList.append(label)
 
     # Get Histogram objects
     hists = []
@@ -83,7 +249,7 @@ def Stitch(toStitchList, obj):
 	histo = openfile.Get(obj)
 	histo.SetDirectory(0)
         hists.append(histo)
-	#print type(histo)
+
     # Stitching
     i = 1
     hist = hists[0].Clone("hist")
@@ -93,38 +259,9 @@ def Stitch(toStitchList, obj):
         i = i + 1
 
     hist.SetDirectory(0)
-    #print type(hist), "stitched?"
-    #stitchedhist.SetDirectory[0]
-    return  hist, labelList
+    return hist, label
 
-def LabelMaker(obj, canvas):
-	binSize = "125 GeV"
-	if "Minv" in obj:
-		canvas.SetLogy()
-	      	xtitle = r"m_{#gamma#gamma}#scale[1.0]{(GeV)}"
-	      	ytitle = r"#scale[1.0]{Nevents/%s}" %(binSize)
-	      	xmin, xmax = 1000, 13000
-      	if "Pt" in obj:
-      		canvas.SetLogy()
-      		xtitle = r"p_{T}#scale[1.0]{(GeV)}"
-      		ytitle = r"#scale[1.0]{Nevents}"
-      		xmin, xmax = 1000, 13000
-      	if "chidiphoton" in obj:
-	      	xtitle = r"#Chi_{#gamma#gamma}"
-	     	ytitle = r"#scale[1.0]{Nevents}"
-	      	xmin, xmax = 1, 20
-      	if "costhetastar" in obj:
-	      	xtitle = r"cos#theta^{*}"
-	      	ytitle = r"#scale[1.0]{Nevents}"
-	      	xmin, xmax = -1, 1
-              	#xpos1, ypos1, xpos2, ypos2 = .30, 0.30, .65, .50
-              	xpos1, ypos1, xpos2, ypos2 = .30, 0.50, .65, .70
-      	if "Eta" in obj:
-	      	xtitle = r"#eta"
-	      	ytitle = r"#scale[1.0]{Nevents}"
-	      	xmin, xmax = -4, 4
-	return canvas, xtitle, ytitle, xmin, xmax
-
+##### Unedited for Diphoton Studies
 def OverlayHists(obj, histlist, labelList):
   	 canvas = ROOT.TCanvas()
 	 canvas, xtitle, ytitle, xmin, xmax = LabelMaker(obj, canvas)
@@ -370,18 +507,7 @@ def createSignalOnly(obj, sample1, sample2):
         #print "hsigonly type", type(hsigonly), type(hdata), type(hsigonly)
 	return h3, match[0]
 
-def makeLegend():
-        xpos1, ypos1, xpos2, ypos2 = .55, 0.58, .80, .88
-	leg = TLegend(xpos1, ypos1, xpos2, ypos2)
-	legendtitle = "#bf{Sensitivity Studies} (EB-EB)"
-        leg.SetHeader(legendtitle, "C")
-        leg.SetBorderSize(0)
-        leg.SetFillColor(0)
-        leg.SetFillStyle(0)
-        leg.SetTextFont(42)
-        leg.SetTextSize(0.035)
 
-	return leg
 
 
 def addToLegend(leg, hist, match):
@@ -433,6 +559,70 @@ def PlotRatio(h1, h2, labels1, labels2):
         hRatio.Draw("ep")
 	print "Theoretical ratio: ", xsecRatio(float(du1.replace("p",".")), float(LU1), float(LU2)), 1.00/xsecRatio(float(du1.replace("p",".")), float(LU1), float(LU2))
         c.Print("Ratio%s_%svs%s.pdf" %(du1, LU1, LU2))
+
+def OverlayResonances(obj, DATASET, legpos, xrange):
+	uf = []
+	for datafile in DATASET:
+		uf.append(ROOT.TFile(datafile, "READ"))
+
+	canvas = ROOT.TCanvas()
+	#canvas.SetLogy()
+	uh = []
+
+	for openfile in uf:
+		uh.append(openfile.Get(obj))
+		#uh1 = uf1.Get(obj)
+
+	xtitle = r"m_{#gamma#gamma}#scale[1.0]{(GeV)}"
+	ytitle = r"#scale[0.8]{weighted events}"
+
+	xmin, xmax = xrange
+	uh[0].GetYaxis().SetTitle(ytitle)
+	uh[0].GetYaxis().SetTitleOffset(1.0)
+	uh[0].GetXaxis().SetTitle(xtitle)
+	#uh[0].GetYaxis().SetRangeUser(10**-5, max(eventsmaxlist))
+	uh[0].GetXaxis().SetRangeUser(xmin, xmax)
+
+	legEntry = []
+	xpos1, ypos1, xpos2, ypos2 = legpos
+	leg = TLegend(xpos1, ypos1, xpos2, ypos2)
+	leg.SetBorderSize(0)
+	leg.SetFillColor(0)
+	leg.SetFillStyle(0)
+	leg.SetTextFont(42)
+	leg.SetTextSize(0.035)
+
+	i = 0
+
+	for hist in uh:
+		hist.SetLineColor(i+1)
+		if i == 9:
+			hist.SetLineColor(46)
+			#hist.SetLineStyle(9)
+			#hist.SetFillColor(48)
+		hist.Draw("hist, same")
+		if "RSG" in DATASET[i]:
+			pattern = "OUTRSGravitonToGammaGamma_kMpl([^(]*)_M_([^(]*).root"
+		if "GluGlu" in DATASET[i]:
+			pattern = "OUTGluGluSpin0ToGammaGamma_W_([^(]*)_M_([^(]*).root"
+		match = re.findall(pattern, DATASET[i])
+		W, M = match[0]
+		if "RSG" in DATASET[i]:
+			label = "RSG_kMpl-%s_M-%s" %(W, M)
+		if "GluGlu" in DATASET[i]:
+			label = "HeavyHiggs_W-%s_M-%s" %(W, M)
+
+		Plot_outFileName = "%s.pdf" %(label)
+		print label
+		leg.AddEntry(hist, "%s" %(label), "l")
+		i = i + 1
+
+	leg.Draw()
+	set_CMS_lumi(canvas, 4, 11, "1")
+	canvas.Update()
+	canvas.Draw()
+	canvas.Print(Plot_outFileName)
+
 
 def OverlayResonances(obj, DATASET, legpos, xrange):
 	uf = []
