@@ -11,6 +11,7 @@ parser.add_argument("-r", "--run", action="store_true")
 parser.add_argument("-v", "--verbose", help="print evertything", action="store_true")
 parser.add_argument("-p", "--parse", action="store_true")
 parser.add_argument("-a", "--average", action="store_true")
+parser.add_argument("-f", "--format", action="store_true")
 args = parser.parse_args()
 
 
@@ -49,9 +50,9 @@ for line in lines:
 		os.system(tarcmd)  
 	if args.delete:
 		os.system("rm -rf %s*" %(dataset))	
-	if args.verbose:	
-		print cmd
-		print tarcmd
+#	if args.verbose:	
+#		print cmd
+#		print tarcmd
 
 if args.parse:
 	print "Parsing Files"
@@ -73,8 +74,9 @@ if args.average:
 	print "Calculating Average Cross-sections from parsed log files"
 	#createDsetXsecDictiontary("InfoXsecPb.txt")
 	for dirdset in os.listdir('.'):
-		if "Grav" in dirdset and "tar.gz" not in dirdset:
-			print dirdset
+		if ("Grav" in dirdset or "GluGlu" in dirdset) and "tar.gz" not in dirdset:
+			if args.verbose:
+				print dirdset
 			os.chdir(dirdset)
 			Ntotal, xsws, dws = 0., 0., 0.
 			for logfile in os.listdir('.'):	
@@ -89,10 +91,18 @@ if args.average:
 					nevts = match2
 					xsec_weightedSum  = float(xsec)*float(nevts)
 					delta_weightedSum = float(delta)*float(nevts)
-					print xsec, delta, nevts  
+					if args.verbose:
+						print xsec, delta, nevts  
 					Ntotal = Ntotal + float(nevts)
 					xsws = xsws + xsec_weightedSum 
-					dws  = dws  + delta_weightedSum 
-			print "Ntotal: ", Ntotal, ";Average xsec +- deltaxsec:", format(xsws/Ntotal, "10.3e"), format(dws/Ntotal, "10.3e")	
+					dws  = dws  + delta_weightedSum
+			xsec_ave = format(xsws/Ntotal, "10.3e")
+			delt_ave = format(dws/Ntotal, "10.3e")	
+			if args.verbose:
+				print "Ntotal: ", Ntotal, ";Average xsec +- deltaxsec:", xsec_ave, delt_ave 
+		   	hardcode_txt = 'if(sample.Contains("%s_pythia8")) xsec = %s;' %(dirdset, xsec_ave)
+			if "ADD" in dirdset:
+				 hardcode_txt = 'if(sample.Contains("%s-pythia8")) xsec = %s;' %(dirdset, xsec_ave)
+			print hardcode_txt	
 			os.chdir("..")
 
