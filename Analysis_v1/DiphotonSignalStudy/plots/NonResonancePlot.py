@@ -10,68 +10,77 @@ sw = ROOT.TStopwatch()
 sw.Start()
 gStyle.SetOptStat(0)
 
+
+# To suppress canvas from popping up. Speeds up plots production.
+#gROOT.SetBatch()
+
+doSM 	   = True
+
+
+# ADD
+doADD      = True
+NI1_13     = True
+
+# Variables to Plot
+kinematicsON = True
+genON        = False
+angularON    = False
+
 doSMstitch = False
 doADDstitch= False
-doADD      = False 
-doHH       = True
-doRSG 	   = True
 
-HISTS_TO_OVERLAY, labelList = [], []
-TempHistsList, templabelList = [None]*4, [None]*4
 
-def PlotSets(DATASET_LIST, obj):
-    i = 1
-    for dset in DATASET_LIST:
-        hist, label = Stitch(dset, obj)
-        TempHistsList[i], templabelList[i] = hist, label
-        i = i + 1
-        HISTS_TO_OVERLAY.append(hist)
-        labelList.append(label)
-    # Calculate Sensitivity
-    #CalcSensitivity("gendiphotonMinv", TempHistsList, 137, templabelList)
-    # Plot Histograms (Overlay)
-    OverlayHists(obj, TempHistsList, templabelList)
+obj = []
+if kinematicsON:
+        #obj.append("diphotonMinv")
+        obj.append("photon1Pt")
+        # obj.append("photon2Pt")
+        # obj.append("photon1Eta")
+        # obj.append("photon2Eta")
+        # obj.append("photon1Phi")
+        # obj.append("photon2Phi")
+if angularON:
+        obj.append("chidiphoton")
+        obj.append("diphotoncosthetastar")
+if genON:
+        obj.append("gendiphotonMinv")
+        obj.append("genphoton1Pt")
+        obj.append("genphoton2Pt")
+        obj.append("genphoton1Eta")
+        obj.append("genphoton2Eta")
+        obj.append("genphoton1Phi")
+        obj.append("genphoton2Phi")
+        if angularON:
+                obj.append("genchidiphoton")
+                obj.append("gendiphotoncosthetastar")
 
-if doSMstitch:
-    DATASETSM = []
-    DATASETSM.append("../mkClassTemplate/OUTSM_pT70_M500_1000.root")
-    DATASETSM.append("../mkClassTemplate/OUTSM_pT70_M1000_2000.root")
-    #DATASETSM.append("../mkClassTemplate/OUTSM_pT70_M2000_4000.root")
-    #DATASETSM.append("../mkClassTemplate/OUTSM_pT70_M4000.root")
+if doSM:
+        DATASETSM = []
+        # DATASETSM.append("../NonResonanceTemplates/OUTGGJets_M_60To200_Pt_50.root")
+        # DATASETSM.append("../NonResonanceTemplates/OUTGGJets_M_200To500_Pt_50.root")
+        DATASETSM.append("../NonResonanceTemplates/OUTGGJets_M_500To1000_Pt_50.root")
+        DATASETSM.append("../NonResonanceTemplates/OUTGGJets_M_1000To2000_Pt_50.root")
+        DATASETSM.append("../NonResonanceTemplates/OUTGGJets_M_2000To4000_Pt_50.root")
+        DATASETSM.append("../NonResonanceTemplates/OUTGGJets_M_4000To6000_Pt_50.root")
+        DATASETSM.append("../NonResonanceTemplates/OUTGGJets_M_6000To8000_Pt_50.root")
+        varhistsm = [Stitch(DATASETSM, var) for var in obj]
+if doADD:
+        if NI1_13:
+            DATASETS = []
+            DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_NegInt_1_LambdaT_13000_M_1000To2000.root")
+            DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_NegInt_1_LambdaT_13000_M_2000To4000.root")
+            DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_NegInt_1_LambdaT_13000_M_4000To13000.root")
+            DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_NegInt_1_LambdaT_13000_M_500To1000.root")
+            varhist = [Stitch(DATASETS, var) for var in obj]
+            #print len(varhist)
 
-    histSM, labelSM = Stitch(DATASETSM, "gendiphotonMinv")
-    HISTS_TO_OVERLAY.append(histSM)
-    labelList.append(labelSM)
-    TempHistsList[0], templabelList[0] = histSM, labelSM
-    print type(histSM)
+for var, sm, sig in zip(obj, varhistsm, varhist):
+    #print var, sm[1], sig[1]
+    hstack = []
+    hstack.append(sm[0])
+    hstack.append(sig[0])
+    labels = []
+    labels.append(sm[1])
+    labels.append(sig[1])
 
-if doADDstitch:
-    DATASET_A, DATASET_B, DATASET_C = [], [], []
-    # DATASET_A.append("../MCIisEBEB/OUTUnp_spin2_du1p1_LU2000_pT70_M500_1000.root")
-    # DATASET_A.append("../MCIisEBEB/OUTUnp_spin2_du1p1_LU2000_pT70_M1000_2000.root")
-    # DATASET_A.append("../MCIisEBEB/OUTUnp_spin2_du1p1_LU2000_pT70_M2000.root")
-    DSETLIST = [DATASET_A, DATASET_B, DATASET_C]
-    PlotSets(DSETLIST, "gendiphotonMinv")
-
-obj = "gendiphotonMinv"
-
-if doADD: 
-	histADD, labelADD = createHist("gendiphotonMinv", "../mkClassTemplate/OUTADDGravToGG_NegInt_0_LambdaT_10000_M_2000To4000.root" )
-	HISTS_TO_OVERLAY.append(histADD)
-	labelList.append(labelADD)
-
-if doHH:
-	histHH, labelHH = createHist(obj, "../mkClassTemplate/OUTGluGluSpin0ToGammaGamma_W_0p014_M_750.root")
-	HISTS_TO_OVERLAY.append(histHH)
-	labelList.append(labelHH)
-
-if doRSG:
-	histRSG, labelRSG = createHist(obj, "../mkClassTemplate/OUTRSGravitonToGammaGamma_kMpl001_M_750.root")
-	HISTS_TO_OVERLAY.append(histRSG)
-	labelList.append(labelRSG)
-
-OverlayHists("gendiphotonMinv", HISTS_TO_OVERLAY, labelList)
-
-#OverlayHists("gendiphotonMinv", HISTS_TO_OVERLAY, labelList)
-#OUTADDGravToGG_NegInt_0_LambdaT_10000_M_2000To4000.root
-#CalcSensitivity("gendiphotonMinv", HISTS_TO_OVERLAY, 137, labelList)
+    OverlayHists(var, hstack, labels)

@@ -163,8 +163,8 @@ def PlotResonance(obj, sample, color=None, outputdir=None, Background=None, lumi
 
 	#legpos = .55, 0.78, .80, .88
 	legend = makeLegend(legpos, "#bf{Legend:} %s"  %(modeltag))
-	h = hist.Clone("shaperhist")	
-	
+	h = hist.Clone("shaperhist")
+
 	# Error Markers
 	hist.SetMarkerSize(0)
 	hist.SetFillColor(kBlack)
@@ -174,13 +174,13 @@ def PlotResonance(obj, sample, color=None, outputdir=None, Background=None, lumi
 		h.SetLineColor(1)
 	else:
 		h.SetLineColor(color)
-	
-	h.SetFillStyle(3244)	
+
+	h.SetFillStyle(3244)
 	h.SetFillColor(kOrange-3)
-	
+
 	# If Standard Model/Background given, reconfigure canvas to overlay S+B.
 	if Background is not None:
-		histSM, labelSM = Background	
+		histSM, labelSM = Background
 		histSM = CreateSMsty(histSM)
 		ymax = max(histSM.GetMaximum(), hist.GetMaximum())
 		ymax = ymax + ymax*(0.3)
@@ -190,18 +190,18 @@ def PlotResonance(obj, sample, color=None, outputdir=None, Background=None, lumi
 		histSM.GetYaxis().SetTitle(ytitle)
 		hist.GetYaxis().SetTitleOffset(1.0)
 		histSM.Draw("hist, same")
-		h.Draw("hist, same") #Redraw Shape 
-		hist.Draw("same, E2") #Keep same option, Draw Error	
-		#histSM.Draw("hist, same") #Redraw SM 
+		h.Draw("hist, same") #Redraw Shape
+		hist.Draw("same, E2") #Keep same option, Draw Error
+		#histSM.Draw("hist, same") #Redraw SM
 		legend.AddEntry(histSM, "%s" %(labelSM), "f")
-		Plot_outFileName = "SM_vs_"+ Plot_outFileName 
+		Plot_outFileName = "SM_vs_"+ Plot_outFileName
 	else:
 		h.GetYaxis().SetTitle(ytitle)
 		h.GetYaxis().SetTitleOffset(1.0)
 		h.GetXaxis().SetTitle(xtitle)
 		h.GetXaxis().SetRangeUser(xmin, xmax)
-		h.Draw("hist, same") #Redraw Shape 
-		hist.Draw("same, E2") # Draw Error	
+		h.Draw("hist, same") #Redraw Shape
+		hist.Draw("same, E2") # Draw Error
 	legend.AddEntry(h, "%s" %(leglabel), "f")
 	legend.Draw()
 	set_CMS_lumi(canvas, 4, 0, intlumi)
@@ -239,6 +239,13 @@ def Stitch(toStitchList, obj):
 			#labelList.append(match[0])
 			PH, spin, du, LU, pT = match[0]
 			label = PH, spin, du, LU, pT
+		if "ADD" in data:
+			pattern = "OUT([^(]*)GravToGG_NegInt_([^(]*)_LambdaT_([^(]*)_M"
+			match = re.findall(pattern, data)
+			#labelList.append(match[0])
+			#PH, NegInt, LT = match[0]
+			label = match[0]
+
 		# Open ROOT files
         	openFileList.append(ROOT.TFile(data, "READ"))
     		labelList.append(label)
@@ -261,19 +268,18 @@ def Stitch(toStitchList, obj):
     hist.SetDirectory(0)
     return hist, label
 
-##### Unedited for Diphoton Studies
+# Currently Editing
+#obj, sample, color=None, outputdir=None, Background=None, lumi=None
 def OverlayHists(obj, histlist, labelList):
+	 # print labelList, histList
   	 canvas = ROOT.TCanvas()
-	 canvas, xtitle, ytitle, xmin, xmax = LabelMaker(obj, canvas)
-	 xpos1, ypos1, xpos2, ypos2 = .55, 0.58, .80, .88
-	 if "costhetastar" in obj:
-			 xpos1, ypos1, xpos2, ypos2 = .30, 0.50, .65, .70
-	 leg = TLegend(xpos1, ypos1, xpos2, ypos2)
-     	 colorlist = [kBlue, kOrange, kViolet+3, kRed,
-	 			  kMagenta, kGreen, kViolet, kSpring,
-				  kPink, kAzure, kOrange+8, kGreen+8,
-				  kRed+8, kViolet+8, kMagenta+5]
-       	 labels, histClones, iset, icolor, i = [], [], 0, 0, 0
+	 canvas, xtitle, ytitle, xmin, xmax, legpos = LabelMaker(obj, canvas)
+ 	 leg = TLegend(legpos)
+      	 colorlist = [kBlue, kOrange, kViolet+3, kRed,
+ 	 	      kMagenta, kGreen, kViolet, kSpring,
+ 		      kPink, kAzure, kOrange+8, kGreen+8,
+ 		      kRed+8, kViolet+8, kMagenta+5]
+     	 labels, histClones, iset, icolor, i = [], [], 0, 0, 0
 	 while i < len(histlist):
 		 histClone = histlist[i].Clone("hist%s" %(str(i)))
 		 histClones.append(histClone)
@@ -281,42 +287,38 @@ def OverlayHists(obj, histlist, labelList):
 	 i = 0
 	 eventsmaxlist = []
 	 for histclone in histClones:
-		label = labelList[i][0]
+		label = labelList[i]
+		print label
          	eventsmaxlist.append(histclone.GetMaximum())
-      		if "SM" in label:
+      		if "SM" in label or "GGJets" in label:
 	     		histSM = histclone
 	      		histSM.SetFillStyle(3144)
 	      		histSM.SetFillColor(7+i)
 	      		histSM.Scale(intlumi)
 		        leg.AddEntry(histSM, "%s" %(r"SM M_{gg} > 500 GeV"), "f")
 	     		histSM.Draw("hist same")
+			Plot_outFileName = "SM"	
 		else:
-	      		histclone.SetLineColor(colorlist[icolor])
-	     		#histclone.Scale(intlumi)
+			histclone.SetLineColor(kRed)
+	      		#histclone.SetLineColor(colorlist[icolor])
+	     		histclone.Scale(intlumi)
 	      		histclone.Draw(drawstyle)
 			if "ADD" in label:
 				PH, NegInt, LT = label
-				print label
-				leglabel = r"#Lambda_{T}=%s, NegInt=%s, %s" %(10000, "0", "ADD")
+				leglabel = r"#Lambda_{T}=%s, NegInt=%s, ADD" %(LT, NegInt)
+				Plot_outFileNAme = "vs_ADD_NegInt%s_LT%s" %(LT, NegInt)
 			if "Unp" in label:
 				PH, spin, du, LU, pT = label
 	      			leglabel = r"#Lambda_{U}=%s, d_{u}=%s, spin-%s" %(LU, du, spin)
-			else:
-				leglabel = label
-   			leg.AddEntry(histclone, "%s" %(leglabel), "l")
+	 			Plot_outFileName = "vs_Unparticles_spin%s_du%s.pdf" %(spin, du)
+   			#leg.AddEntry(histclone, "%s" %(leglabel), "l")
      		i = i+1
    	        icolor = icolor + 1
 
-	 Plot_outFileName = "Sample.pdf"
-
-	 #if "ADD" in PH:
-#		Plot_outFileName = "ADD_NegInt%s_LT%s.pdf" %(NegInt, LT)
-#	 else:
-	 	#Plot_outFileName = "Unparticles_spin%s_du%s.pdf" %(spin, du)
 
 	 print eventsmaxlist
 	 #legendtitle = "#bf{Renormalization Scale:} %s (%s)" %(LU, "isEBEB")
-	 legendtitle = "#bf{Sensitivity Studies} (EB-EB)"
+	 legendtitle = "#bf{Sensitivity Studies}"
 	 leg.SetHeader(legendtitle, "C")
 	 leg.SetBorderSize(0)
 	 leg.SetFillColor(0)
@@ -335,8 +337,71 @@ def OverlayHists(obj, histlist, labelList):
 	 set_CMS_lumi(canvas, 4, 11, intlumi)
 	 canvas.Update()
 	 canvas.Draw()
-	 canvas.Print(Plot_outFileName)
+	 canvas.Print(Plot_outFileName+".pdf")
 
+# Unedited
+def PlotContinuous(obj, Background=None, Signal=None, color=None, outputdir=None, lumi=None):
+  	 canvas = ROOT.TCanvas()
+	 canvas, xtitle, ytitle, xmin, xmax, legpos = LabelMaker(obj, canvas)
+	 leg = TLegend(legpos)
+     	 colorlist = [kBlue, kOrange, kViolet+3, kRed,
+	 	      kMagenta, kGreen, kViolet, kSpring,
+		      kPink, kAzure, kOrange+8, kGreen+8,
+		      kRed+8, kViolet+8, kMagenta+5]
+
+
+	 # Checking if both Background and Signal Histograms given
+	 if Background is not None:
+		print "Overlaying Background and Signal"
+		# Create Standard Model Background
+		histSM, labelSM = Background
+		histSM = CreateSMsty(histSM)
+		histSM.GetXaxis().SetTitle(xtitle)
+		histSM.GetXaxis().SetRangeUser(xmin, xmax)
+		histSM.GetYaxis().SetTitle(ytitle)
+		histSM.Draw("hist, same")
+		Plot_outName = "SM"
+		if Signal is not None:
+			ymax = max(histSM.GetMaximum(), hist.GetMaximum())
+			ymax = ymax + ymax*(0.3)
+			histSM.SetMaximum(ymax)
+			# Create Signal
+			hist.GetYaxis().SetTitleOffset(1.0)
+			# Overlay Background and Signal
+			h.Draw("hist, same") #Redraw Shape
+			hist.Draw("same, E2") #Keep same option, Draw Error
+			## Create Plot_outFileName here
+			Plot_outName = Plot_outName = "_vs_Signal"
+			#legend.AddEntry(histSM, "%s" %(labelSM), "f")
+
+	 elif Background is None:
+		print "No Background given"
+		if Signal is not None:
+			print "Plotting Signal Only"
+			h.GetYaxis().SetTitle(ytitle)
+			h.GetYaxis().SetTitleOffset(1.0)
+			h.GetXaxis().SetTitle(xtitle)
+			h.GetXaxis().SetRangeUser(xmin, xmax)
+			h.Draw("hist, same") #Redraw Shape
+			hist.Draw("same, E2") # Draw Error
+			legend.AddEntry(h, "%s" %(leglabel), "f")
+			legend.Draw()
+
+     	 canvas.Draw()
+
+#         canvas.Update()
+#         canvas.Draw()
+#         if outputdir is None:
+#                canvas.SaveAs(Plot_outFileName)
+#         else:
+#         	# Rename outputdir with parameters
+#         	if not os.path.exists(outputdir):
+#                	os.mkdir(outputdir)
+#                os.chdir(outputdir)
+#                canvas.SaveAs(Plot_outFileName)
+#                os.chdir("..")
+#	"""
+##### Unedited for Diphoton Studies
 def OverlayDatasets(obj, DATASETS):
       uf = []
       for datafile in DATASETS:
@@ -478,8 +543,6 @@ def createCanvasPads():
 
     return c, pad1, pad2
 
-
-
 def createSignalOnly(obj, sample1, sample2):
         file1 = ROOT.TFile(sample1, "READ")
         file2 = ROOT.TFile(sample2, "READ")
@@ -506,9 +569,6 @@ def createSignalOnly(obj, sample1, sample2):
         #AddDirectory(kFALSE)
         #print "hsigonly type", type(hsigonly), type(hdata), type(hsigonly)
 	return h3, match[0]
-
-
-
 
 def addToLegend(leg, hist, match):
         #LU, du, spin, massmin = match
