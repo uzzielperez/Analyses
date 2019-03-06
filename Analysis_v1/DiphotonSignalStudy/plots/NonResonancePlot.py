@@ -87,18 +87,8 @@ if doADD:
 	    signal.append(vhist2)
 
 
-#for var, sm, sig in zip(obj, varhistsm, signal[0]):
-#	# New stack for each variable
-#	hstack, labels = [], []
-#	hstack.append(sm[0])
-#	labels.append(sm[1])
-#	hstack.append(sig[0])
-#	labels.append(sig[1])
-#	
-#	OverlayHists(var, hstack, labels, tag="NI13orig", lumi=137)
-#print signal[2][1]
 print obj
-#print signal[0][1][1]
+
 ipts, ivar = 0, 0 #signal[modelptindex][varindex][hist(0)/label(1)]
 for var, sm in zip(obj, varhistsm):
 	# New stack for each variable
@@ -111,9 +101,13 @@ for var, sm in zip(obj, varhistsm):
 		labels.append(sig[ivar][1])
 	#print labels	
 	ivar = ivar + 1  
-	OverlayHists(var, hstack, labels, tag="NI13orig", lumi=137)
-
-
+		
+	# Plots 
+	#OverlayHists(var, hstack, labels, tag="NI13orig", lumi=137)
+	
+	# Sensitivity Calculation (Only useful for Minv)
+	if "Minv" in var:
+		CalcSensitivityADD(var, hstack, labels, lumi=137)
 
 # Original
 """

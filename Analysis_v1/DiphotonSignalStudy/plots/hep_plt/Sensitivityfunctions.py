@@ -49,8 +49,74 @@ def GetIntegralfromRange(xmin, xmax, hist):
     integral = hist.Integral(bmin, bmax)
     return integral
 
-def CalcSensitivity(obj, DATASET, intlumi, labelList):
+def CalcSensitivityADD(obj, DATASET, labels, lumi=None):
+	f = open("ADDsensitivity_log.csv", "w+")
+	# DATASETS are already histogram objects
+	histClones, Mcuts = [], []
+	for dset, label in zip(DATASET, labels):
+		if "SM" in label or "GGJets" in label:
+			taglabel = label
+			Mcuts.append('500')
+		else:
+			PH, NegInt, LT, mgg = label 
+			taglabel = taglabel + "mgg%s" %(mgg) 		
+			Mcuts.append(mgg)
+		histClone = dset.Clone("hist_%s" %(taglabel))
+		histClones.append(histClone)
+	#print Mcuts
+	#print len(Mcuts), len(histClones)
+
+	b, splusb = [], []
+	for histclone, label in zip(histClones, labels):
+		if "GGJets" in label:
+			histSM = histclone
+			if lumi is not None:
+				histSM.Scale(lumi)
+			for mcut in Mcuts:
+				bkg = GetIntegralfromRange(int(mcut), 13000, histSM)
+				b.append(bkg)
+			print b
+		if "ADD" in label:
+			if lumi is not None:
+				histclone.Scale(lumi)
+			for mcut in Mcuts:
+				sb = GetIntegralfromRange(int(mcut), 13000, histclone) 
+				splusb.append(sb)
+			
+	for B, SplusB in zip(b, splusb):
+		print B, SplusB
+
+#	i = 0
+#	header = "Label, intlumi, B, S+B, S, 95CLsUpperLim, Sig95CLsUpperLim \n"
+#	print header[:-1]
+#	f.write(header)
+#	for histclone, mcuts in zip(histClones, mcuts):
+#		if "SM" in clabel or "GGJets" in clabel:
+#			histSM = histclone
+#			histSM.Scale(intlumi)
+#			b = GetIntegralfromRange(2000, 13000, histSM)
+#			#print "b = ", b
+#			#f.write("B = %s" %(str(b)))
+#		else:
+#			
+#			PH, spin, du, LU, pT = labelList[i][0]
+#			histclone.Scale(intlumi)
+#			splusb = GetIntegralfromRange(2000, 13000, histclone)
+#			n_obs = int(b)
+#			tail = 0.05/2.0
+#			s = splusb - b
+#			CLs95upperlim = ROOT.MathMore.chisquared_quantile(1-tail, 2*(n_obs+1))/2
+#	 		SigCLs95upperlim = CLs95upperlim - n_obs
+#			yields_info = "%s, %s, %s, %s, %s, %s, %s, %s, %s \n" %(str(intlumi), str(spin), str(du), str(LU), str(b), str(splusb), str(s), str(CLs95upperlim), str(SigCLs95upperlim))
+#			print yields_info[:-1]
+#			f.write(yields_info)
+#			#print intlumi,  "fb-1; LU, du= ", LU, du, ";b: ", b, "; s:", s, "; s+b: ", splusb, "95CLsupperlim(S+B and S):", CLs95upperlim, SCLs95upperlim #"; P(b, s+b): ", TMath.Poisson(b, splusb)
+#            	i = i + 1
+#	f.close()
+#
+def CalcSensitivityUnp(obj, DATASET, intlumi, labelList):
 	if labelList is None:
+		# The inputs are root files instead of histograms 
         	uf = []
         	for datafile in DATASET:
            		 uf.append(ROOT.TFile(datafile, "READ"))
@@ -65,7 +131,7 @@ def CalcSensitivity(obj, DATASET, intlumi, labelList):
          	sig = []
          	j = 0
          	for histclone in histClones:
-                	if "SM" in DATASET[j]:
+                	if "SM" in DATASET[j] or "GGJets" in DATASET[j]: 
           	      		histSM = histclone
           	      		histSM.Scale(intlumi)
           	      		b = histSM.Integral()
@@ -92,23 +158,38 @@ def CalcSensitivity(obj, DATASET, intlumi, labelList):
 		i, histClones, clonelabels = 0, [], []
 		while i < len(DATASET):
 			label = labelList[i][0]
-			if "SM" in label:
+			if "SM" in label or "GGJets" in label:
 				taglabel = "SM"
 			else:
-				PH, spin, du, LU, pT = label
-				taglabel = "spin%s_du%s_LU%s" %(spin, du, LU)
-				#leglabel = r"#Lambda_{U}=%s, d_{u}=%s, spin-%s" %(LU, du, spin)
-				#('Unp', '0', '1p9', '2000', '70')
+				if "Unp" in label:
+					PH, spin, du, LU, pT = label
+					taglabel = "spin%s_du%s_LU%s" %(spin, du, LU)
+					#leglabel = r"#Lambda_{U}=%s, d_{u}=%s, spin-%s" %(LU, du, spin)
+					#('Unp', '0', '1p9', '2000', '70')
+				if "ADD" in label:
+					minv = False
+					if len(label) ==3:
+						PH, NegInt, LT = label
+					else:
+						PH, NegInt, LT, mgg = label
+						minv = True
+					taglabel = PH + NegInt + "_" + LT
+					if minv:
+						taglabel = taglabel + "mgg%s" %(mgg)	 
+					
 			histClone = DATASET[i].Clone("hist_%s" %(taglabel))
 			histClones.append(histClone)
 			clonelabels.append(taglabel)
 			i = i + 1
 		i = 0
-		header = "intlumi, spin, du, LambdaU, B, S+B, S, 95CLsUpperLim, Sig95CLsUpperLim \n"
+		if "ADD" in PH:
+			header = "Label, intlumi, B, S+B, S, 95CLsUpperLim, Sig95CLsUpperLim \n"
+		if "Unp" in PH: 
+			header = "intlumi, spin, du, LambdaU, B, S+B, S, 95CLsUpperLim, Sig95CLsUpperLim \n"
 		print header[:-1]
 		f.write(header)
 		for histclone in histClones:
-			if "SM" in clonelabels[i]:
+			if "SM" in clonelabels[i] or "GGJets" in clonelabels[i]:
 				histSM = histclone
 				histSM.Scale(intlumi)
 				b = GetIntegralfromRange(2000, 13000, histSM)
@@ -129,3 +210,5 @@ def CalcSensitivity(obj, DATASET, intlumi, labelList):
 				#print intlumi,  "fb-1; LU, du= ", LU, du, ";b: ", b, "; s:", s, "; s+b: ", splusb, "95CLsupperlim(S+B and S):", CLs95upperlim, SCLs95upperlim #"; P(b, s+b): ", TMath.Poisson(b, splusb)
             		i = i + 1
 		f.close()
+
+
