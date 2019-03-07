@@ -416,21 +416,8 @@ def PlotContinuous(obj, Background=None, Signal=None, color=None, outputdir=None
 			hist.Draw("same, E2") # Draw Error
 			legend.AddEntry(h, "%s" %(leglabel), "f")
 			legend.Draw()
-
      	 canvas.Draw()
 
-#         canvas.Update()
-#         canvas.Draw()
-#         if outputdir is None:
-#                canvas.SaveAs(Plot_outFileName)
-#         else:
-#         	# Rename outputdir with parameters
-#         	if not os.path.exists(outputdir):
-#                	os.mkdir(outputdir)
-#                os.chdir(outputdir)
-#                canvas.SaveAs(Plot_outFileName)
-#                os.chdir("..")
-#	"""
 ##### Unedited for Diphoton Studies
 def OverlayDatasets(obj, DATASETS):
       uf = []

@@ -88,7 +88,7 @@ if doADD:
 
 
 print obj
-
+mcuts = ['1000', '2000', '2500', '3000', '3500']
 ipts, ivar = 0, 0 #signal[modelptindex][varindex][hist(0)/label(1)]
 for var, sm in zip(obj, varhistsm):
 	# New stack for each variable
@@ -107,8 +107,8 @@ for var, sm in zip(obj, varhistsm):
 	
 	# Sensitivity Calculation (Only useful for Minv)
 	if "Minv" in var:
-		CalcSensitivityADD(var, hstack, labels, lumi=137)
-
+		#CalcSensitivityADD(var, hstack, labels, lumi=137)
+		CalcSensitivityADD(var, hstack, labels, lumi=137, McutList=mcuts)
 # Original
 """
 for var, sm, sig in zip(obj, varhistsm, varhist):

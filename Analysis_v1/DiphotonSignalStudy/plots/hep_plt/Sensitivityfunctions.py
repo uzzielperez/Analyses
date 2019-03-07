@@ -49,24 +49,31 @@ def GetIntegralfromRange(xmin, xmax, hist):
     integral = hist.Integral(bmin, bmax)
     return integral
 
-def CalcSensitivityADD(obj, DATASET, labels, lumi=None):
+def Calc95CLuplim(n_obs, s):
+	n_obs = int(n_obs)
+	tail = 0.05/2.0
+	upperlim95CL = ROOT.MathMore.chisquared_quantile(1-tail, 2*(n_obs+1))/2
+	#SigCLs95upperlim = CLs95upperlim - n_obs
+	return round(upperlim95CL,2)
+
+def CalcSensitivityADD(obj, DATASET, labels, lumi=None, McutList=None):
 	f = open("ADDsensitivity_log.csv", "w+")
 	# DATASETS are already histogram objects
 	histClones, Mcuts = [], []
 	for dset, label in zip(DATASET, labels):
 		if "SM" in label or "GGJets" in label:
 			taglabel = label
-			Mcuts.append('500')
+			#Mcuts.append('500')
 		else:
 			PH, NegInt, LT, mgg = label 
 			taglabel = taglabel + "mgg%s" %(mgg) 		
 			Mcuts.append(mgg)
 		histClone = dset.Clone("hist_%s" %(taglabel))
 		histClones.append(histClone)
-	#print Mcuts
-	#print len(Mcuts), len(histClones)
+	b, splusb, modelPt = [], [], []
 
-	b, splusb = [], []
+	if McutList is not None:	
+		Mcuts = McutList	
 	for histclone, label in zip(histClones, labels):
 		if "GGJets" in label:
 			histSM = histclone
@@ -75,45 +82,24 @@ def CalcSensitivityADD(obj, DATASET, labels, lumi=None):
 			for mcut in Mcuts:
 				bkg = GetIntegralfromRange(int(mcut), 13000, histSM)
 				b.append(bkg)
-			print b
+			#print b
 		if "ADD" in label:
 			if lumi is not None:
 				histclone.Scale(lumi)
 			for mcut in Mcuts:
 				sb = GetIntegralfromRange(int(mcut), 13000, histclone) 
 				splusb.append(sb)
-			
-	for B, SplusB in zip(b, splusb):
-		print B, SplusB
+				print label
+				PH, NegInt, LT, mgg = label
+				LT = round(float(LT)/1000, 1) 
+				lbel = "NI%sLT%s" %(NegInt, LT) 
+				modelPt.append(lbel)
+	print "Model Point, mcut, B, S+B, S, S 95CL uplim"
+	for B, SplusB, mcut, mpt in zip(b, splusb, Mcuts, modelPt):
+		S = SplusB - B
+		cl95 = Calc95CLuplim(B,S)  
+		print mpt, mcut, round(B,2), round(SplusB,2), round(S, 2), cl95 
 
-#	i = 0
-#	header = "Label, intlumi, B, S+B, S, 95CLsUpperLim, Sig95CLsUpperLim \n"
-#	print header[:-1]
-#	f.write(header)
-#	for histclone, mcuts in zip(histClones, mcuts):
-#		if "SM" in clabel or "GGJets" in clabel:
-#			histSM = histclone
-#			histSM.Scale(intlumi)
-#			b = GetIntegralfromRange(2000, 13000, histSM)
-#			#print "b = ", b
-#			#f.write("B = %s" %(str(b)))
-#		else:
-#			
-#			PH, spin, du, LU, pT = labelList[i][0]
-#			histclone.Scale(intlumi)
-#			splusb = GetIntegralfromRange(2000, 13000, histclone)
-#			n_obs = int(b)
-#			tail = 0.05/2.0
-#			s = splusb - b
-#			CLs95upperlim = ROOT.MathMore.chisquared_quantile(1-tail, 2*(n_obs+1))/2
-#	 		SigCLs95upperlim = CLs95upperlim - n_obs
-#			yields_info = "%s, %s, %s, %s, %s, %s, %s, %s, %s \n" %(str(intlumi), str(spin), str(du), str(LU), str(b), str(splusb), str(s), str(CLs95upperlim), str(SigCLs95upperlim))
-#			print yields_info[:-1]
-#			f.write(yields_info)
-#			#print intlumi,  "fb-1; LU, du= ", LU, du, ";b: ", b, "; s:", s, "; s+b: ", splusb, "95CLsupperlim(S+B and S):", CLs95upperlim, SCLs95upperlim #"; P(b, s+b): ", TMath.Poisson(b, splusb)
-#            	i = i + 1
-#	f.close()
-#
 def CalcSensitivityUnp(obj, DATASET, intlumi, labelList):
 	if labelList is None:
 		# The inputs are root files instead of histograms 
@@ -210,5 +196,3 @@ def CalcSensitivityUnp(obj, DATASET, intlumi, labelList):
 				#print intlumi,  "fb-1; LU, du= ", LU, du, ";b: ", b, "; s:", s, "; s+b: ", splusb, "95CLsupperlim(S+B and S):", CLs95upperlim, SCLs95upperlim #"; P(b, s+b): ", TMath.Poisson(b, splusb)
             		i = i + 1
 		f.close()
-
-
