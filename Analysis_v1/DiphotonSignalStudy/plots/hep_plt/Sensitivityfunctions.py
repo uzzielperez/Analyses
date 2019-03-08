@@ -56,6 +56,22 @@ def Calc95CLuplim(n_obs, s):
 	#SigCLs95upperlim = CLs95upperlim - n_obs
 	return round(upperlim95CL,2)
 
+def RangeByVar(obj, mcut=None, xMin=None, xMax=None):
+	if "Minv" in obj:
+		xmin, xmax = 500, 13000
+		if mcut is not None:
+			xmin = int(mcut) 
+	if "chidiphoton" in obj:
+		xmin, xmax = 0, 20 
+	if "diphotoncosthetastar" in obj:
+		xmin, xmax = -1, 1
+	# Override presets if given
+	if xMin is not None:
+		xmin = xMin
+	if xMax is not None:
+		xmax = xMax
+	return xmin, xmax 
+
 def CalcSensitivityADD(obj, DATASET, labels, lumi=None, McutList=None):
 	f = open("ADDsensitivity_log.csv", "w+")
 	# DATASETS are already histogram objects
@@ -70,8 +86,8 @@ def CalcSensitivityADD(obj, DATASET, labels, lumi=None, McutList=None):
 			Mcuts.append(mgg)
 		histClone = dset.Clone("hist_%s" %(taglabel))
 		histClones.append(histClone)
-	b, splusb, modelPt = [], [], []
-
+	b, splusb, modelPt, IntRange = [], [], [], []	
+	print Mcuts
 	if McutList is not None:	
 		Mcuts = McutList	
 	for histclone, label in zip(histClones, labels):
@@ -80,21 +96,26 @@ def CalcSensitivityADD(obj, DATASET, labels, lumi=None, McutList=None):
 			if lumi is not None:
 				histSM.Scale(lumi)
 			for mcut in Mcuts:
-				bkg = GetIntegralfromRange(int(mcut), 13000, histSM)
+				xmin, xmax = RangeByVar(obj, mcut)
+				bkg = GetIntegralfromRange(xmin, xmax, histSM)
 				b.append(bkg)
+				IntRange.append("%s-%s" %(str(xmin), str(xmax)))
 			#print b
 		if "ADD" in label:
 			if lumi is not None:
 				histclone.Scale(lumi)
 			for mcut in Mcuts:
-				sb = GetIntegralfromRange(int(mcut), 13000, histclone) 
+				xmin, xmax = RangeByVar(obj, mcut)	
+				sb = GetIntegralfromRange(xmin, xmax, histclone) 
 				splusb.append(sb)
-				print label
+				#print label
 				PH, NegInt, LT, mgg = label
 				LT = round(float(LT)/1000, 1) 
 				lbel = "NI%sLT%s" %(NegInt, LT) 
 				modelPt.append(lbel)
-	print "Model Point, mcut, B, S+B, S, S 95CL uplim"
+				IntRange.append("%s-%s" %(str(xmin), str(xmax)))
+	print "Variable: ", obj 
+	print "Model Point, mcut, B, S+B, S, S 95CL uplim, Signal Region"
 	for B, SplusB, mcut, mpt in zip(b, splusb, Mcuts, modelPt):
 		S = SplusB - B
 		cl95 = Calc95CLuplim(B,S)  
