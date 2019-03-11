@@ -37,11 +37,21 @@ intlumi = 137
 # Draw Options
 DrawAsHi = False
 gStyle.SetOptStat(0)
+	
 
 def labelParser(sample):
+	if "SM" in sample:
+		pattern = "OUT([^(]*)_pT70_"
+		match 	= re.findall(pattern, sample)
+		label = match[0]
+	if "GGJets" in sample:
+		pattern = "OUT([^(]*)_M"
+		match = re.findall(pattern, sample)
+		label = match[0]
+		#labelList.appen
 	if "RSG" in sample:
 		pattern = "OUT([^(]*)ravitonToGammaGamma_kMpl([^(]*)_M_([^(]*).root"
-		match = re.findall(pattern, sample)
+		match = re.fiindall(pattern, sample)
 		#PH, kMpl, M = match[0]
 		label = match[0]
 	if "GluGlu" in sample:
@@ -50,14 +60,29 @@ def labelParser(sample):
 		#PH,W, M  = match[0]
 		label = match[0]
 	if "ADD" in sample:
-		pattern = "OUT([^(]*)GravToGG_NegInt_([^(]*)_LambdaT_([^(]*)_M"
-		match = re.findall(pattern, sample)
-		PH, NegInt, LambdaT = match[0]
+		if "KK" in sample:
+			pattern = "OUT([^(]*)GravToGG_MS_([^(]*)_NED_([^(]*)_KK_([^(]*)_M"      
+			match = re.findall(pattern, sample)
+ 			#PH, LambdaT, NED, KK = match[0]
+			label = match[0]
+			# Add Sherpa label tuple
+			label = ("Sherpa",) + label
+		else:
+			pattern = "OUT([^(]*)GravToGG_NegInt_([^(]*)_LambdaT_([^(]*)_M"
+			match = re.findall(pattern, sample)
+			PH, NegInt, LambdaT = match[0]
+			label = PH, NegInt, LambdaT, '500'
+			if "mgg" in sample:
+				mcut = "mgg_([^(]*).root"
+				mcut = re.findall(mcut, sample)[0]
+				PH, NegInt, LT = match[0]
+				label = PH, NegInt, LT, mcut
 	if "Unp" in sample:
-		pattern = "OUTUnp_spin([^(]*)_du([^(]*)_LU([^(]*)p0_m([^(]*)_pT([^(]*)_M([^(]*).root"
+		pattern = "OUT([^(]*)_spin([^(]*)_du([^(]*)_LU([^(]*)_pT([^(]*)_M"
 		match = re.findall(pattern, sample)
-		spin, du, LU, mCut, pTcut, massmin = match[0]
-		label = "Unp", spin, du, LU, mCut, pTcut, massmin
+		#labelList.append(match[0])
+		PH, spin, du, LU, pT = match[0]
+		label = PH, spin, du, LU, pT
 	return label
 
 
@@ -100,7 +125,7 @@ def LabelMaker(obj, canvas, PeakParams=None):
   	if "chidiphoton" in obj:
       		xtitle = r"#Chi_{#gamma#gamma}"
      		ytitle = r"#scale[1.0]{Nevents}"
-      		xmin, xmax = 1, 20
+      		xmin, xmax = 1, 50
 		legpos = .55, 0.68, .80, .88
   	if "costhetastar" in obj:
       		xtitle = r"cos#theta^{*}"
@@ -228,34 +253,7 @@ def Stitch(toStitchList, obj):
     # Used for stitching non-resonant mass bins
     openFileList, labelList = [], []
     for data in toStitchList:
-		if "SM" in data:
-			pattern = "OUT([^(]*)_pT70_"
-			match = re.findall(pattern, data)
-			label = match[0]
-			#labelList.append(match[0])
-		if "GGJets" in data:
-			pattern = "OUT([^(]*)_M"
-			match = re.findall(pattern, data)
-			label = match[0]
-			#labelList.append(match[0])
-		if "Unp" in data:
-			pattern = "OUT([^(]*)_spin([^(]*)_du([^(]*)_LU([^(]*)_pT([^(]*)_M"
-			match = re.findall(pattern, data)
-			#labelList.append(match[0])
-			PH, spin, du, LU, pT = match[0]
-			label = PH, spin, du, LU, pT
-		if "ADD" in data:
-			pattern = "OUT([^(]*)GravToGG_NegInt_([^(]*)_LambdaT_([^(]*)_M"
-			match = re.findall(pattern, data)
-			PH, NegInt, LT = match[0]
-			label = PH, NegInt, LT, '500'
-			if "mgg" in data:
-				mcut = "mgg_([^(]*).root"
-				mcut = re.findall(mcut, data)[0]
-				#labelList.append(match[0])
-				PH, NegInt, LT = match[0]
-				label = PH, NegInt, LT, mcut
-
+		label = labelParser(data)
 		# Open ROOT files
         	openFileList.append(ROOT.TFile(data, "READ"))
     		labelList.append(label)
@@ -318,16 +316,23 @@ def OverlayHists(obj, histlist, labelList, tag=None, lumi=None):
 				histclone.Scale(intlumi)
 	      		histclone.Draw(drawstyle)
 			if "ADD" in label:
-				PH, NegInt, LT, mgg = label
-				LambdaT = str(round(float(LT)/1000 , 1) )
-				if  NegInt is "1":
-					NI = "Int+"
-				if NegInt is "0":
-					NI = "Int-"
-				minvcut = str(round ( float(mgg)/1000, 1 ))
-				leglabel = r"%s, #Lambda_{T}=%s, M>%s [TeV]" %(NI, LambdaT, minvcut)
-				leg.SetHeader("#bf{ADD Graviton to #gamma#gamma}", "C")
-				outName = outName + "vsADD_NegInt%s_LT%s" %(LT, NegInt)
+				if "Sherpa" in label:	
+					Gen, PH, LambdaT, NED, KK = label
+					LambdaU = str(round (float(LambdaT)/1000, 1))
+					leglabel = r"#Lambda_{U}=%s, KK-%s" %(LambdaU, KK)
+					leg.SetHeader("#bf{ADD Graviton to #gamma#gamma}", "C")
+					outName = outName + "vsADD_LU%s_KK%s" %(LambdaU, KK) 
+				else:
+					PH, NegInt, LT, mgg = label
+					LambdaT = str(round(float(LT)/1000 , 1) )
+					if  NegInt is "1":
+						NI = "Int+"
+					if NegInt is "0":
+						NI = "Int-"
+					minvcut = str(round ( float(mgg)/1000, 1 ))
+					leglabel = r"%s, #Lambda_{T}=%s, M>%s [TeV]" %(NI, LambdaT, minvcut)
+					leg.SetHeader("#bf{ADD Graviton to #gamma#gamma}", "C")
+					outName = outName + "vsADD_NegInt%s_LT%s" %(NegInt, LT)
 				print outName 
 			if "Unp" in label:
 				PH, spin, du, LU, pT = label

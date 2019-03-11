@@ -27,7 +27,7 @@ doADD = True
 # Variables to Plot
 kinematicsON = True
 genON        = False
-angularON    = True
+angularON    = False 
 
 isEBEB       = False
 
@@ -92,9 +92,9 @@ if doADD:
     DATASET_C.append("../NonResonanceTemplates/OUTADDGravToGG_MS_10000_NED_4_KK_1_M_500To1000.root")
     sigC = [Stitch(DATASET_C, var) for var in obj]
 
-    for var, histl in zip(obj, sigC):
-	hist, label = histl
-	print var, label
+    #for var, histl in zip(obj, sigC):
+	#hist, label = histl
+	#print var, label
     signal.append(sigA)
     signal.append(sigB)
     signal.append(sigC)
@@ -106,6 +106,7 @@ for var, sm in zip(obj, varhistsm):
 	hstack.append(sm[0])
 	labels.append(sm[1])
 	for sig in signal:
+		#print sig[ivar][1]
 		hstack.append(sig[ivar][0])
 		labels.append(sig[ivar][1])
 	#print labels
