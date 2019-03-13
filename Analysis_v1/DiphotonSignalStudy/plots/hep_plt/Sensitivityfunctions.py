@@ -56,40 +56,58 @@ def Calc95CLuplim(n_obs, s):
 	#SigCLs95upperlim = CLs95upperlim - n_obs
 	return round(upperlim95CL,2)
 
-def RangeByVar(obj, mcut=None, xMin=None, xMax=None):
+def RangeByVar(obj, mcut=None, xMin=None, xMax=None, chiMin=None, chiMax=None, label=None):
 	if "Minv" in obj:
 		xmin, xmax = 500, 13000
 		if mcut is not None:
 			xmin = int(mcut) 
+		if label is not None and "Sherpa" in label:
+			xmax = xMax
+		if xMin is not None:
+			xmin = xMin
+		if xMax is not None:
+			xmax = xMax
 	if "chidiphoton" in obj:
-		xmin, xmax = 0, 20 
+		xmin, xmax = 0, 20
+		if chiMin is not None:
+			xmin = float(chiMin)
+		if chiMax is not None:
+			xmax = float(chiMax) 
 	if "diphotoncosthetastar" in obj:
 		xmin, xmax = -1, 1
-	# Override presets if given
-	if xMin is not None:
-		xmin = xMin
-	if xMax is not None:
-		xmax = xMax
 	return xmin, xmax 
 
-def CalcSensitivityADD(obj, DATASET, labels, lumi=None, McutList=None):
+def CalcSensitivityADD(obj, DATASET, labels, lumi=None, McutList=None, chiMax=None):
 	f = open("ADDsensitivity_log.csv", "w+")
-	# DATASETS are already histogram objects
+	
 	histClones, Mcuts = [], []
+	
 	for dset, label in zip(DATASET, labels):
 		if "SM" in label or "GGJets" in label:
 			taglabel = label
 			#Mcuts.append('500')
-		else:
-			PH, NegInt, LT, mgg = label 
-			taglabel = taglabel + "mgg%s" %(mgg) 		
-			Mcuts.append(mgg)
+		elif "ADD" in label:
+			if "Sherpa" in label:	
+				Gen, PH, LambdaT, NED, KK = label
+				LambdaU = str(round (float(LambdaT)/1000, 1))
+				taglabel = "ADDSherpaLU%sKK%s" %(LambdaU, KK)
+				Mcuts.append('500')
+			else:
+				PH, NegInt, LT, mgg = label 
+				taglabel = taglabel + "mgg%s" %(mgg) 		
+				Mcuts.append(mgg)
 		histClone = dset.Clone("hist_%s" %(taglabel))
 		histClones.append(histClone)
+
 	b, splusb, modelPt, IntRange = [], [], [], []	
-	print Mcuts
+	
 	if McutList is not None:	
 		Mcuts = McutList	
+		
+	print "Variable: ", obj 
+	print "Model Point, mcut, B, S+B, S, S 95CL uplim, Signal Region"
+	header = "Model Point,mcut,B,S+B,S,S95CL,Signal Region\n"
+	f.write(header)
 	for histclone, label in zip(histClones, labels):
 		if "GGJets" in label:
 			histSM = histclone
@@ -97,29 +115,42 @@ def CalcSensitivityADD(obj, DATASET, labels, lumi=None, McutList=None):
 				histSM.Scale(lumi)
 			for mcut in Mcuts:
 				xmin, xmax = RangeByVar(obj, mcut)
-				bkg = GetIntegralfromRange(xmin, xmax, histSM)
-				b.append(bkg)
+				b = GetIntegralfromRange(xmin, xmax, histSM)
+				#b.append(bkg)
 				IntRange.append("%s-%s" %(str(xmin), str(xmax)))
 			#print b
 		if "ADD" in label:
 			if lumi is not None:
 				histclone.Scale(lumi)
 			for mcut in Mcuts:
+				#print label
 				xmin, xmax = RangeByVar(obj, mcut)	
+				if "Sherpa" in label:	
+					Gen, PH, LU, NED, KK = label	
+							
+					xmin, xmax = RangeByVar(obj, mcut, xMax=int(LU), chiMax=chiMax, label="Sherpa")	
+					b = GetIntegralfromRange(xmin, xmax, histSM) 	
+					LU = round(float(LU)/1000, 1)	
+					lbel = "NED%sLU%sKK%s" %(NED, LU, KK)
+					modelPt.append(lbel)
+					r = "%s-%s" %(str(xmin), str(xmax))
+				else:
+					PH, NegInt, LT, mgg = label
+					LT = round(float(LT)/1000, 1) 
+					lbel = "NI%sLT%s" %(NegInt, LT) 
+					modelPt.append(lbel)
+					r = "%s-%s" %(str(xmin), str(xmax))	
 				sb = GetIntegralfromRange(xmin, xmax, histclone) 
 				splusb.append(sb)
-				#print label
-				PH, NegInt, LT, mgg = label
-				LT = round(float(LT)/1000, 1) 
-				lbel = "NI%sLT%s" %(NegInt, LT) 
-				modelPt.append(lbel)
-				IntRange.append("%s-%s" %(str(xmin), str(xmax)))
-	print "Variable: ", obj 
-	print "Model Point, mcut, B, S+B, S, S 95CL uplim, Signal Region"
-	for B, SplusB, mcut, mpt in zip(b, splusb, Mcuts, modelPt):
-		S = SplusB - B
-		cl95 = Calc95CLuplim(B,S)  
-		print mpt, mcut, round(B,2), round(SplusB,2), round(S, 2), cl95 
+				s = sb - b 
+				cl95 = Calc95CLuplim(b, s)
+				b    = round(b, 1)
+				sb   = round(sb, 1)
+				s    = round(s, 1)
+				cl95 = round(cl95, 1)
+			print lbel, mcut, b, sb, s, cl95, r 
+			yieldsInfo = "%s,%s,%s,%s,%s,%s,%s\n" %(lbel, mcut, b, sb, s, cl95, r) 
+			f.write(yieldsInfo)
 
 def CalcSensitivityUnp(obj, DATASET, intlumi, labelList):
 	if labelList is None:

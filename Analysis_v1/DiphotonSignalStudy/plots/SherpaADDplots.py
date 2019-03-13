@@ -22,12 +22,13 @@ gStyle.SetOptStat(0)
 gROOT.SetBatch()
 
 doSM  = True
-doADD = True
+doADD = False 
+doADDALL = True
 
 # Variables to Plot
 kinematicsON = True
 genON        = False
-angularON    = False 
+angularON    = True
 
 isEBEB       = False
 
@@ -99,6 +100,107 @@ if doADD:
     signal.append(sigB)
     signal.append(sigC)
 
+if doADDALL:
+    signal = []
+    DATASETS = []
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_3000_NED_4_KK_1_M_1000To2000.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_3000_NED_4_KK_1_M_2000To3000.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_3000_NED_4_KK_1_M_200To500.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_3000_NED_4_KK_1_M_500To1000.root")
+    sig = [Stitch(DATASETS, var) for var in obj]
+    signal.append(sig)
+    DATASETS = []
+
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_3500_NED_4_KK_1_M_1000To2000.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_3500_NED_4_KK_1_M_2000To3500.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_3500_NED_4_KK_1_M_200To500.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_3500_NED_4_KK_1_M_500To1000.root")
+    sig = [Stitch(DATASETS, var) for var in obj]
+    signal.append(sig)
+    DATASETS = []
+
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_4000_NED_4_KK_1_M_1000To2000.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_4000_NED_4_KK_1_M_2000To4000.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_4000_NED_4_KK_1_M_200To500.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_4000_NED_4_KK_1_M_500To1000.root")
+    sig = [Stitch(DATASETS, var) for var in obj]
+    signal.append(sig)
+    DATASETS = []
+
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_4500_NED_4_KK_1_M_1000To2000.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_4500_NED_4_KK_1_M_2000To3000.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_4500_NED_4_KK_1_M_200To500.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_4500_NED_4_KK_1_M_3000To4500.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_4500_NED_4_KK_1_M_500To1000.root")
+    sig = [Stitch(DATASETS, var) for var in obj]
+    signal.append(sig)
+    DATASETS = []
+
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_5000_NED_4_KK_1_M_1000To2000.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_5000_NED_4_KK_1_M_2000To3000.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_5000_NED_4_KK_1_M_200To500.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_5000_NED_4_KK_1_M_3000To5000.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_5000_NED_4_KK_1_M_500To1000.root")
+    sig = [Stitch(DATASETS, var) for var in obj]
+    signal.append(sig)
+    DATASETS = []
+
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_5500_NED_4_KK_1_M_1000To2000.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_5500_NED_4_KK_1_M_2000To4000.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_5500_NED_4_KK_1_M_200To500.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_5500_NED_4_KK_1_M_4000To5500.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_5500_NED_4_KK_1_M_500To1000.root")
+    sig = [Stitch(DATASETS, var) for var in obj]
+    signal.append(sig)
+    DATASETS = []
+
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_6000_NED_4_KK_1_M_1000To2000.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_6000_NED_4_KK_1_M_2000To4000.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_6000_NED_4_KK_1_M_200To500.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_6000_NED_4_KK_1_M_4000To6000.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_6000_NED_4_KK_1_M_500To1000.root")
+    sig = [Stitch(DATASETS, var) for var in obj]
+    signal.append(sig)
+    DATASETS = []
+
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_7000_NED_4_KK_1_M_1000To2000.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_7000_NED_4_KK_1_M_2000To4000.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_7000_NED_4_KK_1_M_4000To7000.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_7000_NED_4_KK_1_M_500To1000.root")
+    sig = [Stitch(DATASETS, var) for var in obj]
+    signal.append(sig)
+    DATASETS = []
+
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_8000_NED_4_KK_1_M_1000To2000.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_8000_NED_4_KK_1_M_2000To4000.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_8000_NED_4_KK_1_M_4000To8000.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_8000_NED_4_KK_1_M_500To1000.root")
+    sig = [Stitch(DATASETS, var) for var in obj]
+    signal.append(sig)
+    DATASETS = []
+
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_9000_NED_4_KK_1_M_1000To2000.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_9000_NED_4_KK_1_M_2000To4000.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_9000_NED_4_KK_1_M_4000To9000.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_9000_NED_4_KK_1_M_500To1000.root")
+    sig = [Stitch(DATASETS, var) for var in obj]
+    signal.append(sig)
+    DATASETS = []
+
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_10000_NED_4_KK_1_M_1000To2000.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_10000_NED_4_KK_1_M_2000To4000.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_10000_NED_4_KK_1_M_4000To10000.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_10000_NED_4_KK_1_M_500To1000.root")
+    sig = [Stitch(DATASETS, var) for var in obj]
+    signal.append(sig)
+    DATASETS = []
+
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_11000_NED_4_KK_1_M_1000To2000.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_11000_NED_4_KK_1_M_2000To4000.root")
+    DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_11000_NED_4_KK_1_M_4000To11000.root")
+    sig = [Stitch(DATASETS, var) for var in obj]
+    signal.append(sig)
+
 ipts, ivar = 0, 0 #signal[modelptindex][varindex][hist(0)/label(1)]
 for var, sm in zip(obj, varhistsm):
 	# New stack for each variable
@@ -119,5 +221,6 @@ for var, sm in zip(obj, varhistsm):
     	if args.sensitivity:
 		if "Minv" in var or "chidiphoton" in var or "costhetastar" in var:
 			#CalcSensitivityADD(var, hstack, labels, lumi=137, McutList=mcuts)
-			CalcSensitivityADD(var, hstack, labels, lumi=137)
+			#CalcSensitivityADD(var, hstack, labels, lumi=137)
+			CalcSensitivityADD(var, hstack, labels, lumi=137, McutList=['2000'])
     #PlotSets()

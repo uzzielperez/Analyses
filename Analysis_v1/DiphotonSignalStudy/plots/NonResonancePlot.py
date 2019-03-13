@@ -5,6 +5,13 @@ from ROOT import gBenchmark, gStyle, gROOT, gDirectory
 import re
 from hep_plt.Sensitivityfunctions import CalcSensitivityADD
 from hep_plt.Plotfunctions import *
+import argparse
+
+# Command line options
+parser = argparse.ArgumentParser(description="NonResonance")
+parser.add_argument("-p", "--plot", action="store_true", help="Clean directory and delete copied files")
+parser.add_argument("-s", "--sensitivity", action="store_true", help="Run os.system(cmd) to get CRAB files.")
+args = parser.parse_args()
 
 sw = ROOT.TStopwatch()
 sw.Start()
@@ -18,36 +25,42 @@ doSM 	   = True
 
 # ADD
 doADD         = True
-NI1_13        = True
-NI1_13_m2000  = True
+NI1_13        = False
+
+SM_m2000, NI1_13_m2000   = True, True
 
 # Variables to Plot
 kinematicsON = True
-genON        = True
+genON        = False
 angularON    = True
 
-
+isEBEB       = False
 
 obj = []
 if kinematicsON:
         obj.append("diphotonMinv")
-        obj.append("photon1Pt")
-        obj.append("photon2Pt")
-        obj.append("photon1Eta")
-        obj.append("photon2Eta")
-       	obj.append("photon1Phi")
-        obj.append("photon2Phi")
+#        obj.append("photon1Pt")
+#        obj.append("photon2Pt")
+#        obj.append("photon1Eta")
+#        obj.append("photon2Eta")
+#       	obj.append("photon1Phi")
+#        obj.append("photon2Phi")
+	if isEBEB:
+		obj.append("diphotonMinvisEBEB")
 if angularON:
         obj.append("chidiphoton")
         obj.append("diphotoncosthetastar")
+	if isEBEB:
+		obj.append("chidiphotonisEBEB")
+		obj.append("diphotoncosthetastarisEBEB")
 if genON:
         obj.append("gendiphotonMinv")
-        obj.append("genphoton1Pt")
-        obj.append("genphoton2Pt")
-        obj.append("genphoton1Eta")
-        obj.append("genphoton2Eta")
-        obj.append("genphoton1Phi")
-        obj.append("genphoton2Phi")
+#        obj.append("genphoton1Pt")
+#        obj.append("genphoton2Pt")
+#        obj.append("genphoton1Eta")
+#        obj.append("genphoton2Eta")
+#        obj.append("genphoton1Phi")
+#        obj.append("genphoton2Phi")
         if angularON:
                 obj.append("genchidiphoton")
                 obj.append("gendiphotoncosthetastar")
@@ -55,13 +68,20 @@ if genON:
 
 if doSM:
         DATASETSM = []
-        # DATASETSM.append("../NonResonanceTemplates/OUTGGJets_M_60To200_Pt_50.root")
-        # DATASETSM.append("../NonResonanceTemplates/OUTGGJets_M_200To500_Pt_50.root")
-        DATASETSM.append("../NonResonanceTemplates/OUTGGJets_M_500To1000_Pt_50.root")
-        DATASETSM.append("../NonResonanceTemplates/OUTGGJets_M_1000To2000_Pt_50.root")
-        DATASETSM.append("../NonResonanceTemplates/OUTGGJets_M_2000To4000_Pt_50.root")
-        DATASETSM.append("../NonResonanceTemplates/OUTGGJets_M_4000To6000_Pt_50.root")
-        DATASETSM.append("../NonResonanceTemplates/OUTGGJets_M_6000To8000_Pt_50.root")
+        if SM_m2000:
+                DATASETSM.append("../NonResonanceTemplates/OUTGGJets_M_1000To2000_Pt_50mgg_2000.root")
+                DATASETSM.append("../NonResonanceTemplates/OUTGGJets_M_4000To6000_Pt_50mgg_2000.root")
+                DATASETSM.append("../NonResonanceTemplates/OUTGGJets_M_6000To8000_Pt_50mgg_2000.root")
+                DATASETSM.append("../NonResonanceTemplates/OUTGGJets_M_2000To4000_Pt_50mgg_2000.root")
+                DATASETSM.append("../NonResonanceTemplates/OUTGGJets_M_500To1000_Pt_50mgg_2000.root")
+        else:
+            # DATASETSM.append("../NonResonanceTemplates/OUTGGJets_M_60To200_Pt_50.root")
+            # DATASETSM.append("../NonResonanceTemplates/OUTGGJets_M_200To500_Pt_50.root")
+            DATASETSM.append("../NonResonanceTemplates/OUTGGJets_M_500To1000_Pt_50.root")
+            DATASETSM.append("../NonResonanceTemplates/OUTGGJets_M_1000To2000_Pt_50.root")
+            DATASETSM.append("../NonResonanceTemplates/OUTGGJets_M_2000To4000_Pt_50.root")
+            DATASETSM.append("../NonResonanceTemplates/OUTGGJets_M_4000To6000_Pt_50.root")
+            DATASETSM.append("../NonResonanceTemplates/OUTGGJets_M_6000To8000_Pt_50.root")
         varhistsm = [Stitch(DATASETSM, var) for var in obj]
 if doADD:
 	signal = []
@@ -76,7 +96,7 @@ if doADD:
 	    signal.append(vhist)
             #print len(varhist)
         if NI1_13_m2000:
-            tag = tag + "mgg2000"
+            tag = "m2kNI1_13"
             DSETm2000 = []
             DSETm2000.append("../NonResonanceTemplates/OUTADDGravToGG_NegInt_1_LambdaT_13000_M_1000To2000mgg_2000.root")
             DSETm2000.append("../NonResonanceTemplates/OUTADDGravToGG_NegInt_1_LambdaT_13000_M_2000To4000mgg_2000.root")
@@ -87,7 +107,7 @@ if doADD:
 	    signal.append(vhist2)
 
 
-print obj
+#print obj
 mcuts = ['1000', '2000', '2500', '3000', '3500']
 ipts, ivar = 0, 0 #signal[modelptindex][varindex][hist(0)/label(1)]
 for var, sm in zip(obj, varhistsm):
@@ -96,19 +116,20 @@ for var, sm in zip(obj, varhistsm):
 	hstack.append(sm[0])
 	labels.append(sm[1])
 	for sig in signal:
-		#print var, sig[ivar][1]
 		hstack.append(sig[ivar][0])
 		labels.append(sig[ivar][1])
-	#print labels	
-	ivar = ivar + 1  
-		
-	# Plots 
-	#OverlayHists(var, hstack, labels, tag="NI13orig", lumi=137)
-	
-	# Sensitivity Calculation (Only useful for Minv)
-	if "Minv" in var:
-		#CalcSensitivityADD(var, hstack, labels, lumi=137)
-		CalcSensitivityADD(var, hstack, labels, lumi=137, McutList=mcuts)
+	#print labels
+	ivar = ivar + 1
+
+	# Plots
+	if args.plot:
+	       OverlayHists(var, hstack, labels, tag=tag, lumi=137)
+
+    	if args.sensitivity:
+		if "Minv" in var or "chidiphoton" in var or "costhetastar" in var:
+			#CalcSensitivityADD(var, hstack, labels, lumi=137, McutList=mcuts)
+			CalcSensitivityADD(var, hstack, labels, lumi=137)
+
 # Original
 """
 for var, sm, sig in zip(obj, varhistsm, varhist):
