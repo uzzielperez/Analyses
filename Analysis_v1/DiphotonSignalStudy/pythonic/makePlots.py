@@ -17,7 +17,7 @@ doSherpaADD   = True
 DATASET = []
 if doSherpaADD:
     DATASET.append('/store/user/cawest/ADDGravToGG_MS-6000_NED-4_KK-1_M-1000To2000_13TeV-sherpa/crab_ADDGravToGG_MS-6000_NED-4_KK-1_M-1000To2000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/181106_182643/0000')
-    #DATASET.append('/store/user/cawest/ADDGravToGG_MS-6000_NED-4_KK-1_M-2000To4000_13TeV-sherpa/crab_ADDGravToGG_MS-6000_NED-4_KK-1_M-2000To4000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/181106_182658/0000')
+    DATASET.append('/store/user/cawest/ADDGravToGG_MS-6000_NED-4_KK-1_M-2000To4000_13TeV-sherpa/crab_ADDGravToGG_MS-6000_NED-4_KK-1_M-2000To4000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/181106_182658/0000')
     #DATASET.append('/store/user/cawest/ADDGravToGG_MS-6000_NED-4_KK-1_M-200To500_13TeV-sherpa/crab_ADDGravToGG_MS-6000_NED-4_KK-1_M-200To500_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/181106_182714/0000')
     #DATASET.append('/store/user/cawest/ADDGravToGG_MS-6000_NED-4_KK-1_M-4000To6000_13TeV-sherpa/crab_ADDGravToGG_MS-6000_NED-4_KK-1_M-4000To6000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/181106_182726/0000')
     #DATASET.append('/store/user/cawest/ADDGravToGG_MS-6000_NED-4_KK-1_M-500To1000_13TeV-sherpa/crab_ADDGravToGG_MS-6000_NED-4_KK-1_M-500To1000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/181106_182739/0000')
@@ -33,17 +33,15 @@ for e in DATASET:
 	tchain.Add(rf,0)
 
 #-----------------------------------------------------------
-# Turn on a branch
-tchain.SetBranchStatus("Event")
-tchain.SetBranchStatus("Diphoton")
-tchain.SetBranchStatus("isGood")
 
-# Quick Checks 
-#tchain.Print()
-#tchain.Scan("Diphoton.Minv")
-#c = ROOT.TCanvas()
-#tchain.Draw("Diphoton.Minv", "isGood")
-#c.SaveAs("pythnminv.pdf")
+# Histograms 
+fileOut = ROOT.TFile(args.outputfile, 'recreate')
+hMinv   = ROOT.TH1D('hMinv', 'invariant mass', 100, 500, 10000) 
+
+# Get Branches
+weightAll    = tchain.GetBranch("Event").GetLeaf('weightAll')
+diphotonminv = tchain.GetBranch("Diphoton").GetLeaf('Minv')
+isGood       = tchain.GetBranch("isGood").GetLeaf('isGood') 
 
 #------------------------------------------------------------
 
@@ -51,10 +49,10 @@ tchain.SetBranchStatus("isGood")
 for ievent, event in enumerate(tchain):
  	if ievent % 10000 == 0: print 'Processing entry ' + str(ievent)
  	if ievent > args.maxevents and args.maxevents != -1: break
-
-	nb = tchain.GetEntry( ievent )
-	minv  = tchain.GetBranch("Diphoton").GetLeaf('Minv').GetValue(ievent)
 	
+	weight = weightAll.GetValue(ievent)
+	#if isGood.GetValue(ievent):
+	hMinv.Fill(diphotonminv.GetValue(ievent))		
 
-#for n in xrange (tchain.GetEntries()):
-	#if n % 10000 == 0: print 'Processing entry ' + str(n)
+fileOut.Write()
+fileOut.Close()	
