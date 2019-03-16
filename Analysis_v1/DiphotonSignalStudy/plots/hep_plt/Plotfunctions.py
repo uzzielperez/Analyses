@@ -125,7 +125,7 @@ def LabelMaker(obj, canvas, PeakParams=None):
   	if "chidiphoton" in obj:
       		xtitle = r"#Chi_{#gamma#gamma}"
      		ytitle = r"#scale[1.0]{Nevents}"
-      		xmin, xmax = 1, 50
+      		xmin, xmax = 1, 20
 		legpos = .55, 0.68, .80, .88
   	if "costhetastar" in obj:
       		xtitle = r"cos#theta^{*}"
@@ -276,13 +276,15 @@ def Stitch(toStitchList, obj):
     hist.SetDirectory(0)
     return hist, label
 
-def OverlayHists(obj, histlist, labelList, tag=None, lumi=None):
+def OverlayHists(obj, histlist, labelList, tag=None, lumi=None, Background=None, Mrange=None):
 	 # print labelList, histList
   	 canvas = ROOT.TCanvas()
 	 canvas, xtitle, ytitle, xmin, xmax, legpos = LabelMaker(obj, canvas)
+	 if "Minv" in obj and Mrange is not None:
+		xmin, xmax = Mrange
  	 #leg = TLegend(legpos)
 	 leg = makeLegend(legpos, legendtitle="#bf{Sensitivity Studies}")
-	 colorlist = [kBlue, kOrange, kViolet+3, kRed,
+	 colorlist = [kBlue, kRed, kViolet+3, kOrange+3,
  	 	      kMagenta, kGreen, kViolet, kSpring,
  		      kPink, kAzure, kOrange+8, kGreen+8,
  		      kRed+8, kViolet+8, kMagenta+5]
@@ -307,14 +309,20 @@ def OverlayHists(obj, histlist, labelList, tag=None, lumi=None):
 				leg.AddEntry(histSM, "%s" %(r"SM M_{gg} > 500 GeV"), "f")
 			if "GGJets" in label:
 				leg.AddEntry(histSM, "GGJets", "f")
-			histSM.Draw("hist same")
+			histSM.GetYaxis().SetTitle(ytitle)
+	 		histSM.GetYaxis().SetTitleOffset(1.0)
+	 		histSM.GetXaxis().SetTitle(xtitle)
+	 		histSM.GetXaxis().SetRangeUser(xmin, xmax)
+			if Background is not None:
+				histSM.Draw("hist same")
 			outName = "SM"	
 		else:
 			#histclone.SetLineColor(kRed)
 	      		histclone.SetLineColor(colorlist[icolor])
 	     		if lumi is not None:
 				histclone.Scale(intlumi)
-	      		histclone.Draw(drawstyle)
+	      		histclone.GetXaxis().SetRangeUser(xmin, xmax)
+			histclone.Draw(drawstyle)
 			if "ADD" in label:
 				if "Sherpa" in label:	
 					Gen, PH, LambdaT, NED, KK = label
@@ -343,15 +351,16 @@ def OverlayHists(obj, histlist, labelList, tag=None, lumi=None):
    	        icolor = icolor + 1
 	 
 	 #print eventsmaxlist
-	 histSM.SetMaximum(max(eventsmaxlist))
+	 ymax = max(eventsmaxlist)
+	 ymax = ymax + ymax*(0.3)
+  	 histSM.SetMaximum(ymax)
+	 #histSM.SetMaximum(max(eventsmaxlist))
 	 if lumi is not None:
-	 	histSM.SetMaximum(max(eventsmaxlist)*lumi)
-	 histSM.GetYaxis().SetTitle(ytitle)
-	 histSM.GetYaxis().SetTitleOffset(1.0)
-	 histSM.GetXaxis().SetTitle(xtitle)
-	 histSM.GetXaxis().SetRangeUser(xmin, xmax)
-
-
+		ymax = max(eventsmaxlist)*lumi
+		ymax = ymax + 0.3*ymax
+		histSM.SetMaximum(ymax)
+	 	#histSM.SetMaximum(max(eventsmaxlist)*lumi)
+	 
 	 leg.Draw()
          if lumi is not None:
                 #set_CMS_lumi(canvas, 4, 11, lumi)

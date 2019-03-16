@@ -17,7 +17,7 @@ from CMSlumi import CMS_lumi, set_CMS_lumi
 import argparse
 import numpy as np
 #import scipy.stats.distributions
-from scipy.stats import poisson
+#from scipy.stats import poisson
 import math
 sw = ROOT.TStopwatch()
 sw.Start()

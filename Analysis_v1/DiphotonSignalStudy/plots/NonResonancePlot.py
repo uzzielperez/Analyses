@@ -25,9 +25,14 @@ doSM 	   = True
 
 # ADD
 doADD         = True
-NI1_13        = False
+NI1_13        = False  #Pythia
+doSherpa      = False
 
-SM_m2000, NI1_13_m2000   = True, True
+SM_m2000       = True
+NI1_13_m2000   = True
+doreADD        = False #Sherpa 
+doreADDM2k     = True  #Sherpa
+
 
 # Variables to Plot
 kinematicsON = True
@@ -105,6 +110,74 @@ if doADD:
             # Stitch function returns stitched histogram and label - Tuple
 	    vhist2 = [Stitch(DSETm2000, var) for var in obj]
 	    signal.append(vhist2)
+        if doreADD:
+            DATASETS = []
+
+            #DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_6000_NED_4_KK_1_M_1000To2000.root")
+            #DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_6000_NED_4_KK_1_M_2000To4000.root")
+            #DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_6000_NED_4_KK_1_M_200To500.root")
+            #DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_6000_NED_4_KK_1_M_4000To6000.root")
+            #DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_6000_NED_4_KK_1_M_500To1000.root")
+            #sig = [Stitch(DATASETS, var) for var in obj]
+            #signal.append(sig)
+
+            DATASETS = []
+
+            DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_8000_NED_4_KK_1_M_1000To2000.root")
+            DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_8000_NED_4_KK_1_M_2000To4000.root")
+            DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_8000_NED_4_KK_1_M_4000To8000.root")
+            DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_8000_NED_4_KK_1_M_500To1000.root")
+            sig = [Stitch(DATASETS, var) for var in obj]
+            signal.append(sig)
+
+            DATASETS = []
+            DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_10000_NED_4_KK_1_M_2000To4000.root")
+            DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_10000_NED_4_KK_1_M_4000To10000.root")
+            DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_10000_NED_4_KK_1_M_500To1000.root")
+            sig = [Stitch(DATASETS, var) for var in obj]
+            signal.append(sig)
+            DATASETS = []
+
+            DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_11000_NED_4_KK_1_M_1000To2000.root")
+            DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_11000_NED_4_KK_1_M_2000To4000.root")
+            DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_11000_NED_4_KK_1_M_4000To11000.root")
+            sig = [Stitch(DATASETS, var) for var in obj]
+            signal.append(sig)
+
+        if doreADDM2k:
+            DATASETS = []
+            #DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_6000_NED_4_KK_1_M_1000To2000.root")
+            #DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_6000_NED_4_KK_1_M_2000To4000.root")
+            #DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_6000_NED_4_KK_1_M_200To500.root")
+            #DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_6000_NED_4_KK_1_M_4000To6000.root")
+            #DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_6000_NED_4_KK_1_M_500To1000.root")
+            #sig = [Stitch(DATASETS, var) for var in obj]
+            #signal.append(sig)
+
+            DATASETS = []
+            DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_8000_NED_4_KK_1_M_1000To2000mgg_2000_8000.root")
+            DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_8000_NED_4_KK_1_M_2000To4000mgg_2000_8000.root")
+            DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_8000_NED_4_KK_1_M_4000To8000mgg_2000_8000.root")
+            #DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_8000_NED_4_KK_1_M_500To1000mgg_2000_8000.root")
+            sig = [Stitch(DATASETS, var) for var in obj]
+            signal.append(sig)
+
+            DATASETS = []
+            DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_10000_NED_4_KK_1_M_1000To2000mgg_2000_10000.root")
+            DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_10000_NED_4_KK_1_M_2000To4000mgg_2000_10000.root")
+            DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_10000_NED_4_KK_1_M_4000To10000mgg_2000_10000.root")
+            #DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_10000_NED_4_KK_1_M_500To1000mgg_2000_10000.root")
+            sig = [Stitch(DATASETS, var) for var in obj]
+            signal.append(sig)
+
+            DATASETS = []
+            DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_11000_NED_4_KK_1_M_1000To2000mgg_2000_11000.root")
+            DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_11000_NED_4_KK_1_M_2000To4000mgg_2000_11000.root")
+            DATASETS.append("../NonResonanceTemplates/OUTADDGravToGG_MS_11000_NED_4_KK_1_M_4000To11000mgg_2000_11000.root")
+            #DATASETS.append("../OUTADDGravToGG_MS_11000_NED_4_KK_1_M_500To1000mgg_2000_11000.root")
+            sig = [Stitch(DATASETS, var) for var in obj]
+            signal.append(sig)
+
 
 
 #print obj
@@ -123,12 +196,14 @@ for var, sm in zip(obj, varhistsm):
 
 	# Plots
 	if args.plot:
-	       OverlayHists(var, hstack, labels, tag=tag, lumi=137)
+	       #OverlayHists(var, hstack, labels, tag=tag, lumi=137)
+           OverlayHists(var, hstack, labels, tag="sherpa", lumi=137, Background="Y", Mrange=(2000,13000))
 
     	if args.sensitivity:
 		if "Minv" in var or "chidiphoton" in var or "costhetastar" in var:
 			#CalcSensitivityADD(var, hstack, labels, lumi=137, McutList=mcuts)
-			CalcSensitivityADD(var, hstack, labels, lumi=137)
+			#CalcSensitivityADD(var, hstack, labels, lumi=137)
+            		CalcSensitivityADD(var, hstack, labels, lumi=137, McutList=['2000'], chiMax=3.0)
 
 # Original
 """
