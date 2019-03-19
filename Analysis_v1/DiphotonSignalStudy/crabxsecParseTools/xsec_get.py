@@ -6,35 +6,41 @@ from Parsefunctions import *
 
 # Command line options
 parser = argparse.ArgumentParser(description="cmsDriver")
-parser.add_argument("-d", "--delete", action="store_true", help="run or delete")
-parser.add_argument("-r", "--run", action="store_true")
-parser.add_argument("-v", "--verbose", help="print evertything", action="store_true")
-parser.add_argument("-p", "--parse", action="store_true")
-parser.add_argument("-a", "--average", action="store_true")
-parser.add_argument("-f", "--format", action="store_true")
+parser.add_argument("-i", "--inputfile", default="parsedis.txt", help="Datasets you need.")
+parser.add_argument("-d", "--delete", action="store_true", help="Clean directory and delete copied files")
+parser.add_argument("-r", "--run", action="store_true", help="Run os.system(cmd) to get CRAB files.")
+parser.add_argument("-v", "--verbose", help="Debugging option", action="store_true")
+parser.add_argument("-p", "--parse", action="store_true", help="Parse log files.")
+parser.add_argument("-a", "--average", action="store_true", help="Get average.")
+#parser.add_argument("-f", "--format", action="store_true")
+parser.add_argument("-s", "--sort", action="store_true", help="Sort by dataset")
+parser.add_argument("-t", "--timestamped", action="store_true")
 args = parser.parse_args()
 
 
 
-print "-d for delete, -r to get CRAB cmsRun stdout logs, -v for debugging, -p to parse xsecs, -a to get weighted average of xsecs per dataset"
+print "-d for delete, -r to get CRAB cmsRun stdout logs, -r -i newparsedis.txt -t for timestamped files,  -v for debugging, -p to parse xsecs, -a to get weighted average of xsecs per dataset"
 
-#f = open("copythese.txt")
-f = open("parsedis.txt")
+inputfile = args.inputfile
+f = open(inputfile)
 lines = f.read().split('\n') #list containing each line
 lines = lines[:-1] #to exclude last slots in lines which is white space
 
 if args.delete:
 	print "Cleaning directory.."
 	print "Run python xsec_get.py -r to get cross sections (-v for verbose)"
-	
-for line in lines:
-	
-	pattern = r'DiPhotonAnalysis/xsec/([^(]*)_pythia8/crab' 
-	if "ADD" in line:
-		pattern = r'DiPhotonAnalysis/xsec/([^(]*)-pythia8/crab' 
+	os.system("rm -rf ADD*")
+	os.system("rm -rf RSG*")
+	os.system("rm -rf GluGlu*")
+
+for line in lines:	
+	pattern = r'DiPhotonAnalysis/xsec/([^(]*)/crab' 
+	if args.timestamped:
+		print pattern
+		pattern = r'ciperez/([^(]*)/crab'
 	match = re.findall(pattern, line)	
 	dataset = match[0]
-        tagpattern = 'cmsRun_([^(]*).log.tar.gz'
+	tagpattern = 'cmsRun_([^(]*).log.tar.gz'
 	tag = re.findall(tagpattern, line)
 	tarredsets = ".".join((dataset+tag[0], "tar.gz")) 
 
@@ -50,9 +56,9 @@ for line in lines:
 		os.system(tarcmd)  
 	if args.delete:
 		os.system("rm -rf %s*" %(dataset))	
-#	if args.verbose:	
-#		print cmd
-#		print tarcmd
+	if args.verbose:	
+		print cmd
+		print tarcmd
 
 if args.parse:
 	print "Parsing Files"
@@ -71,8 +77,8 @@ if args.parse:
 	f.close()
 
 if args.average:
-	print "Calculating Average Cross-sections from parsed log files"
-	#createDsetXsecDictiontary("InfoXsecPb.txt")
+	print "Calculating Average Cross-sections from parsed log files."
+	xf = open("FileXSEC.txt", "w+")
 	for dirdset in os.listdir('.'):
 		if ("Grav" in dirdset or "GluGlu" in dirdset) and "tar.gz" not in dirdset:
 			if args.verbose:
@@ -100,9 +106,14 @@ if args.average:
 			delt_ave = format(dws/Ntotal, "10.3e")	
 			if args.verbose:
 				print "Ntotal: ", Ntotal, ";Average xsec +- deltaxsec:", xsec_ave, delt_ave 
-		   	hardcode_txt = 'if(sample.Contains("%s_pythia8")) xsec = %s;' %(dirdset, xsec_ave)
-			if "ADD" in dirdset:
-				 hardcode_txt = 'if(sample.Contains("%s-pythia8")) xsec = %s;' %(dirdset, xsec_ave)
-			print hardcode_txt	
+		   	hardcode_txt = 'if(sample.Contains("%s")) xsec = %s;' %(dirdset, xsec_ave)
+			xf.write(hardcode_txt+"\n")
+		#	if "ADD" in dirdset:
+		#		 hardcode_txt = 'if(sample.Contains("%s-pythia8")) xsec = %s;' %(dirdset, xsec_ave)
+			print hardcode_txt
 			os.chdir("..")
+	xf.close()
+if args.sort:
+	SortbyDatasetName("FileXSEC.txt")
+	os.system("cat sorted_FileXSEC.txt")
 
