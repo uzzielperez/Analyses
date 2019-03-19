@@ -3,10 +3,9 @@
 ####### Directories
 # Main
 eosdir='/store/user/cuperez'
-
 #------ECHO SETTINGS
 quickcheck=false
-crabntuplesDEEP=true     # To search deep for ALL the unmerged CRAB ntuples 
+crabntuplesDEEP=true     # To search deep for ALL the unmerged CRAB ntuples
 crabntuples=false      # true to get full path, uncomment appropriate sub
 merged=false             # true to get full path, uncomment appropriate sub
 crabADD=false
@@ -22,20 +21,20 @@ project='/DiPhotonAnalysis/xsec'
 #sub2='/Summer16GGJetsResubmit'
 #sub2='/Run2016Data'
 
-#-- MERGED FILES 
+#-- MERGED FILES
 #sub='/Summer16_GGJets_Merged'
 #sub='/Run2016Data-Merged'
 #sub=''
 
 
-# Including data files 
+# Including data files
 #/store/user/ciperez/DiPhotonAnalysis/EGammaData/EGamma/
 
 #-----------------------------
 DIR=$eosdir$project$sub
 DIR2=$eosdir$project$sub2
 
-####### eos aliases 
+####### eos aliases
 eosls='eos root://cmseos.fnal.gov ls'
 eosmkdir='eos root://cmseos.fnal.gov mkdir'
 eosrm='eos root://cmseos.fnal.gov rm'
@@ -47,7 +46,7 @@ xrdfsls='xrdfs root://cmseos.fnal.gov ls'
 #-l= lists
 
 ###### eos commands
-# EDIT COMMAND HERE: 
+# EDIT COMMAND HERE:
 #$eosls -l eosdir
 
 #--------/store/user/cuperez/projectname
@@ -75,7 +74,7 @@ while $crabADD; do
      do
 	newg3=$newg2/$k
 	#echo $newg3
-	while $crabADDfiles; 
+	while $crabADDfiles;
 	do
 	 for p in `$eosls $newg3`
 	 do
@@ -106,7 +105,7 @@ while $merged; do
   for j in `$eosls $newdir`
   do
    new=$newdir/$j
-   echo $new 
+   echo $new
   done
  done
 break
@@ -121,7 +120,7 @@ while $crabntuples; do
   for j in `$eosls $newdir2`
   do
    new2=$newdir2/$j
-   echo $new2 
+   echo $new2
   done
  done
 break
@@ -140,7 +139,7 @@ while $midsearch; do
    do
     new3=$new2/$k
     echo $new3
-   done 
+   done
   done
  done
 break
@@ -149,9 +148,9 @@ done
 #------DEEP Full
 redirector='root://cmsxrootd.fnal.gov/'
 while $crabntuplesDEEP; do
- echo 'CRAB unmerged ntuples:' 
+ echo 'CRAB unmerged ntuples:'
  for i in `$eosls $DIR2`
- do 
+ do
    #echo $i
    newdir3=$DIR2/$i
    #echo $eosls $newdir
@@ -164,8 +163,8 @@ while $crabntuplesDEEP; do
      #echo $new3/$k ---> just up to datesdir
      for l in `$eosls $new4`
      do
-      #echo $l 
-      new5=$new4/$l	
+      #echo $l
+      new5=$new4/$l
       #echo $new5 # -----> just up to 0000/
       for m in `$eosls $new5`
       do
@@ -173,7 +172,7 @@ while $crabntuplesDEEP; do
        echo $new6
        # echo $m # filename only
        #echo $new6 >> ${k}fi.txt
-       echo $redirector$new6 >> ${j}fi.txt
+       #echo $redirector$new6 >> ${j}fi.txt
       done
      done
     done
