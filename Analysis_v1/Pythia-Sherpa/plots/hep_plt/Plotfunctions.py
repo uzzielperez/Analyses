@@ -484,12 +484,15 @@ def PlotRatio(h1, h2, label1, label2, tag, xRange=None, yratioRange=None, binnin
 	x = hRatio.GetXaxis()
 	if xRange is not None:
 		x.SetRangeUser(xmin, xmax)
-	#x.SetRangeUser(2000, 4000)
 	hRatio.SetMarkerStyle(20)
         hRatio.Draw("esamex0")
-	#print "Theoretical ratio: ", xsecRatio(float(du1.replace("p",".")), float(LU1), float(LU2)), 1.00/xsecRatio(float(du1.replace("p",".")), float(LU1), float(LU2))
+	outputdir = "RatioPlots"
+	if not os.path.exists(outputdir):
+		os.mkdir(outputdir)
+    	os.chdir(outputdir)
+    	print "Saving in %s" %(outputdir)
         c.Print("Ratio%s.pdf" %(tag))
-
+    	os.chdir("..")
 
 # Unedited Unparticles specific
 def createSignalOnly(obj, sample1, sample2):
