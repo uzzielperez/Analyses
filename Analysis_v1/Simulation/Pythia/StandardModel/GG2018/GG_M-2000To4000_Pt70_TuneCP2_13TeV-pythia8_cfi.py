@@ -1,7 +1,8 @@
-import FWCore.ParameterSet.Config as cms
+import FWCore.ParameterSet.Config as cms 
 
 from Configuration.Generator.Pythia8CommonSettings_cfi import *
 from Configuration.Generator.MCTunes2017.PythiaCP2Settings_cfi import *
+from Configuration.Generator.PSweightsPythia.PythiaPSweightsSettings_cfi import *
 
 generator = cms.EDFilter("Pythia8GeneratorFilter",
     maxEventsToPrint = cms.untracked.int32(1),
@@ -12,18 +13,20 @@ generator = cms.EDFilter("Pythia8GeneratorFilter",
     PythiaParameters = cms.PSet(
         pythia8CommonSettingsBlock,
         pythia8CP2SettingsBlock,
+        pythia8PSweightsSettingsBlock,
         processParameters = cms.vstring(
             'PromptPhoton:gg2gammagamma = on',
             'PromptPhoton:ffbar2gammagamma = on',
-            'PhaseSpace:pTHatMin = 50',
-            'PhaseSpace:mHatMin = 500',
-            'PhaseSpace:mHatMax = 1000',
-            ),
+            'PhaseSpace:pTHatMin = 70',
+            'PhaseSpace:mHatMin = 2000',
+            'PhaseSpace:mHatMax = 4000',
+            ),  
         parameterSets = cms.vstring('pythia8CommonSettings',
                                     'pythia8CP2Settings',
                                     'processParameters',
-                                    )
-        )
+                                    'pythia8PSweightsSettings',
+                                    )   
+        )   
 )
 
 ProductionFilterSequence = cms.Sequence(generator)

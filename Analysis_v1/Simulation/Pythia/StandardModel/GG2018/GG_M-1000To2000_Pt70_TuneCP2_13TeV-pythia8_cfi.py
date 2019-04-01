@@ -17,7 +17,7 @@ generator = cms.EDFilter("Pythia8GeneratorFilter",
         processParameters = cms.vstring(
             'PromptPhoton:gg2gammagamma = on',
             'PromptPhoton:ffbar2gammagamma = on',
-            'PhaseSpace:pTHatMin = 50',
+            'PhaseSpace:pTHatMin = 70',
             'PhaseSpace:mHatMin = 1000',
             'PhaseSpace:mHatMax = 2000',
             ),  
