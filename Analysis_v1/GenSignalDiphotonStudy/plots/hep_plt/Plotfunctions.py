@@ -280,10 +280,34 @@ def Stitch(toStitchList, obj):
     hist.SetDirectory(0)
     return hist, label
 
-def OverlayHists(obj, histlist, labelList, tag=None, lumi=None, Background=None, Mrange=None):
+def PlotContinuous(obj, hist, leglabel, lumi=None, Mrange=None, chiMax=None):
+	canvas = ROOT.TCanvas()
+	canvas, xtitle, ytitle, xmin, xmax, legpos = LabelMaker(obj, canvas)
+        leg = makeLegend(legpos, legendtitle="#bf{%s}" %(leglabel))
+	if lumi is not None:
+		hist.Scale(lumi)
+	if Mrange is not None:
+		xmin, xmax = Mrange
+		hist.GetXaxis().SetRangeUser(xmin, xmax)
+	if chiMax is not None:
+		hist.GetXaxis().SetRangeUser(0, chiMax) 
+	hist.Draw()
+	leg.AddEntry(hist, leglabel, "f") 
+	leg.Draw()
+	set_CMS_lumi(canvas, 4, 0, intlumi) 
+	canvas.Update()
+	canvas.Draw()
+	if not os.path.exists("plotsdir"):
+		os.mkdir("plotsdir")
+	os.chdir("plotsdir")
+	canvas.SaveAs("%s.pdf" %(leglabel))
+	os.chdir('../') 
+
+def OverlayHists(obj, histlist, labelList, tag=None, lumi=None, Background=None, Mrange=None, chiMax=None):
 	 # print labelList, histList
   	 canvas = ROOT.TCanvas()
 	 canvas, xtitle, ytitle, xmin, xmax, legpos = LabelMaker(obj, canvas)
+	 print "Plotting with cuts- minv: ", Mrange, "chidiphoton: 0-", chiMax
 	 if "Minv" in obj and Mrange is not None:
 		xmin, xmax = Mrange
  	 #leg = TLegend(legpos)
@@ -303,7 +327,7 @@ def OverlayHists(obj, histlist, labelList, tag=None, lumi=None, Background=None,
 		label = labelList[i]
 		#print label
          	eventsmaxlist.append(histclone.GetMaximum())
-      		if "SM" in label or "GGJets" in label:
+      		if "SM" in label or "GG" in label:
 	     		histSM = histclone
 	      		histSM.SetFillStyle(3144)
 	      		histSM.SetFillColor(7+i)
@@ -311,8 +335,11 @@ def OverlayHists(obj, histlist, labelList, tag=None, lumi=None, Background=None,
 	      			histSM.Scale(lumi)
 	     		if "SM" in label:
 				leg.AddEntry(histSM, "%s" %(r"SM M_{gg} > 500 GeV"), "f")
-			if "GGJets" in label:
-				leg.AddEntry(histSM, "GGJets", "f")
+			if "GG" in label:
+				leglabel = "GG"
+				if "Jets" in label:
+					leglabel = "GGJets"	
+				leg.AddEntry(histSM, "GG", "f")
 			histSM.GetYaxis().SetTitle(ytitle)
 	 		histSM.GetYaxis().SetTitleOffset(1.0)
 	 		histSM.GetXaxis().SetTitle(xtitle)
@@ -321,6 +348,7 @@ def OverlayHists(obj, histlist, labelList, tag=None, lumi=None, Background=None,
 				histSM.Draw("hist same")
 			outName = "SM"
 		else:
+			outName = "n_"
 			#histclone.SetLineColor(kRed)
 	      		histclone.SetLineColor(colorlist[icolor])
 	     		if lumi is not None:
@@ -341,6 +369,9 @@ def OverlayHists(obj, histlist, labelList, tag=None, lumi=None, Background=None,
 						NI = "Int+"
 					if NegInt is "0":
 						NI = "Int-"
+					if Mrange is not None:
+						massmin, massmax = Mrange
+						mgg = massmin
 					minvcut = str(round ( float(mgg)/1000, 1 ))
 					leglabel = r"%s, #Lambda_{T}=%s, M>%s [TeV]" %(NI, LambdaT, minvcut)
 					leg.SetHeader("#bf{ADD Graviton to #gamma#gamma}", "C")
@@ -354,16 +385,14 @@ def OverlayHists(obj, histlist, labelList, tag=None, lumi=None, Background=None,
      		i = i+1
    	        icolor = icolor + 1
 
-	 #print eventsmaxlist
 	 ymax = max(eventsmaxlist)
 	 ymax = ymax + ymax*(0.3)
-  	 histSM.SetMaximum(ymax)
-	 #histSM.SetMaximum(max(eventsmaxlist))
+	 if Background is not None:
+  	 	histSM.SetMaximum(ymax)
 	 if lumi is not None:
 		ymax = max(eventsmaxlist)*lumi
 		ymax = ymax + 0.3*ymax
 		histSM.SetMaximum(ymax)
-	 	#histSM.SetMaximum(max(eventsmaxlist)*lumi)
 
 	 leg.Draw()
          if lumi is not None:
@@ -444,7 +473,7 @@ def createCanvasPads():
 
     return c, pad1, pad2
 
-def PlotRatio(h1, h2, label1, label2, tag, xRange=None, yratioRange=None, binning=None):
+def PlotRatio(h1, h2, label1, label2, tag, xRange=None, yratioRange=None, binning=None, h3=None):
 	c, pad1, pad2 = createCanvasPads()
     	#pad1.SetLogy()
 	pad1.cd()
@@ -462,6 +491,9 @@ def PlotRatio(h1, h2, label1, label2, tag, xRange=None, yratioRange=None, binnin
 		xmin, xmax = xRange
 		x1.SetRangeUser(xmin, xmax)
 	h2.Draw("same")
+	if h3 is not None:
+		h3.SetFillStyle(3144)
+		h3.Draw("same")
         legpos = .55, 0.58, .80, .88
 	leg = makeLegend(legpos, legendtitle="#bf{Sensitivity Studies}")
 	leg.AddEntry(h1, label1)
@@ -630,54 +662,54 @@ def hStackRatio(obj, histList, labelList, tag=None, lumi=None, Mrange=None):
 
 
 # Unedited
-def PlotContinuous(obj, Background=None, Signal=None, color=None, outputdir=None, lumi=None):
-  	 canvas = ROOT.TCanvas()
-	 canvas, xtitle, ytitle, xmin, xmax, legpos = LabelMaker(obj, canvas)
-	 leg = TLegend(legpos)
-     	 colorlist = [kBlue, kOrange, kViolet+3, kRed,
-	 	      kMagenta, kGreen, kViolet, kSpring,
-		      kPink, kAzure, kOrange+8, kGreen+8,
-		      kRed+8, kViolet+8, kMagenta+5]
-
-
-	 # Checking if both Background and Signal Histograms given
-	 if Background is not None:
-		print "Overlaying Background and Signal"
-		# Create Standard Model Background
-		histSM, labelSM = Background
-		histSM = CreateSMsty(histSM)
-		histSM.GetXaxis().SetTitle(xtitle)
-		histSM.GetXaxis().SetRangeUser(xmin, xmax)
-		histSM.GetYaxis().SetTitle(ytitle)
-		histSM.Draw("hist, same")
-		Plot_outName = "SM"
-		if Signal is not None:
-			ymax = max(histSM.GetMaximum(), hist.GetMaximum())
-			ymax = ymax + ymax*(0.3)
-			histSM.SetMaximum(ymax)
-			# Create Signal
-			hist.GetYaxis().SetTitleOffset(1.0)
-			# Overlay Background and Signal
-			h.Draw("hist, same") #Redraw Shape
-			hist.Draw("same, E2") #Keep same option, Draw Error
-			## Create Plot_outFileName here
-			Plot_outName = Plot_outName = "_vs_Signal"
-			#legend.AddEntry(histSM, "%s" %(labelSM), "f")
-
-	 elif Background is None:
-		print "No Background given"
-		if Signal is not None:
-			print "Plotting Signal Only"
-			h.GetYaxis().SetTitle(ytitle)
-			h.GetYaxis().SetTitleOffset(1.0)
-			h.GetXaxis().SetTitle(xtitle)
-			h.GetXaxis().SetRangeUser(xmin, xmax)
-			h.Draw("hist, same") #Redraw Shape
-			hist.Draw("same, E2") # Draw Error
-			legend.AddEntry(h, "%s" %(leglabel), "f")
-			legend.Draw()
-     	 canvas.Draw()
-
+#def PlotContinuous(obj, Background=None, Signal=None, color=None, outputdir=None, lumi=None):
+#  	 canvas = ROOT.TCanvas()
+#	 canvas, xtitle, ytitle, xmin, xmax, legpos = LabelMaker(obj, canvas)
+#	 leg = TLegend(legpos)
+#     	 colorlist = [kBlue, kOrange, kViolet+3, kRed,
+#	 	      kMagenta, kGreen, kViolet, kSpring,
+#		      kPink, kAzure, kOrange+8, kGreen+8,
+#		      kRed+8, kViolet+8, kMagenta+5]
+#
+#
+#	 # Checking if both Background and Signal Histograms given
+#	 if Background is not None:
+#		print "Overlaying Background and Signal"
+#		# Create Standard Model Background
+#		histSM, labelSM = Background
+#		histSM = CreateSMsty(histSM)
+#		histSM.GetXaxis().SetTitle(xtitle)
+#		histSM.GetXaxis().SetRangeUser(xmin, xmax)
+#		histSM.GetYaxis().SetTitle(ytitle)
+#		histSM.Draw("hist, same")
+#		Plot_outName = "SM"
+#		if Signal is not None:
+#			ymax = max(histSM.GetMaximum(), hist.GetMaximum())
+#			ymax = ymax + ymax*(0.3)
+#			histSM.SetMaximum(ymax)
+#			# Create Signal
+#			hist.GetYaxis().SetTitleOffset(1.0)
+#			# Overlay Background and Signal
+#			h.Draw("hist, same") #Redraw Shape
+#			hist.Draw("same, E2") #Keep same option, Draw Error
+#			## Create Plot_outFileName here
+#			Plot_outName = Plot_outName = "_vs_Signal"
+#			#legend.AddEntry(histSM, "%s" %(labelSM), "f")
+#
+#	 elif Background is None:
+#		print "No Background given"
+#		if Signal is not None:
+#			print "Plotting Signal Only"
+#			h.GetYaxis().SetTitle(ytitle)
+#			h.GetYaxis().SetTitleOffset(1.0)
+#			h.GetXaxis().SetTitle(xtitle)
+#			h.GetXaxis().SetRangeUser(xmin, xmax)
+#			h.Draw("hist, same") #Redraw Shape
+#			hist.Draw("same, E2") # Draw Error
+#			legend.AddEntry(h, "%s" %(leglabel), "f")
+#			legend.Draw()
+#     	 canvas.Draw()
+#
 ##### Unedited for Diphoton Studies
 def OverlayDatasets(obj, DATASETS):
       uf = []
