@@ -474,10 +474,12 @@ if args.isolate:
 if args.plot:
 	print "CALLING PLOTTER FUNCTIONS..."
 	if args.background:
-		if args.minv:
+		if args.minv: 
 			OverlayHists(var, signalstack, labels, tag=tag, lumi=137, Background="Y", Mrange=(minx, 13000))
+			OverlayHists("genphoton1Pt", signalstack, labels, tag=tag, lumi=137, Background="Y")
 		elif args.chidiphoton:
 			OverlayHists(var, signalstack, labels, tag=tag, lumi=137, Background="Y", Mrange=(minx, 13000), chiMax=chiMax)
+
 		else:
 			OverlayHists(var, signalstack, labels, tag=tag, lumi=137, Background="Y",  Mrange=(minx, 13000))
 

@@ -120,7 +120,7 @@ def LabelMaker(obj, canvas, PeakParams=None):
   		xmin, xmax = 0, 10000
 		if PeakParams is None:
 	   		xmin, xmax = 500, 13000
-		else:
+		elif PeakParams is not None:
 			W, M = PeakParams
 			xmin, xmax = 0, int(M)+500
 			if "001" not in W:
@@ -303,14 +303,14 @@ def PlotContinuous(obj, hist, leglabel, lumi=None, Mrange=None, chiMax=None):
 	canvas.SaveAs("%s.pdf" %(leglabel))
 	os.chdir('../') 
 
-def OverlayHists(obj, histlist, labelList, tag=None, lumi=None, Background=None, Mrange=None, chiMax=None):
+def OverlayHists(obj, histlist, labelList, tag=None, lumi=None, Background=None, Mrange=None, chiMax=None, xRange=None, Outputdir=None):
 	 # print labelList, histList
   	 canvas = ROOT.TCanvas()
 	 canvas, xtitle, ytitle, xmin, xmax, legpos = LabelMaker(obj, canvas)
 	 print "Plotting with cuts- minv: ", Mrange, "chidiphoton: 0-", chiMax
 	 if "Minv" in obj and Mrange is not None:
 		xmin, xmax = Mrange
- 	 #leg = TLegend(legpos)
+	 #leg = TLegend(legpos)
 	 leg = makeLegend(legpos, legendtitle="#bf{Sensitivity Studies}")
 	 colorlist = [kBlue, kRed, kViolet+3, kOrange+3,
  	 	      kMagenta, kGreen, kViolet, kSpring,
@@ -343,6 +343,9 @@ def OverlayHists(obj, histlist, labelList, tag=None, lumi=None, Background=None,
 			histSM.GetYaxis().SetTitle(ytitle)
 	 		histSM.GetYaxis().SetTitleOffset(1.0)
 	 		histSM.GetXaxis().SetTitle(xtitle)
+			if xRange is not None:
+				xmin, xmax = xRange
+				xmin, xmax = float(xmin), float(xmax)
 	 		histSM.GetXaxis().SetRangeUser(xmin, xmax)
 			if Background is not None:
 				histSM.Draw("hist same")
@@ -353,6 +356,9 @@ def OverlayHists(obj, histlist, labelList, tag=None, lumi=None, Background=None,
 	      		histclone.SetLineColor(colorlist[icolor])
 	     		if lumi is not None:
 				histclone.Scale(intlumi)
+			if xRange is not None:
+				xmin, xmax = xRange
+				xmin, xmax = float(xmin), float(xmax)
 	      		histclone.GetXaxis().SetRangeUser(xmin, xmax)
 			histclone.Draw(drawstyle)
 			if "ADD" in label:
@@ -406,6 +412,9 @@ def OverlayHists(obj, histlist, labelList, tag=None, lumi=None, Background=None,
 	 if tag is not None:
 		outName = tag + outName
 		outputdir  = PH + tag
+		if Outputdir is not None:
+			# Overwrite outputdir
+			outputdir = Outputdir
          	# Rename outputdir with parameters
          	if not os.path.exists(outputdir):
                 	os.mkdir(outputdir)
