@@ -19,25 +19,35 @@ void ${ClassDiphoton}::Loop()
    int isEEEE = 0;
 
    //histograms
-   TH1D* gendiphotonMinv = new TH1D("gendiphotonMinv", "", 100, 0., 13000.);// 100, 0, 10000
+   TH1D* gendiphotonMinv = new TH1D("gendiphotonMinv", "", 130, 0., 13000.);// 100, 0, 10000
    TH1D* genphoton1Pt    = new TH1D("genphoton1Pt", "", 100, 0., 10000.);//
    TH1D* genphoton2Pt    = new TH1D("genphoton2Pt", "", 100, 0., 10000.);
-   TH1D* genphoton1Eta   = new TH1D("genphoton1Eta", "", 80, -2.8, 2.8);
-   TH1D* genphoton2Eta   = new TH1D("genphoton2Eta", "", 80, -2.8, 2.8);
-   TH1D* genphoton1Phi   = new TH1D("genphoton1Phi", "", 80, -3.5, 3.5);
-   TH1D* genphoton2Phi   = new TH1D("genphoton2Phi", "", 80, -3.5, 3.5);
-   TH1D* gendiphotoncosthetastar = new TH1D("gendiphotoncosthetastar", "", 80, -1.0, 1.0);
-   TH1D* genchidiphoton  = new TH1D("genchidiphoton", "", 80, 0, 50);
+   TH1D* genphoton1Eta   = new TH1D("genphoton1Eta", "", 70, -3.5, 3.5);
+   TH1D* genphoton2Eta   = new TH1D("genphoton2Eta", "", 70, -3.5, 3.5);
+   TH1D* genphoton1Phi   = new TH1D("genphoton1Phi", "", 70, -3.5, 3.5);
+   TH1D* genphoton2Phi   = new TH1D("genphoton2Phi", "", 70, -3.5, 3.5);
+   TH1D* gendiphotoncosthetastar = new TH1D("gendiphotoncosthetastar", "", 100, -1.0, 1.0);
+   TH1D* genchidiphoton  = new TH1D("genchidiphoton", "", 70, 0, 280);
 
-   TH1D* gendiphotonMinvisEBEB = new TH1D("gendiphotonMinvisEBEB", "", 100, 0., 13000.);// 100, 0, 10000
+   TH1D* gendiphotonMinvisEBEB = new TH1D("gendiphotonMinvisEBEB", "", 130, 0., 13000.);// 100, 0, 10000
    TH1D* genphoton1PtisEBEB = new TH1D("genphoton1PtisEBEB", "", 100, 0., 10000.);//
    TH1D* genphoton2PtisEBEB = new TH1D("genphoton2PtisEBEB", "", 100, 0., 10000.);
-   TH1D* genphoton1EtaisEBEB = new TH1D("genphoton1EtaisEBEB", "", 80, -2.8, 2.8);
-   TH1D* genphoton2EtaisEBEB = new TH1D("genphoton2EtaisEBEB", "", 80, -2.8, 2.8);
-   TH1D* genphoton1PhiisEBEB = new TH1D("genphoton1PhiisEBEB", "", 80, -3.5, 3.5);
-   TH1D* genphoton2PhiisEBEB = new TH1D("genphoton2PhiisEBEB", "", 80, -3.5, 3.5);
+   TH1D* genphoton1EtaisEBEB = new TH1D("genphoton1EtaisEBEB", "", 70, -3.5, 3.5);
+   TH1D* genphoton2EtaisEBEB = new TH1D("genphoton2EtaisEBEB", "", 70, -3.5, 3.5);
+   TH1D* genphoton1PhiisEBEB = new TH1D("genphoton1PhiisEBEB", "", 70, -3.5, 3.5);
+   TH1D* genphoton2PhiisEBEB = new TH1D("genphoton2PhiisEBEB", "", 70, -3.5, 3.5);
    TH1D* gendiphotoncosthetastarisEBEB = new TH1D("gendiphotoncosthetastarisEBEB", "", 100, -1.0, 1.0);
-   TH1D* genchidiphotonisEBEB  = new TH1D("genchidiphotonisEBEB", "", 80, 0, 50);
+   TH1D* genchidiphotonisEBEB  = new TH1D("genchidiphotonisEBEB", "", 70, 0, 280);
+
+   TH1D* gendiphotonMinvisEBEB_M2000 = new TH1D("gendiphotonMinvisEBEB_M2000", "", 130, 0., 13000.);// 100, 0, 10000
+   TH1D* genphoton1PtisEBEB_M2000 = new TH1D("genphoton1PtisEBEB_M2000", "", 100, 0., 10000.);//
+   TH1D* genphoton2PtisEBEB_M2000 = new TH1D("genphoton2PtisEBEB_M2000", "", 100, 0., 10000.);
+   TH1D* genphoton1EtaisEBEB_M2000 = new TH1D("genphoton1EtaisEBEB_M2000", "", 70, -3.5, 3.5);
+   TH1D* genphoton2EtaisEBEB_M2000 = new TH1D("genphoton2EtaisEBEB_M2000", "", 70, -3.5, 3.5);
+   TH1D* genphoton1PhiisEBEB_M2000 = new TH1D("genphoton1PhiisEBEB_M2000", "", 70, -3.5, 3.5);
+   TH1D* genphoton2PhiisEBEB_M2000 = new TH1D("genphoton2PhiisEBEB_M2000", "", 70, -3.5, 3.5);
+   TH1D* gendiphotoncosthetastarisEBEB_M2000 = new TH1D("gendiphotoncosthetastarisEBEB_M2000", "", 100, -1.0, 1.0);
+   TH1D* genchidiphotonisEBEB_M2000  = new TH1D("genchidiphotonisEBEB_M2000", "", 70, 0, 280);
 
    gendiphotonMinv->Sumw2();
    genphoton1Pt->Sumw2();
@@ -58,6 +68,16 @@ void ${ClassDiphoton}::Loop()
    genphoton2PhiisEBEB->Sumw2();
    gendiphotoncosthetastarisEBEB->Sumw2();
    genchidiphotonisEBEB->Sumw2();
+
+   gendiphotonMinvisEBEB_M2000->Sumw2();
+   genphoton1PtisEBEB_M2000->Sumw2();
+   genphoton2PtisEBEB_M2000->Sumw2();
+   genphoton1EtaisEBEB_M2000->Sumw2();
+   genphoton2EtaisEBEB_M2000->Sumw2();
+   genphoton1PhiisEBEB_M2000->Sumw2();
+   genphoton2PhiisEBEB_M2000->Sumw2();
+   gendiphotoncosthetastarisEBEB_M2000->Sumw2();
+   genchidiphotonisEBEB_M2000->Sumw2();
 
    TString fileout_name = "OUT${outputfile}.root";
    TString logfile = "LOG.txt";
@@ -104,6 +124,18 @@ void ${ClassDiphoton}::Loop()
           genphoton2PhiisEBEB->Fill(GenPhoton2_phi, weight);
           gendiphotoncosthetastarisEBEB->Fill(GenDiPhoton_cosThetaStar, weight);
           genchidiphotonisEBEB->Fill(GenDiPhoton_chiDiphoton, weight);
+
+          if (GenDiPhoton_Minv > 2000){
+            gendiphotonMinvisEBEB_M2000->Fill(GenDiPhoton_Minv, weight);
+            genphoton1PtisEBEB_M2000->Fill(GenPhoton1_pt, weight);
+            genphoton2PtisEBEB_M2000->Fill(GenPhoton2_pt, weight);
+            genphoton1EtaisEBEB_M2000->Fill(GenPhoton1_eta, weight);
+            genphoton2EtaisEBEB_M2000->Fill(GenPhoton2_eta, weight);
+            genphoton1PhiisEBEB_M2000->Fill(GenPhoton1_phi, weight);
+            genphoton2PhiisEBEB_M2000->Fill(GenPhoton2_phi, weight);
+            gendiphotoncosthetastarisEBEB_M2000->Fill(GenDiPhoton_cosThetaStar, weight);
+            genchidiphotonisEBEB_M2000->Fill(GenDiPhoton_chiDiphoton, weight);
+          }
         }
       }
    }
@@ -140,4 +172,14 @@ void ${ClassDiphoton}::Loop()
    genphoton2PhiisEBEB->Write();
    gendiphotoncosthetastarisEBEB->Write();
    genchidiphotonisEBEB->Write();
+
+   gendiphotonMinvisEBEB_M2000->Write();
+   genphoton1PtisEBEB_M2000->Write();
+   genphoton2PtisEBEB_M2000->Write();
+   genphoton1EtaisEBEB_M2000->Write();
+   genphoton2EtaisEBEB_M2000->Write();
+   genphoton1PhiisEBEB_M2000->Write();
+   genphoton2PhiisEBEB_M2000->Write();
+   gendiphotoncosthetastarisEBEB_M2000->Write();
+   genchidiphotonisEBEB_M2000->Write();
 }

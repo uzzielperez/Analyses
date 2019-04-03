@@ -24,8 +24,9 @@ sw.Start()
 DATASET = []
 numevents = 10000
 
-doGGPythia2017  = False
-doGGPythia2018  = True
+doGGtrimmed17 = False 
+doGGPythia2017  = True
+doGGPythia2018  = False
 doSM            = False
 doSMPythia      = False
 doADDTuneCUEP8M1 = False
@@ -36,14 +37,33 @@ run_analyzetemp = "analyze.C"
 
 xsecdict = {}
 
+if doGGtrimmed17:
+    tag = "trimmed17"
+    DATASET.append("/uscms_data/d3/cuperez/DiphotonEXO/CMSSW_10_2_1/src/outlocal/GG_M-500To1000_Pt70_TuneCP2_13TeV-pythia8_cfi_py_GEN.root")
+    DATASET.append("/uscms_data/d3/cuperez/DiphotonEXO/CMSSW_10_2_1/src/outlocal/GG_M-1000To2000_Pt70_TuneCP2_13TeV-pythia8_cfi_py_GEN.root")
+    DATASET.append("/uscms_data/d3/cuperez/DiphotonEXO/CMSSW_10_2_1/src/outlocal/GG_M-2000To4000_Pt70_TuneCP2_13TeV-pythia8_cfi_py_GEN.root")
+    DATASET.append("/uscms_data/d3/cuperez/DiphotonEXO/CMSSW_10_2_1/src/outlocal/GG_M-4000To13000_Pt70_TuneCP2_13TeV-pythia8_cfi_py_GEN.root")
+
+    xsecdict_temp = {
+        "GG_M-500To1000_Pt70_TuneCP2_13TeV-pythia8_cfi_py" :  1.344e-01+-5.763e-04,
+        "GG_M-1000To2000_Pt70_TuneCP2_13TeV-pythia8_cfi_py" :  1.359e-02+-6.089e-05,
+        "GG_M-2000To4000_Pt70_TuneCP2_13TeV-pythia8_cfi_py" :  6.696e-04+-3.028e-06,
+        "GG_M-4000To13000_Pt70_TuneCP2_13TeV-pythia8_cfi_py" :  8.757e-06+-4.183e-08,
+    }
+    xsecdict.update(xsecdict_temp)
+
 if doGGPythia2017:
     tag = "2017"
-    DATASET.append("/uscms_data/d3/cuperez/DiphotonEXO/CMSSW_10_2_1/src/outlocal/GG_M-6000To8000_Pt50_TuneCP2_13TeV-pythia8_cfi_2017_py_GEN.root")
-    DATASET.append("/uscms_data/d3/cuperez/DiphotonEXO/CMSSW_10_2_1/src/outlocal/GG_M-4000To6000_Pt50_TuneCP2_13TeV-pythia8_cfi_2017_py_GEN.root")
-    DATASET.append("/uscms_data/d3/cuperez/DiphotonEXO/CMSSW_10_2_1/src/outlocal/GG_M-1000To2000_Pt50_TuneCP2_13TeV-pythia8_cfi_2017_py_GEN.root")
-    DATASET.append("/uscms_data/d3/cuperez/DiphotonEXO/CMSSW_10_2_1/src/outlocal/GG_M-2000To4000_Pt50_TuneCP2_13TeV-pythia8_cfi_2017_py_GEN.root")
-    DATASET.append("/uscms_data/d3/cuperez/DiphotonEXO/CMSSW_10_2_1/src/outlocal/GG_M-8000To13000_Pt50_TuneCP2_13TeV-pythia8_cfi_2017_py_GEN.root")
+    DATASET.append("/uscms_data/d3/cuperez/DiphotonEXO/CMSSW_10_2_1/src/outlocal/GG_M-500To1000_Pt50_TuneCP2_13TeV-pythia8_cfi_2017_py_GEN.root")
+    # DATASET.append("/uscms_data/d3/cuperez/DiphotonEXO/CMSSW_10_2_1/src/outlocal/GG_M-6000To8000_Pt50_TuneCP2_13TeV-pythia8_cfi_2017_py_GEN.root")
+    # DATASET.append("/uscms_data/d3/cuperez/DiphotonEXO/CMSSW_10_2_1/src/outlocal/GG_M-4000To6000_Pt50_TuneCP2_13TeV-pythia8_cfi_2017_py_GEN.root")
+    # DATASET.append("/uscms_data/d3/cuperez/DiphotonEXO/CMSSW_10_2_1/src/outlocal/GG_M-1000To2000_Pt50_TuneCP2_13TeV-pythia8_cfi_2017_py_GEN.root")
+    # DATASET.append("/uscms_data/d3/cuperez/DiphotonEXO/CMSSW_10_2_1/src/outlocal/GG_M-2000To4000_Pt50_TuneCP2_13TeV-pythia8_cfi_2017_py_GEN.root")
+    # DATASET.append("/uscms_data/d3/cuperez/DiphotonEXO/CMSSW_10_2_1/src/outlocal/GG_M-8000To13000_Pt50_TuneCP2_13TeV-pythia8_cfi_2017_py_GEN.root")
     xsecdict_temp = {
+        "GG_M-60To200_Pt50_TuneCP2_13TeV-pythia8_cfi_2017" :  6.756e+00+-3.063e-02,
+        "GG_M-200To500_Pt50_TuneCP2_13TeV-pythia8_cfi_2017" :  2.183e+00+-9.625e-03,
+        "GG_M-500To1000_Pt50_TuneCP2_13TeV-pythia8_cfi_2017" :  1.594e-01 +- 6.758e-04,
         "GG_M-6000To8000_Pt50_TuneCP2_13TeV-pythia8_cfi_2017"  :  3.367e-07+-1.497e-09,
         "GG_M-4000To6000_Pt50_TuneCP2_13TeV-pythia8_cfi_2017"  :  9.489e-06+-4.149e-08,
         "GG_M-1000To2000_Pt50_TuneCP2_13TeV-pythia8_cfi_2017"  :  1.577e-02+-7.006e-05,
@@ -54,12 +74,15 @@ if doGGPythia2017:
 
 if doGGPythia2018:
     tag = "2018"
+    DATASET.append("/uscms_data/d3/cuperez/DiphotonEXO/CMSSW_10_2_1/src/outlocal/GG_M-500To1000_Pt50_TuneCP2_13TeV-pythia8_cfi_py_GEN.root")
     DATASET.append("/uscms_data/d3/cuperez/DiphotonEXO/CMSSW_10_2_1/src/outlocal/GG_M-6000To8000_Pt50_TuneCP2_13TeV-pythia8_cfi_py_GEN.root")
     DATASET.append("/uscms_data/d3/cuperez/DiphotonEXO/CMSSW_10_2_1/src/outlocal/GG_M-4000To6000_Pt50_TuneCP2_13TeV-pythia8_cfi_py_GEN.root")
     DATASET.append("/uscms_data/d3/cuperez/DiphotonEXO/CMSSW_10_2_1/src/outlocal/GG_M-1000To2000_Pt50_TuneCP2_13TeV-pythia8_cfi_py_GEN.root")
     DATASET.append("/uscms_data/d3/cuperez/DiphotonEXO/CMSSW_10_2_1/src/outlocal/GG_M-2000To4000_Pt50_TuneCP2_13TeV-pythia8_cfi_py_GEN.root")
     DATASET.append("/uscms_data/d3/cuperez/DiphotonEXO/CMSSW_10_2_1/src/outlocal/GG_M-8000To13000_Pt50_TuneCP2_13TeV-pythia8_cfi_py_GEN.root")
     xsecdict_temp = {
+        "GG_M-60To200_Pt50_TuneCP2_13TeV-pythia8_cfi_py" :  6.747e+00+-3.069e-02,
+        "GG_M-200To500_Pt50_TuneCP2_13TeV-pythia8_cfi_py" :  2.169e+00+-9.540e-03,
         "GG_M-4000To6000_Pt50_TuneCP2_13TeV-pythia8_cfi_py" :  9.550e-06+-4.183e-08,
         "GG_M-1000To2000_Pt50_TuneCP2_13TeV-pythia8_cfi_py" :  1.558e-02+-6.959e-05,
         "GG_M-500To1000_Pt50_TuneCP2_13TeV-pythia8_cfi_py" :  1.604e-01+-6.792e-04,
@@ -68,7 +91,6 @@ if doGGPythia2018:
         "GG_M-8000To13000_Pt50_TuneCP2_13TeV-pythia8_cfi_py" :  9.455e-09+-4.653e-11,
     }
     xsecdict.update(xsecdict_temp)
-
 
 if doSMPythia:
     DATASET.append("TestSM_pT70_M-500-1000_py_GEN.root")
@@ -82,6 +104,7 @@ if doSMPythia:
         "SM_pT70_M-4000" :  8.623e-06+-4.134e-08,
     }
     xsecdict.update(xsecdict_temp)
+
 if doADDTuneCUEP8M1:
     DATASET.append("/uscms_data/d3/cuperez/DiphotonEXO/CMSSW_10_2_1/src/Nout/ADDGravToGG_NegInt-1_LambdaT-6000_M-2000To4000_TuneCUEP8M1_13TeV-pythia8_cfi_py_GEN.root")
     DATASET.append("/uscms_data/d3/cuperez/DiphotonEXO/CMSSW_10_2_1/src/Nout/ADDGravToGG_NegInt-1_LambdaT-6000_M-500To1000_TuneCUEP8M1_13TeV-pythia8_cfi_py_GEN.root")
@@ -110,7 +133,7 @@ for dset in DATASET:
     pattern = "/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/([^(]*)_13TeV-sherpa/crab"
     if doGGPythia2017:
             pattern = "/uscms_data/d3/cuperez/DiphotonEXO/CMSSW_10_2_1/src/outlocal/([^(]*)_py_GEN.root"
-    if doGGPythia2018:
+    if doGGPythia2018 or doGGtrimmed17:
             pattern = "/uscms_data/d3/cuperez/DiphotonEXO/CMSSW_10_2_1/src/outlocal/([^(]*)_GEN.root"
     if doSMPythia:
         pattern = "Test([^(]*)_py_GEN.root"
