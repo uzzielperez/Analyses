@@ -1,0 +1,1 @@
+root://cmseos.fnal.gov//eos/uscms/store/user/cuperez/DiPhotonAnalysis/EGammaData/EGamma/store/user/cuperez/DiPhotonAnalysis/EGammaData/EGamma/crab_EGamma__Run2018D-PromptReco-v2__MINIAOD_json_Run2018Dv2_324209-324420/181026_075950/0000

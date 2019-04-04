@@ -1,0 +1,15 @@
+root://cmseos.fnal.gov//eos/uscms/store/user/cuperez/DiPhotonAnalysis/EGammaData/EGamma/crab_EGamma__Run2018A-PromptReco-v1__MINIAOD_json_Run2018Dv2_324420/181026_075106/0000
+root://cmseos.fnal.gov//eos/uscms/store/user/cuperez/DiPhotonAnalysis/EGammaData/EGamma/crab_EGamma__Run2018A-PromptReco-v1__MINIAOD_json_Run2018Dv2_324420/181026_075106/0001
+root://cmseos.fnal.gov//eos/uscms/store/user/cuperez/DiPhotonAnalysis/EGammaData/EGamma/crab_EGamma__Run2018A-PromptReco-v2__MINIAOD_json_Run2018Dv2_324420/181026_075121/0000
+root://cmseos.fnal.gov//eos/uscms/store/user/cuperez/DiPhotonAnalysis/EGammaData/EGamma/crab_EGamma__Run2018A-PromptReco-v3__MINIAOD_json_Run2018Dv2_324420/181026_075140/0000
+root://cmseos.fnal.gov//eos/uscms/store/user/cuperez/DiPhotonAnalysis/EGammaData/EGamma/crab_EGamma__Run2018B-PromptReco-v1__MINIAOD_json_Run2018Dv2_324420/181026_075157/0000
+root://cmseos.fnal.gov//eos/uscms/store/user/cuperez/DiPhotonAnalysis/EGammaData/EGamma/crab_EGamma__Run2018B-PromptReco-v1__MINIAOD_json_Run2018Dv2_324420/181026_075157/0001
+root://cmseos.fnal.gov//eos/uscms/store/user/cuperez/DiPhotonAnalysis/EGammaData/EGamma/crab_EGamma__Run2018B-PromptReco-v2__MINIAOD_json_Run2018Dv2_324420/181026_075214/0000
+root://cmseos.fnal.gov//eos/uscms/store/user/cuperez/DiPhotonAnalysis/EGammaData/EGamma/crab_EGamma__Run2018C-PromptReco-v1__MINIAOD_json_Run2018Dv2_324420/181026_075230/0000
+root://cmseos.fnal.gov//eos/uscms/store/user/cuperez/DiPhotonAnalysis/EGammaData/EGamma/crab_EGamma__Run2018C-PromptReco-v2__MINIAOD_json_Run2018Dv2_324420/181026_075245/0000
+root://cmseos.fnal.gov//eos/uscms/store/user/cuperez/DiPhotonAnalysis/EGammaData/EGamma/crab_EGamma__Run2018C-PromptReco-v3__MINIAOD_json_Run2018Dv2_324420/181026_204714/0000
+root://cmseos.fnal.gov//eos/uscms/store/user/cuperez/DiPhotonAnalysis/EGammaData/EGamma/crab_EGamma__Run2018D-PromptReco-v2__MINIAOD_json_Run2018Dv2_324420/181029_042341/0000
+root://cmseos.fnal.gov//eos/uscms/store/user/cuperez/DiPhotonAnalysis/EGammaData/EGamma/crab_EGamma__Run2018D-PromptReco-v2__MINIAOD_json_Run2018Dv2_324420/181029_042341/0001
+root://cmseos.fnal.gov//eos/uscms/store/user/cuperez/DiPhotonAnalysis/EGammaData/EGamma/crab_EGamma__Run2018D-PromptReco-v2__MINIAOD_json_Run2018Dv2_324420/181029_042341/0002
+root://cmseos.fnal.gov//eos/uscms/store/user/cuperez/DiPhotonAnalysis/EGammaData/EGamma/crab_EGamma__Run2018D-PromptReco-v2__MINIAOD_json_Run2018Dv2_324420/181029_042341/0003
+root://cmseos.fnal.gov//eos/uscms/store/user/cuperez/DiPhotonAnalysis/EGammaData/EGamma/crab_EGamma__Run2018D-PromptReco-v2__MINIAOD_json_Run2018Dv2_324420/181029_042341/0004
