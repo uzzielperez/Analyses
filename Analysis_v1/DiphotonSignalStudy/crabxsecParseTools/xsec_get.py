@@ -1,6 +1,6 @@
 import os
 import sys
-import re 
+import re
 import argparse
 from Parsefunctions import *
 
@@ -27,36 +27,37 @@ lines = f.read().split('\n') #list containing each line
 lines = lines[:-1] #to exclude last slots in lines which is white space
 
 if args.delete:
+	print "\n"
 	print "Cleaning directory.."
-	print "Run python xsec_get.py -r to get cross sections (-v for verbose)"
+	#print "Run python xsec_get.py -r to get cross sections (-v for verbose)"
 	os.system("rm -rf ADD*")
 	os.system("rm -rf RSG*")
 	os.system("rm -rf GluGlu*")
-
-for line in lines:	
-	pattern = r'DiPhotonAnalysis/xsec/([^(]*)/crab' 
+	print "CLEANED Directory"
+for line in lines:
+	pattern = r'DiPhotonAnalysis/xsec/([^(]*)/crab'
 	if args.timestamped:
 		print pattern
 		pattern = r'ciperez/([^(]*)/crab'
-	match = re.findall(pattern, line)	
+	match = re.findall(pattern, line)
 	dataset = match[0]
 	tagpattern = 'cmsRun_([^(]*).log.tar.gz'
 	tag = re.findall(tagpattern, line)
-	tarredsets = ".".join((dataset+tag[0], "tar.gz")) 
+	tarredsets = ".".join((dataset+tag[0], "tar.gz"))
 
-	# Copy the output 
+	# Copy the output
 	cmd = 'xrdcp %s %s' %(line, tarredsets)
 	tarcmd = 'tar -xvf %s -C %s' %(tarredsets, dataset)
 
 	if args.run:
 		os.system(cmd)
-		if not os.path.exists(dataset):	
+		if not os.path.exists(dataset):
 			mkdircmd = 'mkdir %s' %(dataset)
-			os.system(mkdircmd)	
-		os.system(tarcmd)  
+			os.system(mkdircmd)
+		os.system(tarcmd)
 	if args.delete:
-		os.system("rm -rf %s*" %(dataset))	
-	if args.verbose:	
+		os.system("rm -rf %s*" %(dataset))
+	if args.verbose:
 		print cmd
 		print tarcmd
 
@@ -68,7 +69,7 @@ if args.parse:
 			print dirdset
 			f.write("DATASET NAME: "+ dirdset+"\n")
 			os.chdir(dirdset)
-			for logfile in os.listdir('.'):	
+			for logfile in os.listdir('.'):
 				if "cmsRun-stdout" in logfile:
 					info = xsecParse(logfile, dirdset)
 					print info
@@ -85,7 +86,7 @@ if args.average:
 				print dirdset
 			os.chdir(dirdset)
 			Ntotal, xsws, dws = 0., 0., 0.
-			for logfile in os.listdir('.'):	
+			for logfile in os.listdir('.'):
 				if "cmsRun-stdout" in logfile:
 					info = xsecParse(logfile, dirdset)
 					#print info
@@ -98,14 +99,14 @@ if args.average:
 					xsec_weightedSum  = float(xsec)*float(nevts)
 					delta_weightedSum = float(delta)*float(nevts)
 					if args.verbose:
-						print xsec, delta, nevts  
+						print xsec, delta, nevts
 					Ntotal = Ntotal + float(nevts)
-					xsws = xsws + xsec_weightedSum 
+					xsws = xsws + xsec_weightedSum
 					dws  = dws  + delta_weightedSum
 			xsec_ave = format(xsws/Ntotal, "10.3e")
-			delt_ave = format(dws/Ntotal, "10.3e")	
+			delt_ave = format(dws/Ntotal, "10.3e")
 			if args.verbose:
-				print "Ntotal: ", Ntotal, ";Average xsec +- deltaxsec:", xsec_ave, delt_ave 
+				print "Ntotal: ", Ntotal, ";Average xsec +- deltaxsec:", xsec_ave, delt_ave
 		   	hardcode_txt = 'if(sample.Contains("%s")) xsec = %s;' %(dirdset, xsec_ave)
 			xf.write(hardcode_txt+"\n")
 		#	if "ADD" in dirdset:
@@ -116,4 +117,3 @@ if args.average:
 if args.sort:
 	SortbyDatasetName("FileXSEC.txt")
 	os.system("cat sorted_FileXSEC.txt")
-
