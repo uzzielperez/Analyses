@@ -24,11 +24,11 @@ sw.Start()
 DATASET = []
 
 doSM          = False
-doADD         = True
+doADD         = False
 doUnparticles = False
 
 doSherpaADD   = False
-doSherpaADDang = False
+doSherpaADDang = True
 
 #runnumevent = 10000
 
@@ -41,8 +41,8 @@ if args.cuts is not None:
     class_Ctemp = "ClassAngCutsStudy.C"
     MinvCut     =  args.cuts# Basic cut is 500 GeV
     print "Applying invariant mass cut > %s" %(MinvCut)
-    if doSherpaADDang:
-        class_Ctemp = "ClassAngCutsStudySherpa.C"
+    #if doSherpaADDang:
+        #class_Ctemp = "ClassAngCutsStudySherpa.C"
 
 if doSM:
     # DATASET.append("/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/GGJets_M-60To200_Pt-50_13TeV-sherpa/crab_GGJets_M-60To200_Pt-50_13TeV-sherpa__Fall17_PU2017-v1__MINIAODSIM/190304_071350/0000")
@@ -63,34 +63,49 @@ if doSM:
     # DATASET.append("/store/user/cawest/GGJets_M-8000To13000_Pt-50_13TeV-sherpa/crab_GGJets_M-8000To13000_Pt-50_13TeV-sherpa__Fall17_PU2017-v1__MINIAODSIM/190131_195356/0000")
 if doADD:
     #DATASET.append('/store/user/cuperez/DiPhotonAnalysis/signal-2018/ADDGravToGG_NegInt-0_LambdaT-10000_M-2000To4000_TuneCP2_13TeV-pythia8/crab_ADDGravToGG_NegInt-0_LambdaT-10000_M-2000To4000_TuneCP2_13TeV-pythia8__Fall17_PU2017-v1__MINIAODSIM/190207_171204/0000')
-    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_NegInt-1_LambdaT-13000_M-500To1000_TuneCP2_13TeV-pythia8/crab_ADDGravToGG_NegInt-1_LambdaT-13000_M-500To1000_TuneCP2_13TeV-pythia8__Fall17_PU2017-v1__MINIAODSIM/190304_071943/0000')
-    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_NegInt-1_LambdaT-13000_M-1000To2000_TuneCP2_13TeV-pythia8/crab_ADDGravToGG_NegInt-1_LambdaT-13000_M-1000To2000_TuneCP2_13TeV-pythia8__Fall17_PU2017-v1__MINIAODSIM/190304_071907/0000')
-    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_NegInt-1_LambdaT-13000_M-2000To4000_TuneCP2_13TeV-pythia8/crab_ADDGravToGG_NegInt-1_LambdaT-13000_M-2000To4000_TuneCP2_13TeV-pythia8__Fall17_PU2017-v1__MINIAODSIM/190304_071921/0000')
-    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_NegInt-1_LambdaT-13000_M-4000To13000_TuneCP2_13TeV-pythia8/crab_ADDGravToGG_NegInt-1_LambdaT-13000_M-4000To13000_TuneCP2_13TeV-pythia8__Fall17_PU2017-v1__MINIAODSIM/190304_071932/0000')
+    #DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_NegInt-1_LambdaT-13000_M-500To1000_TuneCP2_13TeV-pythia8/crab_ADDGravToGG_NegInt-1_LambdaT-13000_M-500To1000_TuneCP2_13TeV-pythia8__Fall17_PU2017-v1__MINIAODSIM/190304_071943/0000')
+    #DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_NegInt-1_LambdaT-13000_M-1000To2000_TuneCP2_13TeV-pythia8/crab_ADDGravToGG_NegInt-1_LambdaT-13000_M-1000To2000_TuneCP2_13TeV-pythia8__Fall17_PU2017-v1__MINIAODSIM/190304_071907/0000')
+    #DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_NegInt-1_LambdaT-13000_M-2000To4000_TuneCP2_13TeV-pythia8/crab_ADDGravToGG_NegInt-1_LambdaT-13000_M-2000To4000_TuneCP2_13TeV-pythia8__Fall17_PU2017-v1__MINIAODSIM/190304_071921/0000')
+    #DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_NegInt-1_LambdaT-13000_M-4000To13000_TuneCP2_13TeV-pythia8/crab_ADDGravToGG_NegInt-1_LambdaT-13000_M-4000To13000_TuneCP2_13TeV-pythia8__Fall17_PU2017-v1__MINIAODSIM/190304_071932/0000')
+
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_NegInt-1_LambdaT-10000_M-1000To2000_TuneCP2_13TeV-pythia8/crab_ADDGravToGG_NegInt-1_LambdaT-10000_M-1000To2000_TuneCP2_13TeV-pythia8__Fall17_PU2017-v1__MINIAODSIM/190319_071912/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_NegInt-1_LambdaT-10000_M-2000To4000_TuneCP2_13TeV-pythia8/crab_ADDGravToGG_NegInt-1_LambdaT-10000_M-2000To4000_TuneCP2_13TeV-pythia8__Fall17_PU2017-v1__MINIAODSIM/190319_071922/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_NegInt-1_LambdaT-10000_M-4000To10000_TuneCP2_13TeV-pythia8/crab_ADDGravToGG_NegInt-1_LambdaT-10000_M-4000To10000_TuneCP2_13TeV-pythia8__Fall17_PU2017-v1__MINIAODSIM/190319_071937/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_NegInt-1_LambdaT-10000_M-500To1000_TuneCP2_13TeV-pythia8/crab_ADDGravToGG_NegInt-1_LambdaT-10000_M-500To1000_TuneCP2_13TeV-pythia8__Fall17_PU2017-v1__MINIAODSIM/190319_071947/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_NegInt-1_LambdaT-6000_M-1000To2000_TuneCP2_13TeV-pythia8/crab_ADDGravToGG_NegInt-1_LambdaT-6000_M-1000To2000_TuneCP2_13TeV-pythia8__Fall17_PU2017-v1__MINIAODSIM/190319_071956/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_NegInt-1_LambdaT-6000_M-2000To4000_TuneCP2_13TeV-pythia8/crab_ADDGravToGG_NegInt-1_LambdaT-6000_M-2000To4000_TuneCP2_13TeV-pythia8__Fall17_PU2017-v1__MINIAODSIM/190319_072009/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_NegInt-1_LambdaT-6000_M-4000To6000_TuneCP2_13TeV-pythia8/crab_ADDGravToGG_NegInt-1_LambdaT-6000_M-4000To6000_TuneCP2_13TeV-pythia8__Fall17_PU2017-v1__MINIAODSIM/190319_072020/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_NegInt-1_LambdaT-6000_M-500To1000_TuneCP2_13TeV-pythia8/crab_ADDGravToGG_NegInt-1_LambdaT-6000_M-500To1000_TuneCP2_13TeV-pythia8__Fall17_PU2017-v1__MINIAODSIM/190319_072030/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_NegInt-1_LambdaT-8000_M-1000To2000_TuneCP2_13TeV-pythia8/crab_ADDGravToGG_NegInt-1_LambdaT-8000_M-1000To2000_TuneCP2_13TeV-pythia8__Fall17_PU2017-v1__MINIAODSIM/190319_072040/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_NegInt-1_LambdaT-8000_M-2000To4000_TuneCP2_13TeV-pythia8/crab_ADDGravToGG_NegInt-1_LambdaT-8000_M-2000To4000_TuneCP2_13TeV-pythia8__Fall17_PU2017-v1__MINIAODSIM/190319_072050/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_NegInt-1_LambdaT-8000_M-4000To8000_TuneCP2_13TeV-pythia8/crab_ADDGravToGG_NegInt-1_LambdaT-8000_M-4000To8000_TuneCP2_13TeV-pythia8__Fall17_PU2017-v1__MINIAODSIM/190319_072100/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_NegInt-1_LambdaT-8000_M-500To1000_TuneCP2_13TeV-pythia8/crab_ADDGravToGG_NegInt-1_LambdaT-8000_M-500To1000_TuneCP2_13TeV-pythia8__Fall17_PU2017-v1__MINIAODSIM/190319_072110/0000')
 
 if doSherpaADDang:
     DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_MS-10000_NED-4_KK-1_M-1000To2000_13TeV-sherpa/crab_ADDGravToGG_MS-10000_NED-4_KK-1_M-1000To2000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/190315_055305/0000')
     DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_MS-10000_NED-4_KK-1_M-2000To4000_13TeV-sherpa/crab_ADDGravToGG_MS-10000_NED-4_KK-1_M-2000To4000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/190315_055324/0000')
     DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_MS-10000_NED-4_KK-1_M-4000To10000_13TeV-sherpa/crab_ADDGravToGG_MS-10000_NED-4_KK-1_M-4000To10000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/190315_055335/0000')
     DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_MS-10000_NED-4_KK-1_M-500To1000_13TeV-sherpa/crab_ADDGravToGG_MS-10000_NED-4_KK-1_M-500To1000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/190315_055346/0000')
-    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_MS-11000_NED-4_KK-1_M-1000To2000_13TeV-sherpa/crab_ADDGravToGG_MS-11000_NED-4_KK-1_M-1000To2000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/190315_055357/0000')
-    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_MS-11000_NED-4_KK-1_M-2000To4000_13TeV-sherpa/crab_ADDGravToGG_MS-11000_NED-4_KK-1_M-2000To4000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/190315_055408/0000')
-    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_MS-11000_NED-4_KK-1_M-4000To11000_13TeV-sherpa/crab_ADDGravToGG_MS-11000_NED-4_KK-1_M-4000To11000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/190315_055419/0000')
-    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_MS-11000_NED-4_KK-1_M-500To1000_13TeV-sherpa/crab_ADDGravToGG_MS-11000_NED-4_KK-1_M-500To1000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/190315_055429/0000')
+    # DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_MS-11000_NED-4_KK-1_M-1000To2000_13TeV-sherpa/crab_ADDGravToGG_MS-11000_NED-4_KK-1_M-1000To2000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/190315_055357/0000')
+    # DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_MS-11000_NED-4_KK-1_M-2000To4000_13TeV-sherpa/crab_ADDGravToGG_MS-11000_NED-4_KK-1_M-2000To4000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/190315_055408/0000')
+    # DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_MS-11000_NED-4_KK-1_M-4000To11000_13TeV-sherpa/crab_ADDGravToGG_MS-11000_NED-4_KK-1_M-4000To11000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/190315_055419/0000')
+    # DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_MS-11000_NED-4_KK-1_M-500To1000_13TeV-sherpa/crab_ADDGravToGG_MS-11000_NED-4_KK-1_M-500To1000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/190315_055429/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_MS-6000_NED-4_KK-1_M-1000To2000_13TeV-sherpa/crab_ADDGravToGG_MS-6000_NED-4_KK-1_M-1000To2000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/190316_021039/0000')
+    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_MS-6000_NED-4_KK-1_M-2000To4000_13TeV-sherpa/crab_ADDGravToGG_MS-6000_NED-4_KK-1_M-2000To4000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/190316_021500/0000')
     DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_MS-6000_NED-4_KK-1_M-4000To6000_13TeV-sherpa/crab_ADDGravToGG_MS-6000_NED-4_KK-1_M-4000To6000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/190315_055019/0000')
     DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_MS-6000_NED-4_KK-1_M-500To1000_13TeV-sherpa/crab_ADDGravToGG_MS-6000_NED-4_KK-1_M-500To1000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/190315_055030/0000')
     #  DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_MS-7000_NED-4_KK-1_M-1000To2000_13TeV-sherpa/crab_ADDGravToGG_MS-7000_NED-4_KK-1_M-1000To2000_13TeV-sherpa__80XMniAODv2__MINIAODSIM')
-    #  DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_MS-7000_NED-4_KK-1_M-2000To4000_13TeV-sherpa/crab_ADDGravToGG_MS-7000_NED-4_KK-1_M-2000To4000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/190315_055055/0000')
-    #  DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_MS-7000_NED-4_KK-1_M-4000To7000_13TeV-sherpa/crab_ADDGravToGG_MS-7000_NED-4_KK-1_M-4000To7000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/190315_055107/0000')
+    # DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_MS-7000_NED-4_KK-1_M-2000To4000_13TeV-sherpa/crab_ADDGravToGG_MS-7000_NED-4_KK-1_M-2000To4000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/190315_055055/0000')
+    # DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_MS-7000_NED-4_KK-1_M-4000To7000_13TeV-sherpa/crab_ADDGravToGG_MS-7000_NED-4_KK-1_M-4000To7000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/190315_055107/0000')
     #  DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_MS-7000_NED-4_KK-1_M-500To1000_13TeV-sherpa/crab_ADDGravToGG_MS-7000_NED-4_KK-1_M-500To1000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/190315_055123/0000')
     DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_MS-8000_NED-4_KK-1_M-1000To2000_13TeV-sherpa/crab_ADDGravToGG_MS-8000_NED-4_KK-1_M-1000To2000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/190315_055136/0000')
     DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_MS-8000_NED-4_KK-1_M-2000To4000_13TeV-sherpa/crab_ADDGravToGG_MS-8000_NED-4_KK-1_M-2000To4000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/190315_055147/0000')
     DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_MS-8000_NED-4_KK-1_M-4000To8000_13TeV-sherpa/crab_ADDGravToGG_MS-8000_NED-4_KK-1_M-4000To8000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/190315_055158/0000')
     DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_MS-8000_NED-4_KK-1_M-500To1000_13TeV-sherpa/crab_ADDGravToGG_MS-8000_NED-4_KK-1_M-500To1000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/190315_055209/0000')
-    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_MS-9000_NED-4_KK-1_M-1000To2000_13TeV-sherpa/crab_ADDGravToGG_MS-9000_NED-4_KK-1_M-1000To2000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/190315_055219/0000')
-    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_MS-9000_NED-4_KK-1_M-2000To4000_13TeV-sherpa/crab_ADDGravToGG_MS-9000_NED-4_KK-1_M-2000To4000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/190315_055232/0000')
-    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_MS-9000_NED-4_KK-1_M-4000To9000_13TeV-sherpa/crab_ADDGravToGG_MS-9000_NED-4_KK-1_M-4000To9000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/190315_055243/0000')
-    DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_MS-9000_NED-4_KK-1_M-500To1000_13TeV-sherpa/crab_ADDGravToGG_MS-9000_NED-4_KK-1_M-500To1000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/190315_055254/0000')
+    # DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_MS-9000_NED-4_KK-1_M-1000To2000_13TeV-sherpa/crab_ADDGravToGG_MS-9000_NED-4_KK-1_M-1000To2000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/190315_055219/0000')
+    # DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_MS-9000_NED-4_KK-1_M-2000To4000_13TeV-sherpa/crab_ADDGravToGG_MS-9000_NED-4_KK-1_M-2000To4000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/190315_055232/0000')
+    # DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_MS-9000_NED-4_KK-1_M-4000To9000_13TeV-sherpa/crab_ADDGravToGG_MS-9000_NED-4_KK-1_M-4000To9000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/190315_055243/0000')
+    # DATASET.append('/store/user/cuperez/DiPhotonAnalysis/ExoANDiphoton/ADDGravToGG_MS-9000_NED-4_KK-1_M-500To1000_13TeV-sherpa/crab_ADDGravToGG_MS-9000_NED-4_KK-1_M-500To1000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/190315_055254/0000')
 
 if doSherpaADD:
     DATASET.append('/store/user/cawest/ADDGravToGG_MS-10000_NED-2_KK-1_M-1000To2000_13TeV-sherpa/crab_ADDGravToGG_MS-10000_NED-2_KK-1_M-1000To2000_13TeV-sherpa__80XMiniAODv2__MINIAODSIM/181106_183351/0000')
@@ -228,11 +243,11 @@ for dset in DATASET:
     nametag   = match[0].replace('-', '_')
 
     setMmax = False
-    if doSherpaADDang:
-        pttn =  "ADDGravToGG_MS-([^(]*)_NED"
-        newmatch = re.findall(pttn, match[0])
-        Mmax = newmatch[0]
-        setMmax = True
+    #if doSherpaADDang:
+        #pttn =  "ADDGravToGG_MS-([^(]*)_NED"
+        #newmatch = re.findall(pttn, match[0])
+        #Mmax = newmatch[0]
+        #setMmax = True
 
     if args.cuts is not None:
         nametag = nametag + "mgg_"+str(MinvCut)
@@ -297,26 +312,6 @@ if args.run:
     RunAnalyze(os.listdir('.'))
 if args.delete:
     DelClassFiles(os.listdir('.'))
-
-# def RunAnalyze(file_list):
-# 	for anFile in file_list:
-# 		if anFile.startswith("analyze_") and anFile.endswith(".C"):
-# 			root_cmd = "root -l -q %s" %(anFile)
-# 			os.system(root_cmd)
-# def DelClassFiles(file_list):
-#     for classFile in file_list:
-#         if "Class_" in classFile:
-#             del_cmd = "rm %s" %(classFile)
-#             os.system(del_cmd)
-#         if classFile.startswith("analyze_") and classFile.endswith(".C"):
-#             del_cmd = "rm %s" %(classFile)
-#             os.system(del_cmd)
-#     print "deleted auxilliary files"
-#
-# if action == "run":
-#     RunAnalyze(os.listdir('.'))
-# if action == "del":
-#     DelClassFiles(os.listdir('.'))
 
 sw.Stop()
 print "Real time: " + str(sw.RealTime() / 60.0) + " minutes"
