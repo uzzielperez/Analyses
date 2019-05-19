@@ -18,9 +18,20 @@ void ${ClassDiphotonSignal}::Loop()
    int isEEEB = 0;
    int isEEEE = 0;
    double NisGood = 0;
-   double efficiency = 0; 
+   double efficiency = 0;
+   int npTcut = 0;
 
-   TString logfile = "LOG.txt";
+   double pTCut = 75.0; // default analyzer 75
+
+   TString logfile = "LOG.csv";
+   ofstream outfile;
+   outfile.open(logfile, ios::app);
+   //outfile << "Sample,Ntotal,NisGood,isGoodfrac,nEBEB,nEBEEorEEEB,nEEEE,npTcut"<<endl;
+
+   TString pTeventLog = "pTeventlog.csv";
+   ofstream pToutfile;
+   pToutfile.open(pTeventLog, ios::app);
+
 
    // Event Loop
    Long64_t nbytes = 0, nb = 0;
@@ -33,9 +44,20 @@ void ${ClassDiphotonSignal}::Loop()
       double weight = Event_weightAll;
       if(jentry%10000 == 0) cout << "Number of processed events: " << jentry << endl;
       // Only look at eventw with two true photons
-      if (isGood)
+
+      //if ((Photon1_pt > pTCut) && (Photon2_pt > pTCut))  npTcut = npTcut + 1;
+      if  (isGood)
+      //if ( isGood && (Photon1_pt > pTCut) && (Photon2_pt > pTCut))
       {
-	NisGood = NisGood + 1;
+        NisGood = NisGood + 1;
+        npTcut = npTcut + 1;
+        // cout << "${nametag}" << "," << Event_run << "," << Event_evnum << "," << Photon1_pt << "," <<  Photon2_pt << "," << Diphoton_Minv << endl;
+        pToutfile << "${nametag}" << "," << Event_run << "," << Event_evnum << "," << Photon1_pt << "," <<  Photon2_pt << "," << Diphoton_Minv << endl;
+
+        // if ((Photon1_pt < pTCut) || (Photon2_pt <  pTCut)){
+        //   pToutfile << "${nametag}" << "," << Event_run << "," << Event_evnum << "," << Photon1_pt << "," <<  Photon2_pt << "," << Diphoton_Minv << endl;
+        //   pToutfile.close();
+        // }
 
         if (((std::abs(Photon1_eta)<1.442) && (1.566 < std::abs(Photon2_eta) && std::abs(Photon2_eta) < 2.5)) || ((1.566 < std::abs(Photon1_eta) && std::abs(Photon1_eta) < 2.5) && (std::abs(Photon2_eta) < 1.4442))) isEBEEorEEEB = isEBEEorEEEB + 1;
         if ((1.566 < std::abs(Photon1_eta) && std::abs(Photon1_eta) < 2.5) && (1.566 < std::abs(Photon2_eta) && std::abs(Photon2_eta) < 2.5)) isEEEE = isEEEE + 1;
@@ -45,20 +67,19 @@ void ${ClassDiphotonSignal}::Loop()
         }
       }
    }
-
    efficiency = NisGood/Ntotal;
 
    cout << endl;
    cout << "Model point: " << "${nametag}" << endl;
    cout << "Total entries            : " << Ntotal    << " " << nentries << endl;
+   cout << "pTCut: " << npTcut << endl;
    cout << "isGood : " << NisGood << endl;
    cout << "isEBEB  : " << isEBEB << endl;
    cout << "isEBEEorEEEB: " << isEBEEorEEEB << endl;
    cout << "isEEEE: " << isEEEE << endl;
    cout << "Efficiency: " << NisGood/Ntotal << endl;
    cout << endl;
-   ofstream outfile;
-   outfile.open(logfile, ios::app);
-   outfile << "${nametag}" << ", " << Ntotal << ", " << NisGood << ", " << NisGood/Ntotal << ", " <<  isEBEB << ", " << isEBEEorEEEB <<  ", " << isEEEE << endl;
+   //outfile.open(logfile, ios::app);
+   outfile << "${nametag}" << "," << Ntotal << "," << NisGood << "," << NisGood/Ntotal << "," <<  isEBEB << "," << isEBEEorEEEB <<  "," << isEEEE << "," << npTcut << endl;
    outfile.close();
 }
