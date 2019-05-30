@@ -17,6 +17,7 @@ void ${ClassDiphotonSignal}::Loop()
    int isEBEEorEEEB = 0;
    int isEEEB = 0;
    int isEEEE = 0;
+   int nisGood = 0; 
 
    //histograms
    TH1D* diphotonMinv = new TH1D("diphotonMinv", "", 1000, 0., 13000.);// 100, 0, 10000
@@ -115,6 +116,8 @@ void ${ClassDiphotonSignal}::Loop()
       // Only look at eventw with two true photons
       if (isGood)
       {
+        nisGood = nisGood + 1;
+
         diphotonMinv->Fill(Diphoton_Minv, weight);
         photon1Pt->Fill(Photon1_pt, weight);
         photon2Pt->Fill(Photon2_pt, weight);
@@ -168,6 +171,7 @@ void ${ClassDiphotonSignal}::Loop()
    cout << "isEBEB  : " << isEBEB << endl;
    cout << "isEBEEorEEEB: " << isEBEEorEEEB << endl;
    cout << "isEEEE: " << isEEEE << endl;
+   cout << "nisGood: " << nisGood  << endl;
    cout << endl;
    ofstream outfile;
    outfile.open(logfile, ios::app);
