@@ -97,13 +97,14 @@ def readCSV_eff(inputfile):
 	return mass, e_barrel, e_EBorBE, etotal
 
 def createTGraph(N, m, e, color, linestyl):
-	umin, umax = 0, 0.70
+	umin, umax = 0.5, 1.4
 	xmin, xmax = 750, 5000
 
 	gr = ROOT.TGraph(n, mass, e)
 	gr.SetLineColor( color )
 	gr.SetLineWidth( 2 )
-	gr.SetMarkerColor( 4 )
+	gr.SetMarkerColor( color )
+	gr.SetMarkerStyle(2)
 	gr.SetLineStyle( linestyl )
 	#gr.SetMarkerStyle( 21 )
 	gr.SetMinimum(0.2)
@@ -118,75 +119,57 @@ def createTGraph(N, m, e, color, linestyl):
 	return gr
 
 # --- PROGRAM START ---
+in1 = 'gluglu_75.csv'
+in2 = 'gluglu_125.csv'
 
-mass, e_barrel, e_EBorBE, etotal = readCSV_eff( 'hh75goodAN.csv' )
-mass125, e125_barrel, e125_EBorBE, e125total = readCSV_eff( 'hh125goodAN.csv') 
+mass, e_barrel, e_EBorBE, etotal = readCSV_eff( in1 )
+mass125, e125_barrel, e125_EBorBE, e125total = readCSV_eff( in2 ) 
 
-c1 = ROOT.TCanvas("c1", "Efficiency vs M", 200, 10, 550, 500)
+e_t, e_eb, e_eborbe = array( 'd' ), array( 'd' ), array( 'd' )
+for m, e1, e2, e1_b, e2_b, e1_e, e2_e in zip( mass,etotal, e125total, e_barrel, e125_barrel, e_EBorBE, e125_EBorBE ):
+        #print m, e1, e2, e1_b, e2_b, e1_e, e2_e
+	print e1, e2, e1/e2
+        e_t.append(e2/e1)
+        e_eb.append(e2_b/e1_b)
+        e_eborbe.append(e2_e/e1_e)
+n = len(mass)
+print e_t
+print e_eb
+print e_eborbe
+r_eb = createTGraph(n, mass, e_eb, 2, linestyl=1)
+r_eborbe = createTGraph(n, mass, e_eborbe, 4, linestyl=1)
+r_t = createTGraph(n, mass, e_t, 1, linestyl=1)
+
+
+c1 = ROOT.TCanvas("c1", "Efficiency vs M", 200, 10, 550, 200)
 #c1.SetFillColor( 42 )
-#c1.SetGrid()
+c1.SetGrid()
 c1.cd()
 pad1 = ROOT.TPad("pad1", "", 0, 0, 1, 1)
 pad2 = ROOT.TPad("pad2", "", 0, 0, 1, 1)
 pad3 = ROOT.TPad("pad3", "", 0, 0, 1, 1)
-pad1_b = ROOT.TPad("pad1_b", "", 0, 0, 1, 1)
-pad2_b = ROOT.TPad("pad2_b", "", 0, 0, 1, 1)
-pad3_b = ROOT.TPad("pad3_b", "", 0, 0, 1, 1)
 pad2.SetFillStyle(4000) # Make Transparent pad
 pad2.SetFrameFillStyle(0)
 pad3.SetFillStyle(4000) # Make Transparent pad
 pad3.SetFrameFillStyle(0) 
-pad1_b.SetFillStyle(4000) # Make Transparent pad
-pad1_b.SetFrameFillStyle(0)
-pad2_b.SetFillStyle(4000) # Make Transparent pad
-pad2_b.SetFrameFillStyle(0)
-pad3_b.SetFillStyle(4000) # Make Transparent pad
-pad3_b.SetFrameFillStyle(0)
  
 #mg = ROOT.TMultiGraph()
 
-n = len(mass)
-n125 = len(mass125)
-print n
-print n125
-print mass
-print mass125
-
-print e_barrel
-print e125_barrel
-
-gr = createTGraph(n, mass, e_barrel, 2, linestyl=2) 
-gr_eb = createTGraph(n, mass, e_EBorBE, 4, linestyl=2) 
-gr_t = createTGraph(n, mass, etotal, 1, linestyl=2) 
-
-gr125 = createTGraph(n125, mass125, e125_barrel, 2, linestyl=1) 
-gr_eb125 = createTGraph(n125, mass125, e125_EBorBE, 4, 1) 
-gr_t125 = createTGraph(n125, mass125, e125total, 1, 1 ) 
 
 
 # Multipad solution
 pad1.Draw()
 pad1.cd()
-gr.Draw(" APL ")
+r_eb.Draw(" APL ")
 pad2.Draw()
 pad2.cd()
-gr_eb.Draw( ' APL ' )
+r_eborbe.Draw( ' APL ' )
 pad3.Draw()
 pad3.cd()
-gr_t.Draw( ' APL ' )
-
-pad1_b.Draw()
-pad1_b.cd()
-gr125.Draw( ' APL ')
-pad2_b.Draw()
-pad2_b.cd()
-gr_eb125.Draw( ' APL ' )
-pad3_b.Draw()
-pad3_b.cd()
-gr_t125.Draw( ' APL ' )
+r_t.Draw( ' APL ' )
 
 
-leg = ROOT.TLegend(0.65, 0.3, 0.9, 0.6)
+leg = ROOT.TLegend(0.75, 0.55, 0.9, 0.85)
 leg.SetBorderSize(0)
 leg.SetFillColor(0)
 leg.SetFillStyle(0)
@@ -194,22 +177,18 @@ leg.SetTextFont(42)
 leg.SetTextSize(0.035)
 leg.SetHeader(r"#frac{#Gamma_{x}}{m_{x}} = 0.01")
 
-leg.AddEntry(gr, "EBEB", "l")
-leg.AddEntry(gr_eb, "EBEE", "l")
-leg.AddEntry(gr_t, "Total", "l")
-leg.AddEntry(gr125, "EBEB_125", "l")
-leg.AddEntry(gr_eb125, "EBEE_125", "l")
-leg.AddEntry(gr_t125, "Total_125", "l")
+leg.AddEntry(r_eb, "EBEB", "l")
+leg.AddEntry(r_eborbe, "EBEE", "l")
+leg.AddEntry(r_t, "Total", "l")
 
 leg.Draw()
 
 # set_CMS_lumi(c1, 4, 0, 137)
-CMS_Energy(c1, 0, E="13 TeV")
+#CMS_Energy(c1, 0, E="13 TeV")
 c1.Update()
 #c1.GetFrame().SetFillColor(21)
 #c1.GetFrame().SetBorderSize(12)
 c1.Modified()
 c1.Update()
 c1.Draw()
-tag = inputfile[3:-4]
-c1.SaveAs("gluglu_eff_cms_750-7000_%s_ratio.pdf" %(tag))
+c1.SaveAs("gluglu_eff_ratio.pdf")
