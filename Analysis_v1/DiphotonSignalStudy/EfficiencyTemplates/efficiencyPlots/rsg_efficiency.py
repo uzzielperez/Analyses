@@ -1,18 +1,10 @@
+from __future__ import division
 import ROOT
 from hep_plt.CMSlumi import CMS_lumi, set_CMS_lumi, CMS_Energy
 from ROOT import *
 import re
-
-# RSG Original
-# M = [5750, 2500, 4250, 1250, 1500, 3000, 4750, 5000, 6500, 750, 6000, 7000]
-#
-# Ntotal = [81181, 73804, 79273, 66793, 67054, 76326, 80211, 77228, 81650, 63565, 81285, 77175]
-# isGood_frac = [0.908, 0.887, 0.898, 0.879, 0.880, 0.892, 0.904, 0.904, 0.910, 0.878, 0.909, 0.912]
-# NisEBEB = [70211, 53424, 64944, 39251, 41677, 57731, 67287, 65380, 71575, 33105, 70711, 68184]
-# NisbEorEb = [2790, 10435, 5205, 17424, 15396, 8715, 4267, 3550, 1978, 20314, 2466, 1529]
-# MC_total = [100000, 99000, 100000, 98000, 96000, 100000, 100000, 96000, 100000, 100000, 100000, 95002]
-
-
+from array import array
+from math import sin
 
 import csv
 # inputfile = 'RSG75.csv'
@@ -21,9 +13,16 @@ inputfile = 'RSG75_AN.csv'
 #inputfile = 'RSG125_AN.csv'
 #inputfile = 'RSGdefault.csv'
 
-M, isGood_frac, Ntotal, NisEBEB, NisbEorEb, MC_total = [], [], [], [], [], []
+inputfile = 'hh125goodAN.csv'
+#inputfile = 'hh75goodAN.csv'
+#inputfile = 'hh75tAN.csv'
+#inputfile = 'hh75AN.csv'
+#inputfile = 'hh125AN.csv'
+#inputfile = 'hhcheckAN.csv'
+#inputfile = 'hhdefault.csv'
 
-# have to use a dict for the MC_total
+# --- FUNCTION DEFINITIONS 
+# have to use a dict for the MC_total 
 MC_total_dict = {750: 100000,
                  1250: 98000,
                  1500: 96000,
@@ -37,74 +36,107 @@ MC_total_dict = {750: 100000,
                  6000: 100000,
                  6500: 100000,
                  7000: 95002,
-                 750: 100000,
                  }
 
-with open(inputfile, mode='r') as infile:
-    csv_file = csv.DictReader(infile)
-    row_num = 0
-    for line in csv_file:
-        dset, ntotal,= line['Sample'], line['Ntotal']
-        NisGood, isGoodfrac = line['NisGood'], line['isGoodfrac']
-        nEBEB = line['nEBEB']
-        nEBEEorEEEB = line['nEBEEorEEEB']
-        nEEEE = line['nEEEE']
-        npTcut = line['npTcut']
+def readCSV_eff(inputfile):
+	M, isGood_frac, Ntotal, NisEBEB, NisbEorEb, MC_total = [], [], [], [], [], []
+	with open(inputfile, mode='r') as infile:
+	    csv_file = csv.DictReader(infile)
+	    row_num = 0
+ 	    for line in csv_file:
+        	dset, ntotal,= line['Sample'], line['Ntotal']
+		NisGood, isGoodfrac = line['NisGood'], line['isGoodfrac']
+		nEBEB = line['nEBEB']
+		nEBEEorEEEB = line['nEBEEorEEEB']
+		nEEEE = line['nEEEE']
+		npTcut = line['npTcut']
+		#pattern = "GluGluSpin0ToGammaGamma_W_1p4_M_([^(]*)"
+	        pattern = "RSGravitonToGammaGamma_kMpl01_M_([^(]*)"
+		
+		print nEBEEorEEEB
+		match = re.findall(pattern, dset)
+		mass = int(match[0])
+		M.append(mass)
+		isGood_frac.append(double(isGoodfrac))
+		Ntotal.append(int(ntotal))
+		NisEBEB.append(int(nEBEB))
+		NisbEorEb.append(int(nEBEEorEEEB))
+		MC_total.append(MC_total_dict[mass])
+	
+	print NisbEorEb
 
-        pattern = "RSGravitonToGammaGamma_kMpl01_M_([^(]*)"
-        match = re.findall(pattern, dset)
-        mass = int(match[0])
-        M.append(mass)
-        isGood_frac.append(double(isGoodfrac))
-        Ntotal.append(int(ntotal))
-        NisEBEB.append(int(nEBEB))
-        NisbEorEb.append(int(nEBEEorEEEB))
-        MC_total.append(MC_total_dict[mass])
+	efficiency_isEBEB = array( 'd' )
+	efficiency_isbEorEb = array( 'd')
+	efficiency_tot = array('d')
 
-        #print dset, ntotal, NisGood, isGoodfrac, nEBEB, nEBEEorEEEB, nEEEE, npTcut
 
-#print len(M), len(MC_total)
-#print M, isGood_frac
-print M
-print Ntotal
-print isGood_frac
-print NisEBEB
-print NisbEorEb
-print MC_total
+	for ntotal, nb, neBoreB, e, mctotal in zip(Ntotal, NisEBEB, NisbEorEb, isGood_frac, MC_total):
+		barrel_eff = nb*e/mctotal
+    		endcap_barrel_eff = neBoreB*e/mctotal
+   		total_eff = barrel_eff + endcap_barrel_eff
+    		print neBoreB, e, mctotal, neBoreB*e/mctotal, barrel_eff, endcap_barrel_eff
+  	        efficiency_isEBEB.append(barrel_eff)
+	        efficiency_isbEorEb.append(endcap_barrel_eff)
+    		efficiency_tot.append(total_eff)
 
-efficiency_isEBEB = []
-efficiency_isbEorEb = []
-efficiency_tot = []
+	#print efficiency_isEBEB
+	gROOT.SetBatch()
+	e_barrel_dict = {}
+	e_EBorBE_dict = {}
+	e_total_dict = {}
 
-for ntotal, nb, neBoreB, e, mctotal in zip(Ntotal, NisEBEB, NisbEorEb, isGood_frac, MC_total):
-    barrel_eff = nb*e/mctotal
-    endcap_barrel_eff = neBoreB*e/mctotal
-    total_eff = barrel_eff + endcap_barrel_eff
-    efficiency_isEBEB.append(barrel_eff)
-    efficiency_isbEorEb.append(endcap_barrel_eff)
-    efficiency_tot.append(total_eff)
+	for m, e1, e2, et in zip(M, efficiency_isEBEB, efficiency_isbEorEb, efficiency_tot):
+   		#print e2
+		e_barrel_dict[m] = e1
+    		e_EBorBE_dict[m] = e2
+    		e_total_dict[m] = et
 
-from array import array
-from math import sin
-gROOT.SetBatch()
-e_barrel_dict = {}
-e_EBorBE_dict = {}
-e_total_dict = {}
+	n = len(M)
 
-for m, e1, e2, et in zip(M, efficiency_isEBEB, efficiency_isbEorEb, efficiency_tot):
-    e_barrel_dict[m] = e1
-    e_EBorBE_dict[m] = e2
-    e_total_dict[m] = et
+	mass, e_barrel, e_EBorBE, etotal = array( 'd' ), array( 'd' ), array( 'd' ), array( 'd' )
+	M.sort()
+	for mpt in M:
+	    #print e_barrel_dict[mpt]
+	    #print e_EBorBE_dict[mpt]
+	    e_barrel.append(e_barrel_dict[mpt])
+	    e_EBorBE.append(e_EBorBE_dict[mpt])
+	    etotal.append(e_total_dict[mpt])
+	    mass.append(mpt)
 
-n = len(M)
-mass, e_barrel, e_EBorBE, etotal = array( 'd' ), array( 'd' ), array( 'd' ), array( 'd' )
+	return mass, e_barrel, e_EBorBE, etotal
 
-M.sort()
-for mpt in M:
-    e_barrel.append(e_barrel_dict[mpt])
-    e_EBorBE.append(e_EBorBE_dict[mpt])
-    etotal.append(e_total_dict[mpt])
-    mass.append(mpt)
+def createTGraph(N, m, e, color, linestyl):
+	umin, umax = 0, 0.70
+	xmin, xmax = 750, 5000
+
+	gr = ROOT.TGraph(n, mass, e)
+	gr.SetLineColor( color )
+	gr.SetLineWidth( 2 )
+	gr.SetMarkerColor( 4 )
+	gr.SetLineStyle( linestyl )
+	#gr.SetMarkerStyle( 21 )
+	gr.SetMinimum(0.2)
+	gr.SetTitle(r' ')
+	#gr.GetXaxis().SetTitle( r'GluGluSpin0 m_X (GeV)' )
+	gr.GetXaxis().SetTitle( r'RSGraviton m_X (GeV)' )
+	gr.GetYaxis().SetTitle( r'#epsilon #times A' )
+	#gr.SetMinimum(0.2)
+	gr.GetYaxis().SetRangeUser(umin, umax)
+	gr.GetXaxis().SetRangeUser(xmin, xmax)
+
+	return gr
+
+# --- PROGRAM START ---
+
+in1 = 'rsg_75.csv'
+in2 = 'rsg_125.csv'
+#in2 = 'LOG.csv'
+
+mass, e_barrel, e_EBorBE, etotal = readCSV_eff( in1 )
+mass125, e125_barrel, e125_EBorBE, e125total = readCSV_eff( in2 ) 
+
+print e_barrel
+print e125_barrel
 
 c1 = ROOT.TCanvas("c1", "Efficiency vs M", 200, 10, 550, 500)
 #c1.SetFillColor( 42 )
@@ -112,49 +144,41 @@ c1 = ROOT.TCanvas("c1", "Efficiency vs M", 200, 10, 550, 500)
 c1.cd()
 pad1 = ROOT.TPad("pad1", "", 0, 0, 1, 1)
 pad2 = ROOT.TPad("pad2", "", 0, 0, 1, 1)
-pad3 = ROOT.TPad("pad2", "", 0, 0, 1, 1)
+pad3 = ROOT.TPad("pad3", "", 0, 0, 1, 1)
+pad1_b = ROOT.TPad("pad1_b", "", 0, 0, 1, 1)
+pad2_b = ROOT.TPad("pad2_b", "", 0, 0, 1, 1)
+pad3_b = ROOT.TPad("pad3_b", "", 0, 0, 1, 1)
 pad2.SetFillStyle(4000) # Make Transparent pad
 pad2.SetFrameFillStyle(0)
 pad3.SetFillStyle(4000) # Make Transparent pad
-pad3.SetFrameFillStyle(0)
-mg = ROOT.TMultiGraph()
+pad3.SetFrameFillStyle(0) 
+pad1_b.SetFillStyle(4000) # Make Transparent pad
+pad1_b.SetFrameFillStyle(0)
+pad2_b.SetFillStyle(4000) # Make Transparent pad
+pad2_b.SetFrameFillStyle(0)
+pad3_b.SetFillStyle(4000) # Make Transparent pad
+pad3_b.SetFrameFillStyle(0)
+ 
+#mg = ROOT.TMultiGraph()
 
-umin, umax = 0, 0.70
-xmin, xmax = 750, 7000
+n = len(mass)
+n125 = len(mass125)
+print mass
+print mass125
 
-gr = ROOT.TGraph(n, mass, e_barrel)
-gr.SetLineColor( 2 )
-gr.SetLineWidth( 2 )
-gr.SetMarkerColor( 4 )
-gr.SetLineStyle(2)
-#gr.SetMarkerStyle( 21 )
-gr.SetMinimum(0.2)
-gr.SetTitle(r' ')
-gr.GetXaxis().SetTitle( r'RSGraviton m_X (GeV)' )
-gr.GetYaxis().SetTitle( r'#epsilon #times A' )
-#gr.SetMinimum(0.2)
-gr.GetYaxis().SetRangeUser(umin, umax)
-gr.GetXaxis().SetRangeUser(xmin, xmax)
+print e_barrel
+print e125_barrel
+print "EEEE"
+print e_EBorBE
+print e125_EBorBE
 
-gr_eb = ROOT.TGraph(n, mass, e_EBorBE)
-gr_eb.SetLineColor( 4 )
-gr_eb.SetLineWidth( 2 )
-gr_eb.SetLineStyle( 2 )
-gr_eb.SetMarkerColor( 4 )
-#gr_eb.SetMarkerStyle( 21 )
-gr_eb.GetYaxis().SetRangeUser(umin, umax)
-gr_eb.GetXaxis().SetRangeUser(xmin, xmax)
-gr_eb.SetTitle(r' ')
+gr = createTGraph(n, mass, e_barrel, 2, linestyl=2) 
+gr_eb = createTGraph(n, mass, e_EBorBE, 4, linestyl=2) 
+gr_t = createTGraph(n, mass, etotal, 1, linestyl=2) 
 
-gr_t = ROOT.TGraph(n, mass, etotal)
-gr_t.SetLineColor( 1 )
-gr_t.SetLineWidth( 2 )
-gr_t.SetLineStyle( 2 )
-gr_t.SetMarkerColor( 4 )
-#gr_t.SetMarkerStyle( 21 )
-gr_t.GetYaxis().SetRangeUser(umin, umax)
-gr_t.GetXaxis().SetRangeUser(xmin, xmax)
-gr_t.SetTitle(r' ')
+gr125 = createTGraph(n125, mass125, e125_barrel, 2, linestyl=1) 
+gr_eb125 = createTGraph(n125, mass125, e125_EBorBE, 4, 1) 
+gr_t125 = createTGraph(n125, mass125, e125total, 1, 1 ) 
 
 # Multipad solution
 pad1.Draw()
@@ -167,6 +191,16 @@ pad3.Draw()
 pad3.cd()
 gr_t.Draw( ' APL ' )
 
+pad1_b.Draw()
+pad1_b.cd()
+gr125.Draw( ' APL ')
+pad2_b.Draw()
+pad2_b.cd()
+gr_eb125.Draw( ' APL ' )
+pad3_b.Draw()
+pad3_b.cd()
+gr_t125.Draw( ' APL ' )
+
 
 leg = ROOT.TLegend(0.65, 0.3, 0.9, 0.6)
 leg.SetBorderSize(0)
@@ -175,9 +209,15 @@ leg.SetFillStyle(0)
 leg.SetTextFont(42)
 leg.SetTextSize(0.035)
 leg.SetHeader(r"#tilde{#kappa} = 0.01")
+#leg.SetHeader(r"#frac{#Gamma_{x}}{m_{x}} = 0.01")
+
 leg.AddEntry(gr, "EBEB", "l")
 leg.AddEntry(gr_eb, "EBEE", "l")
 leg.AddEntry(gr_t, "Total", "l")
+leg.AddEntry(gr125, "EBEB_125", "l")
+leg.AddEntry(gr_eb125, "EBEE_125", "l")
+leg.AddEntry(gr_t125, "Total_125", "l")
+
 leg.Draw()
 
 # set_CMS_lumi(c1, 4, 0, 137)
@@ -188,5 +228,5 @@ c1.Update()
 c1.Modified()
 c1.Update()
 c1.Draw()
-tag = inputfile[3:-4]
-c1.SaveAs("rsg_eff_cms_750-7000_%s.pdf" %(tag))
+
+c1.SaveAs("rsg_efficiency.pdf" )
