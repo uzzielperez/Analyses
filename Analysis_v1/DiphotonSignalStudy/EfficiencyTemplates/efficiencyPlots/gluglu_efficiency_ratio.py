@@ -20,14 +20,14 @@ inputfile = 'hh125goodAN.csv'
 #inputfile = 'hhcheckAN.csv'
 #inputfile = 'hhdefault.csv'
 
-# --- FUNCTION DEFINITIONS 
-# have to use a dict for the MC_total 
-MC_total_dict = {750: 100000, 
-                 1000: 100000, 
-                 1250: 100000, 
-                 1500: 100000, 
-                 1750: 100000, 
-                 2000: 100000, 
+# --- FUNCTION DEFINITIONS
+# have to use a dict for the MC_total
+MC_total_dict = {750: 100000,
+                 1000: 100000,
+                 1250: 100000,
+                 1500: 100000,
+                 1750: 100000,
+                 2000: 100000,
                  2250: 98000,
                  2500: 96000,
                  3000: 100000,
@@ -111,7 +111,9 @@ def createTGraph(N, m, e, color, linestyl):
 	gr.SetTitle(r' ')
 	gr.GetXaxis().SetTitle( r'GluGluSpin0 m_X (GeV)' )
 	#gr.GetXaxis().SetTitle( r'RSGraviton m_X (GeV)' )
-	gr.GetYaxis().SetTitle( r'#epsilon #times A' )
+	
+	#gr.GetYaxis().SetTitle( r'#epsilon #times A' )
+	gr.GetYaxis().SetTitle( r'#frac{(#epsilon #times A)_{pT125}}{(#epsilon #times A)_{pT75}}' )
 	#gr.SetMinimum(0.2)
 	gr.GetYaxis().SetRangeUser(umin, umax)
 	gr.GetXaxis().SetRangeUser(xmin, xmax)
@@ -123,7 +125,7 @@ in1 = 'gluglu_75.csv'
 in2 = 'gluglu_125.csv'
 
 mass, e_barrel, e_EBorBE, etotal = readCSV_eff( in1 )
-mass125, e125_barrel, e125_EBorBE, e125total = readCSV_eff( in2 ) 
+mass125, e125_barrel, e125_EBorBE, e125total = readCSV_eff( in2 )
 
 e_t, e_eb, e_eborbe = array( 'd' ), array( 'd' ), array( 'd' )
 for m, e1, e2, e1_b, e2_b, e1_e, e2_e in zip( mass,etotal, e125total, e_barrel, e125_barrel, e_EBorBE, e125_EBorBE ):
@@ -151,8 +153,8 @@ pad3 = ROOT.TPad("pad3", "", 0, 0, 1, 1)
 pad2.SetFillStyle(4000) # Make Transparent pad
 pad2.SetFrameFillStyle(0)
 pad3.SetFillStyle(4000) # Make Transparent pad
-pad3.SetFrameFillStyle(0) 
- 
+pad3.SetFrameFillStyle(0)
+
 #mg = ROOT.TMultiGraph()
 
 

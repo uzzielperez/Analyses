@@ -229,4 +229,4 @@ c1.Modified()
 c1.Update()
 c1.Draw()
 tag = inputfile[3:-4] + "all"
-c1.SaveAs("gluglu_eff_cms_750-7000_%s.pdf" %(tag))
+c1.SaveAs("gluglu_eff.pdf")

@@ -97,7 +97,10 @@ def createTGraph(N, m, e, color, linestyl):
 	gr.SetTitle(r' ')
 	#gr.GetXaxis().SetTitle( r'GluGluSpin0 m_X (GeV)' )
 	gr.GetXaxis().SetTitle( r'RSGraviton m_X (GeV)' )
-	gr.GetYaxis().SetTitle( r'#epsilon #times A' )
+#	gr.GetYaxis().SetTitle( r'#epsilon #times A' )
+	
+	gr.GetYaxis().SetTitle( r'#frac{(#epsilon #times A)_{pT125}}{(#epsilon #times A)_{pT75}}') 
+	
 	#gr.SetMinimum(0.2)
 	gr.GetYaxis().SetRangeUser(umin, umax)
 	gr.GetXaxis().SetRangeUser(xmin, xmax)
