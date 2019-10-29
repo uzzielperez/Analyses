@@ -11,7 +11,7 @@ generator = cms.EDFilter("Pythia8GeneratorFilter",
     comEnergy = cms.double(13000.),
     PythiaParameters = cms.PSet(
         pythia8CommonSettingsBlock,
-        pythia8CP2SettingsBlock,
+        pythia8CUEP8M1SettingsBlock,
         processParameters = cms.vstring(
             'PromptPhoton:gg2gammagamma = on',
             'PromptPhoton:ffbar2gammagamma = on',
