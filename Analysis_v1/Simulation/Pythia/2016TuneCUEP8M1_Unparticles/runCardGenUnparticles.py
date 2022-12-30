@@ -45,6 +45,9 @@ d={'lambdaU': lambdau_label,
    'pTcut':pTcut}
 
 RunCard_outName = 'UnparToGG_Spin%s_du%s_LambdaU-%s_pT%s_M%s-%s_TuneCUEP8M1_13TeV_pythia8_cfi.py' %(spin, du_label, lambdau_label, pTcut, massMin, massMax)
+if massMax == "-1":
+	RunCard_outName = 'UnparToGG_Spin%s_du%s_LambdaU-%s_pT%s_M%s_TuneCUEP8M1_13TeV_pythia8_cfi.py' %(spin, du_label, lambdau_label, pTcut, massMin)
+
 filein = open(RunCardTemplate)
 
 if not os.path.exists('Unpar2016fragments'):

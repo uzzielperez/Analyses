@@ -39,13 +39,32 @@ if spin == "0":
 	                   1.9 : {2000, 2500, 3500}}
 
 
+
 if spin == "2":
 	du_lambdaU_map = { 1.1 : {2000, 2500, 3000},
 					   1.5 : {2000, 2500, 3000},
 					   1.9 : {2000, 2500, 3500}}
 
+massRanges = { 4000 : [500, 1000, 2000, 4000, -1],
+			   8000 : [500, 1000, 2000, 4000, -1],
+			   10000 : [500, 1000, 2000, 4000, -1],
+			   2000 : [500, 1000, 2000, -1],
+			   2500 : [500, 1000, 2000, -1],
+			   3000 : [500, 1000, 2000, 3000, -1],
+			   3500 : [500, 1000, 2000, 3000, -1]}
+
 for du in dus:
-	print du
+	# print du
+
 	for lambdaU in du_lambdaU_map[du]:
-		command = 'python runCardGenUnparticles.py -s %s -d %f -l %d -min %d -max %d -p %s' %(spin, du, lambdaU, massMin, massMax, pTcut)
-		os.system(command)
+		i = 0
+		# print lambdaU
+		while i < ( len(massRanges[lambdaU])-1 ) :
+			massMin = massRanges[lambdaU][i]
+			massMax = massRanges[lambdaU][i+1]
+			# print massMin, massMax
+
+			command = 'python runCardGenUnparticles.py -s %s -d %f -l %d -min %d -max %d -p %s' %(spin, du, lambdaU, massMin, massMax, pTcut)
+			os.system(command)
+
+			i = i + 1
