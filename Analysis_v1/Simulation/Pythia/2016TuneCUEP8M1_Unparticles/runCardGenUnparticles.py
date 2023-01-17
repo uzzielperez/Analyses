@@ -39,7 +39,7 @@ lambdau_label  = str(LambdaU)
 lambdau_label  = lambdau_label.replace('.', 'p')
 
 d={'lambdaU': lambdau_label,
-   'du':du_label,
+   'du':du,
    'massMin':massMin,
    'massMax':massMax,
    'pTcut':pTcut}
