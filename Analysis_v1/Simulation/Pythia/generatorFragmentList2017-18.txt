@@ -106,3 +106,7 @@ ADDGravToGG_NegInt-1_LambdaT-13000_M-500To1000_13TeV-pythia8_MASTER_cff.py
 ADDGravToGG_NegInt-1_LambdaT-13000_M-1000To2000_13TeV-pythia8_MASTER_cff.py
 ADDGravToGG_NegInt-1_LambdaT-13000_M-2000To4000_13TeV-pythia8_MASTER_cff.py
 ADDGravToGG_NegInt-1_LambdaT-13000_M-4000To13000_13TeV-pythia8_MASTER_cff.py
+ADDGravToGG_NegInt-1_LambdaT-4000_M-500To1000_13TeV-pythia8_MASTER_cff.py
+ADDGravToGG_NegInt-1_LambdaT-4000_M-1000To2000_13TeV-pythia8_MASTER_cff.py
+ADDGravToGG_NegInt-1_LambdaT-4000_M-2000To3000_13TeV-pythia8_MASTER_cff.py
+ADDGravToGG_NegInt-1_LambdaT-4000_M-3000To4000_13TeV-pythia8_MASTER_cff.py

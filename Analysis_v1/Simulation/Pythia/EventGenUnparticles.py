@@ -7,8 +7,8 @@ from multiprocessing import Pool
 sw = ROOT.TStopwatch()
 sw.Start()
 
-cmsDriver_Step = False
-cmsRun_Step = True
+cmsDriver_Step = True
+cmsRun_Step    = False
 
 def cmsDriver_GenCard(file_list):
 	for filename in file_list:
@@ -40,8 +40,17 @@ def multiproc(file_list, func):
 
 
 if cmsDriver_Step:
+	print "Running cmsDriver Step"
+
 	#cmsDriver_GenCard(os.listdir('Configuration/GenProduction/python/ThirteenTeV/'))
-	multiproc(os.listdir('Configuration/GenProduction/python/ThirteenTeV/'), cmsDriver_GenCard)
+	#multiproc(os.listdir('Configuration/GenProduction/python/ThirteenTeV/'), cmsDriver_GenCard)
+
+	# print os.listdir('Configuration/GenProduction/python/ThirteenTeV/')
+	#cmsDriver_GenCard(os.listdir('Configuration/GenProduction/python/ThirteenTeV/'))
+	cmsDriver_cmd = "cmsDriver.py Configuration/GenProduction/python/ThirteenTeV/{} -s GEN --mc --no_exec --conditions auto:mc -n 100".format("UnparToGG_Spin2_du1p9_LambdaU-3500_pT70_M3000_TuneCUEP8M1_13TeV_pythia8_cfi.py")
+	process = sp.Popen(cmsDriver_cmd.split(), stdout=sp.PIPE)
+	foutput, error = process.communicate()
+	
 if cmsRun_Step:
 	#cmsRun_GenCard(os.listdir('.'))
 	multiproc(os.listdir('.'), cmsRun_GenCard)

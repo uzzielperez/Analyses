@@ -13,19 +13,23 @@ generator = cms.EDFilter("Pythia8GeneratorFilter",
         pythia8CommonSettingsBlock,
         pythia8CUEP8M1SettingsBlock,
         processParameters = cms.vstring(
-            'ExtraDimensionsLED:LambdaT = 10000.0',
-            'ExtraDimensionsLED:n = 4',
-            'ExtraDimensionsLED:ffbar2gammagamma = on',
-            'ExtraDimensionsLED:gg2gammagamma = on',
-            'ExtraDimensionsLED:CutOffmode = 2',
-            'ExtraDimensionsLED:NegInt= 1',
-            'PhaseSpace:pTHatMin = 70.0',
-	    'PhaseSpace:mHatMin = 2000.0',
-	    'PhaseSpace:mHatMax = 1000.0'
-  ),
+            'ExtraDimensionsUnpart:ffbar2gammagamma = on',
+            'ExtraDimensionsUnpart:gg2gammagamma = on',
+            'PromptPhoton:gg2gammagamma = on',
+            #'PromptPhoton:ffbar2gammagamma = on',
+	        'ExtraDimensionsUnpart:LambdaU = 3000',
+            'ExtraDimensionsUnpart:lambda = 1.0',
+            'ExtraDimensionsUnpart:dU = 1p1',
+            'ExtraDimensionsUnpart:spinU = 2',
+            'PhaseSpace:pTHatMin = 70',
+            'PhaseSpace:mHatMin = 3000',
+            'PhaseSpace:mHatMax = -1',
+            ),
         parameterSets = cms.vstring('pythia8CommonSettings',
                                     'pythia8CUEP8M1Settings',
                                     'processParameters',
                                     )
-    )
+        )
 )
+
+ProductionFilterSequence = cms.Sequence(generator)
